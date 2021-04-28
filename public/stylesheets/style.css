@@ -1,0 +1,89 @@
+/* own classes */
+
+.background-picture {
+  text-shadow: 0px 0px 1px black;
+  background-image: url("../images/mixer-821537_640x423.jpg");
+  background-color: grey;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.container-opacity {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.disable-text-shadow {
+  text-shadow: none;
+}
+
+.no-list-markers {
+  list-style: none;
+}
+
+.sfc-table-wrap {
+  overflow-y: scroll;
+  height: 18rem;
+}
+
+.sfc-table-wrap th {
+  position: sticky;
+  top: 0px;
+}
+
+.ufc-table-wrap {
+  overflow-y: scroll;
+  height: 28rem;
+}
+
+.ufc-table-wrap th {
+  position: sticky;
+  top: 0px;
+}
+
+.text-color {
+  color: rgb(116, 116, 218);
+}
+
+.text-grey {
+  color: rgb(165, 165, 165);
+}
+
+.bg-color-light {
+  background-color: rgb(116, 116, 218);
+}
+
+.bg-color-dark {
+  background-color: rgb(63, 63, 129);
+}
+
+
+/* Bootstrap classes */
+
+.btn-primary {
+  background-color: rgb(116, 116, 218);
+  border-color: rgb(116, 116, 218);
+}
+
+.btn-primary:hover {
+  background-color: rgb(81, 57, 189);
+  border-color: rgb(81, 57, 189);
+}
+
+.btn-primary:focus {
+  background-color: rgb(116, 116, 218);
+  border-color: rgb(116, 116, 218);
+}
+
+.btn-primary:focus:hover {
+  background-color: rgb(81, 57, 189);
+  border-color: rgb(81, 57, 189);
+}
+
+.navbar .navbar-brand {
+  color: rgb(116, 116, 218);
+}
+
+.navbar .navbar-brand:hover {
+  color: rgb(81, 57, 189);
+}
