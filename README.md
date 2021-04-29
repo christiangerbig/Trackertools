@@ -16,20 +16,15 @@ A collection of tools for a work with the Amiga Protracker
 **Header**
  - Links to access all tools and  Link to Homepage.
 **TonePortaStep**
-- Input fields for the calculation Links to About and Help
+ - Input fields for the calculation Links to About and Help
 **VolSlideStep** 
-- Input fields for the calculation Links to About and Help
+ - Input fields for the calculation Links to About and Help
 **SearchFxCmd** 
-- Input fields for the calculation Links to About and Help
+ - Input fields for the calculation Links to About and Help
 **UsedFxCmd** 
-- Input fields for the calculation Links to About
+ - Input fields for the calculation Links to About
 **Contact** 
-- Form to send a message
-
-## Backlog
-
-List of other features outside of the MVPs scope
-
+ - Form to send a message
 
 ## ROUTES:
 
@@ -58,18 +53,16 @@ List of other features outside of the MVPs scope
 
 ## Models
 
-Models:
-
-Request-Model
+Models: Request-Model
 
 ## Links
 
 ### Git
 The url to your repository and to your deployed project
-[Repository Link]()
+[Repository Link](https://github.com/christiangerbig/Trackertools)
 
 ### Heroku
-[Deploy Link]()
+[Deploy Link](https://trackertools.herokuapp.com/)
 
 ### Slides
 

@@ -23,7 +23,7 @@
 
 .sfc-table-wrap {
   overflow-y: scroll;
-  height: 18rem;
+  height: 17rem;
 }
 
 .sfc-table-wrap th {
@@ -33,7 +33,7 @@
 
 .ufc-table-wrap {
   overflow-y: scroll;
-  height: 28rem;
+  height: 27rem;
 }
 
 .ufc-table-wrap th {
@@ -45,8 +45,12 @@
   color: rgb(116, 116, 218);
 }
 
-.text-grey {
-  color: rgb(165, 165, 165);
+.text-light-grey {
+  color: rgb(202, 200, 200);
+}
+
+.text-dark-grey {
+  color: rgb(122, 122, 122);
 }
 
 .bg-color-light {
@@ -55,6 +59,14 @@
 
 .bg-color-dark {
   background-color: rgb(63, 63, 129);
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  color: rgb(122, 122, 122);
 }
 
 
