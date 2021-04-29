@@ -17,7 +17,7 @@ A collection of tools for a work with the Amiga Protracker
    - Links to access all tools and  Link to Homepage.
 - TonePortaStep
    - Input fields for the calculation Links to About and Help
--VolSlideStep 
+- VolSlideStep 
    - Input fields for the calculation Links to About and Help
 - SearchFxCmd 
    - Input fields for the calculation Links to About and Help
