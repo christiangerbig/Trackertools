@@ -111,6 +111,19 @@ const handleSearchFxCmd = () => {
     reader.readAsBinaryString(file);
     reader.onload = (e) => scan.fileContent = e.target.result;
     resetValues();
+
+    // Handler to wait until module is loaded
+    const handleWaitForLoad = () => {
+      reader.removeEventListener(
+        "load",
+        handleWaitForLoad
+      );
+    }
+    // Add handler for wait until module is loaded
+    reader.addEventListener(
+      "load",
+      handleWaitForLoad
+    );
   }
   // Add handler for load module if "Choose file" button was clicked
   inputGroupFile01.addEventListener(

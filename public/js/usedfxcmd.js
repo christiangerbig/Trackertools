@@ -214,11 +214,19 @@ const usedFxCmd = () => {
     reader.readAsBinaryString(file);
     reader.onload = (e) => scan.fileContent = e.target.result;
     resetValues();
+
+    // Handler to wait until module is loaded
+    const handleWaitForLoad = () => {
+      reader.removeEventListener(
+        "load",
+        handleWaitForLoad
+      );
+      handleScanCommands();
+    }
+    // Add handler for wait until module is loaded
     reader.addEventListener(
       "load",
-      () => {
-        handleScanCommands();
-      }
+      handleWaitForLoad
     );
   }
   // Add handler for load module if "Choose file" button was clicked
@@ -226,7 +234,6 @@ const usedFxCmd = () => {
     "change",
     handleLoadModule
   );
-
 }
 
 // Add handler for UsedFxCmd
