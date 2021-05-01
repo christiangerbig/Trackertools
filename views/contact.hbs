@@ -16,6 +16,10 @@
             <label class="pb-2" for="message"> <h4> Your message </h4></label>
             <textarea class="form-control" name="message" rows="5" id="message" required></textarea>
           </div>
+            {{!-- Conditionally render the msg --}}
+            {{#if errorMessage}}
+              <div class="text-red mb-5"> <h5> {{errorMessage}} </h5> </div>
+            {{/if}}
           <input class="btn btn-secondary mb-0" type="submit" value="Send">
         </form>
       </div>

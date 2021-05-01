@@ -1,6 +1,5 @@
-const RequestModel = require("../models/Request.model");
-
 const router = require("express").Router();
+const RequestModel = require("../models/Request.model");
 
 /* Get home page */
 router.get(
@@ -9,7 +8,7 @@ router.get(
     res.render(
       "index.hbs",
       {
-        title: "Welcome Users on Trackertools Website"
+        title: "Trackertools"
       }
     );
   }
@@ -17,12 +16,12 @@ router.get(
 
 /* Get TonePortaStep page */
 router.get(
-  "/toneportastep/",
+  "/toneportastep",
   (req, res, next) => {
     res.render(
       "toneportastep.hbs",
       {
-        title: "Welcome Users on TonePortaStep Website"
+        title: "TonePortaStep"
       }
     );
   }
@@ -30,12 +29,12 @@ router.get(
 
 /* Get VolSlideStep page */
 router.get(
-  "/volslidestep/",
+  "/volslidestep",
   (req, res, next) => {
     res.render(
       "volslidestep.hbs",
       {
-        title: "Welcome Users on VolSlideStep Website"
+        title: "VolSlideStep"
       }
     );
   }
@@ -43,12 +42,12 @@ router.get(
 
 /* Get SearchFxCmd page */
 router.get(
-  "/searchfxcmd/",
+  "/searchfxcmd",
   (req, res, next) => {
     res.render(
       "searchfxcmd.hbs",
       {
-        title: "Welcome Users on SearchFxCmd Website"
+        title: "SearchFxCmd"
       }
     );
   }
@@ -56,12 +55,12 @@ router.get(
 
 /* Get UsedFxCmd page */
 router.get(
-  "/usedfxcmd/",
+  "/usedfxcmd",
   (req, res, next) => {
     res.render(
       "usedfxcmd.hbs",
       {
-        title: "Welcome Users on UsedFxCmd Website"
+        title: "UsedFxCmd"
       }
     );
   }
@@ -69,12 +68,12 @@ router.get(
 
 /* Get Contact page */
 router.get(
-  "/contact/",
+  "/contact",
   (req, res, next) => {
     res.render(
       "contact.hbs",
       {
-        title: "Welcome Users on Contact Website"
+        title: "Contact"
       }
     );
   }
@@ -82,9 +81,30 @@ router.get(
 
 // Post Contact page
 router.post(
-  "/contact/",
+  "/contact",
   (req, res, next) => {
     const { email, message } = req.body;
+    if (!email.length || !message.length) {
+      res.render(
+        "contact.hbs",
+        { 
+          errorMessage: "Please enter all fields" 
+        }
+      );
+      return;
+    }
+    // validate if the user has entered email in the right format ( @ , .)
+    // regex that validates an email in javascript
+    const re = /\S+@\S+\.\S+/;
+    if (!re.test(email)) {
+      res.render(
+        "contact.hbs",
+        { 
+          errorMessage: "Email not in valid format" 
+        }
+      );
+      return;
+    }
     const request = {
       email: email,
       message: message

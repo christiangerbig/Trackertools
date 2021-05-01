@@ -41,7 +41,7 @@
   top: 0px;
 }
 
-.text-color {
+.text-colored {
   color: rgb(116, 116, 218);
 }
 
@@ -51,6 +51,10 @@
 
 .text-dark-grey {
   color: rgb(122, 122, 122);
+}
+
+.text-red {
+  color: red;
 }
 
 .bg-color-light {

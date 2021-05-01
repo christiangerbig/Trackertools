@@ -20,22 +20,12 @@ const path = require("path");
 // Middleware configuration
 module.exports = (app) => {
   // In development environment the app logs
-  app.use(
-    logger("dev")
-  );
+  app.use(logger("dev"));
 
   // To have access to `body` property in the request
-  app.use(
-    express.json()
-  );
-  app.use(
-    express.urlencoded(
-      { extended: false }
-    )
-  );
-  app.use(
-    cookieParser()
-  );
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: false }));
+  app.use(cookieParser());
 
   // Normalizes the path to the views folder
   app.set(
@@ -74,4 +64,4 @@ module.exports = (app) => {
       )
     )
   );
-};
+}

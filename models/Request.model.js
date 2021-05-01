@@ -8,7 +8,7 @@ let RequestSchema = new Schema(
 );
 
 //define model
-let RequestModel = model("request", RequestSchema);
+const RequestModel = model("request", RequestSchema);
 
 //export model
 module.exports = RequestModel;
