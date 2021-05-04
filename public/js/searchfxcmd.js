@@ -132,33 +132,25 @@ const handleSearchFxCmd = () => {
   );
 
   // Handler for set extended command number to 0 if command number E was selected
-  const setExtendedCommand = () => {
-    scan.searchCommandNumber = commandSelect.value;
-    (scan.searchCommandNumber !== -1 || scan.searchCommandNumber === 14) ? extendedCommandSelect.value = 0 : extendedCommandSelect.value = -1;
+  const handleCheckCommandNumber = () => {
+    (commandSelect.value == 14) ? extendedCommandSelect.value = 0 : extendedCommandSelect.value = -1;
     setDefaultTextColor()
   }
   // Add handler for set extended command number to 0 if command number E was selected
   commandSelect.addEventListener(
     "change",
-    setExtendedCommand
+    handleCheckCommandNumber
   );
 
   // Handler for set command number to hex E if extended command number was selected
-  const setCommandNumber = () => {
-    scan.searchExtendedCommandNumber = extendedCommandSelect.value;
-    if (scan.searchExtendedCommandNumber) {
-      commandSelect.value = 14;
-    }
-    scan.searchCommandNumber = commandSelect.value;
-    if (scan.searchExtendedCommandNumber === -1 && scan.searchCommandNumber === 14) {
-      commandSelect.value = -1;
-    }
+  const handleCheckExtendedCommandNumber = () => {
+    (extendedCommandSelect.value == -1) ? commandSelect.value = -1 : commandSelect.value = 14;
     setDefaultTextColor();
   }
   // Add handler for set command number to hex E if extended command number was selected
   extendedCommandSelect.addEventListener(
     "change",
-    setCommandNumber
+    handleCheckExtendedCommandNumber
   );
 
   // Handler for pressed key to set command number
@@ -271,7 +263,7 @@ const handleSearchFxCmd = () => {
       // Append <td> {{ ( (k / noteDataLength) + 1 }}  </td> element
       appendTdElement(k / noteDataLength);
     }
-    if (scan.fileContent !== "") {
+    if (scan.fileContent.length) {
 
       // Get highest pattern number in pattern position table
       const getHighestPattern = () => {
