@@ -30,13 +30,13 @@ const handleVolSlideStep = () => {
   };
 
   // Constants
-  const defTics = 6;
-  const defInstrumentVolume = 64;
-  const defUnits = 1;
+  const definedTics = 6;
+  const definedInstrumentVolume = 64;
+  const definedUnits = 1;
   const maxVolumeSlideCommands = 64;
   const maxFinevolumeSlideUnits = 15; // = hex F
-  const defVolumeslideTooltipText = "Number of commands ranges from 1 to 64";
-  const defFinevolumeSlideTooltipText = "Number of units ranges from hex 1 to F";
+  const definedVolumeslideTooltipText = "Number of commands ranges from 1 to 64";
+  const definedFinevolumeSlideTooltipText = "Number of units ranges from hex 1 to F";
   const volumeSlideTooltipErrorText = "Number of commands is greater than 64";
   const finevolumeSlideTooltipErrorText = "Number of units is greater than hex F";
   const outputErrorText = "**";
@@ -47,9 +47,9 @@ const handleVolSlideStep = () => {
     0,
     0,
     0,
-    defTics,
-    defInstrumentVolume,
-    defUnits
+    definedTics,
+    definedInstrumentVolume,
+    definedUnits
   );
 
   const elements = new ElementsObject(
@@ -91,8 +91,8 @@ const handleVolSlideStep = () => {
   // Check checkbox state and show/hide fine volume slide
   const handleCheckboxState = () => {
     checkFinevolume();
-    let volumeSlideTooltipText = defVolumeslideTooltipText;
-    let finevolumeSlideTooltipText = defFinevolumeSlideTooltipText;
+    let volumeSlideTooltipText = definedVolumeslideTooltipText;
+    let finevolumeSlideTooltipText = definedFinevolumeSlideTooltipText;
     if ((calculation.commandsToggle <= maxVolumeSlideCommands) && (calculation.finevolumeSlideUnits <= maxFinevolumeSlideUnits)) {
       calculation.finevolumeSlideUnits = calculation.finevolumeSlideUnits;
     }			
@@ -138,8 +138,8 @@ const handleVolSlideStep = () => {
 
     // Check maxinun of volume slide commands number or fine volume slide units number and output units
     const outputUnits = () => {
-      let volumeSlideTooltipText = defVolumeslideTooltipText;
-      let finevolumeSlideTooltipText = defFinevolumeSlideTooltipText;
+      let volumeSlideTooltipText = definedVolumeslideTooltipText;
+      let finevolumeSlideTooltipText = definedFinevolumeSlideTooltipText;
       if (calculation.volumeSlideCommands <= maxVolumeSlideCommands && calculation.finevolumeSlideUnits <= maxFinevolumeSlideUnits) {
         calculation.finevolumeSlideUnits = calculation.finevolumeSlideUnits;
         setDefaultTextColor();
@@ -185,13 +185,13 @@ const handleVolSlideStep = () => {
 		calculation.finevolumeSlideCommands = 0;
     calculation.commandsToggle = 0;
 		calculation.finevolumeSlideUnits = 0;
-    ticsButton.value = defTics;
-    instrumentVolumeButton.value = defInstrumentVolume;
-    unitsButton.value = defUnits;
+    ticsButton.value = definedTics;
+    instrumentVolumeButton.value = definedInstrumentVolume;
+    unitsButton.value = definedUnits;
     commandsResult.innerHTML = "0";
-    commandsResult.title = defVolumeslideTooltipText;
+    commandsResult.title = definedVolumeslideTooltipText;
     unitsResult.innerHTML = "0";
-    unitsResult.title = defFinevolumeSlideTooltipText;
+    unitsResult.title = definedFinevolumeSlideTooltipText;
 		finevolumeSlideCheckbox.checked = false;
 		finevolumeSlideContainer.classList.add("d-none");
     setDefaultTextColor();

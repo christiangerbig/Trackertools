@@ -62,9 +62,9 @@ const handleTonePortaStep = () => {
   ];
 
   // Init constants
-  const defTics = 6;
-  const defCommands = 1;
-  const defTooltipText = "Number of units ranges from hex 01 to FF";
+  const definedTics = 6;
+  const definedCommands = 1;
+  const definedTooltipText = "Number of units ranges from hex 01 to FF";
   
   // Init objects
   const sourceNote = new NoteObject(
@@ -84,8 +84,8 @@ const handleTonePortaStep = () => {
   );
 
   const calculation = new CalculationObject(
-    defTics,
-    defCommands,
+    definedTics,
+    definedCommands,
     0,
     0,
     0,
@@ -311,7 +311,7 @@ const handleTonePortaStep = () => {
     const tooltipErrorText = "Calculated number of units is greater than hex FF";
 
     // Init variables
-    let tooltipText = defTooltipText;
+    let tooltipText = definedTooltipText;
 
     // Get input element values and convert them to integers
     const getInputElementsValues = () => {
@@ -343,7 +343,7 @@ const handleTonePortaStep = () => {
 
     // Output units per command
     const outputUnits = () => {
-      tooltipText = defTooltipText;
+      tooltipText = definedTooltipText;
       if (calculation.commandsPeriodDiff <= maxUnits) {
         calculation.commandUnits = calculation.commandsPeriodDiff.toString(16).padStart(2, 0, 0).toUpperCase();
         setDefaultTextColour();
@@ -381,10 +381,10 @@ const handleTonePortaStep = () => {
     destinationNoteSelect.value = 0;
     destinationOctaveSelect.value = 0;
     destinationFinetuneSelect.value = 0;
-    ticsButton.value = defTics;
-    commandsButton.value = defCommands;
+    ticsButton.value = definedTics;
+    commandsButton.value = definedCommands;
     unitsResult.innerHTML = "00";
-    unitsResult.title = defTooltipText;
+    unitsResult.title = definedTooltipText;
     setDefaultTextColour();
   }
   // Add handler for click on reset button
