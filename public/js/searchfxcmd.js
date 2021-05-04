@@ -134,12 +134,7 @@ const handleSearchFxCmd = () => {
   // Handler for set extended command number to 0 if command number E was selected
   const setExtendedCommand = () => {
     scan.searchCommandNumber = commandSelect.value;
-    if (scan.searchCommandNumber !== -1) {
-      (scan.searchCommandNumber === 14) ? extendedCommandSelect.value = 0 : extendedCommandSelect.value = -1;
-    }
-    else {
-      extendedCommandSelect.value = -1;
-    }
+    (scan.searchCommandNumber !== -1 || scan.searchCommandNumber === 14) ? extendedCommandSelect.value = 0 : extendedCommandSelect.value = -1;
     setDefaultTextColor()
   }
   // Add handler for set extended command number to 0 if command number E was selected
