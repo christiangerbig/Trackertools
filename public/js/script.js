@@ -30,7 +30,13 @@ const handleMainPart = () => {
     "click",
     handlePlayCatMeowSound
   );
-  
+
+  // Add handler for playing cat meow sound for mobile phone
+  document.querySelector("#gitHubLink").addEventListener(
+    "touchstart",
+    handlePlayCatMeowSound
+  );
+
 }
 // Add handler for main part
 document.addEventListener(
