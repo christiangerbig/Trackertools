@@ -25,14 +25,14 @@ const handleMainPart = () => {
   const handlePlayCatMeowSound = () => {
     catMeowSound.play();
   }
+  let gitHubLinkElement = document.querySelector("#gitHubLink");
   // Add handler for playing cat meow sound
-  document.querySelector("#gitHubLink").addEventListener(
+  gitHubLinkElement.addEventListener(
     "click",
     handlePlayCatMeowSound
   );
-
   // Add handler for playing cat meow sound for mobile phone
-  document.querySelector("#gitHubLink").addEventListener(
+  gitHubLinkElement.addEventListener(
     "touchstart",
     handlePlayCatMeowSound
   );
