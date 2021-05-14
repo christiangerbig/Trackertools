@@ -77,6 +77,10 @@ a:hover {
   background-color: rgb(63, 63, 129);
 }
 
+#finevolumeSlideCheckbox:checked {
+  background-color: rgb(81, 57, 189);
+}
+
 /* Bootstrap classes */
 
 .btn-primary {
