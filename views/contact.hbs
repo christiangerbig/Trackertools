@@ -6,6 +6,12 @@
         <h5> If you have any questions or suggestions, feel free to contact me </h5>
         <h3 class="text-center"> <i class="far fa-envelope"></i> </h3>
       </div>
+      {{!-- Conditionally render the msg --}}
+      {{#if errorMessage}}
+        <div class="text-red my-0"> 
+          <h5> {{errorMessage}} </h5> 
+        </div>
+      {{/if}}
       <div class="w-100"></div>
       <div class="col-10 col-md-5 pt-0 pb-4 mt-0 mb-5 text-light-grey align-content-center">
         <form action="/contact" method="POST">
@@ -17,12 +23,6 @@
             <label for="message"> <h4> Your message </h4></label>
             <textarea class="form-control form-control-sm" name="message" rows="5" id="message"></textarea>
           </div>
-          {{!-- Conditionally render the msg --}}
-          {{#if errorMessage}}
-            <div class="text-red my-0"> 
-              <h5> {{errorMessage}} </h5> 
-            </div>
-          {{/if}}
           <div class="mb-0">
             <input class="btn btn-secondary" type="submit" value="Send">
           </div>
