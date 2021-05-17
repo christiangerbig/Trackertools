@@ -84,7 +84,7 @@ router.post(
   "/contact",
   (req, res, next) => {
     const { email, message } = req.body;
-    if (!email.length || !message.length) {
+    if (!email || !message) {
       res.render(
         "contact.hbs",
         { 
