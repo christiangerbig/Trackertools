@@ -95,11 +95,11 @@ router.post(
     }
     // validate if the user has entered email in the right format ( @ , .)
     // regex that validates an email in javascript
-    const re = /\S+@\S+\.\S+/;
-    if (!re.test(email)) {
+    const regEx = /\S+@\S+\.\S+/;
+    if (!regEx.test(email)) {
       res.render(
         "contact.hbs",
-        { 
+        {
           errorMessage: "Email not in valid format" 
         }
       );
