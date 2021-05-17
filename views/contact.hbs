@@ -17,12 +17,12 @@
             <label for="message"> <h4> Your message </h4></label>
             <textarea class="form-control form-control-sm" name="message" rows="5" id="message"></textarea>
           </div>
-            {{!-- Conditionally render the msg --}}
-            {{#if errorMessage}}
-              <div class="text-red my-0"> 
-                <h5> {{errorMessage}} </h5> 
-              </div>
-            {{/if}}
+          {{!-- Conditionally render the msg --}}
+          {{#if errorMessage}}
+            <div class="text-red my-0"> 
+              <h5> {{errorMessage}} </h5> 
+            </div>
+          {{/if}}
           <div class="mb-0">
             <input class="btn btn-secondary" type="submit" value="Send">
           </div>
