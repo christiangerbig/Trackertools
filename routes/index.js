@@ -106,8 +106,8 @@ router.post(
       return;
     }
     const request = {
-      email: email,
-      message: message
+      email,
+      message
     };
     RequestModel.create(request)
       .then(
