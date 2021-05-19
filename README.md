@@ -11,11 +11,11 @@ This collection includes four tools for the music editor Protracker, which make 
 ## User Stories
 
 - 404
-   - As a user I want to see a nice 404 page when I go to a page that doesn’t exist so that I know it was my fault 
+   - 404 page when I go to a page that doesn’t exist so that I know it was my fault 
 - 500
-   - As a user I want to see a nice error page when the super team screws it up so that I know that is not my fault
-- homepage
-   - As a user I want to be able to access the homepage so that I see what the app is about. 
+   - Error page when the super team screws it up so that I know that is not my fault
+- Homepage
+   - What the app is about. 
 - Header
    - Links to access all tools and  Link to Homepage.
 - TonePortaStep
