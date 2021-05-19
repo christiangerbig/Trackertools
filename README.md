@@ -17,7 +17,9 @@ This collection includes four tools for the music editor Protracker, which make 
 - Homepage
    - What the app is about. 
 - Header
-   - Links to access all tools and  Link to Homepage.
+   - Links to access all tools and  Link to Homepage
+- Footer
+   - Links to my GitHub and LinkedIn
 - TonePortaStep
    - Input fields for the calculation Links to About and Help
 - VolSlideStep 
