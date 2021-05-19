@@ -58,13 +58,8 @@ Models: Request-Model
 ## Links
 
 ### Git
-The url to your repository and to your deployed project
+
 [Repository Link](https://github.com/christiangerbig/Trackertools)
 
 ### Heroku
 [Deploy Link](https://trackertools.herokuapp.com/)
-
-### Slides
-
-The url to your presentation slides
-[Slides Link]()
