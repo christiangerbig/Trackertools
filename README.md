@@ -1,5 +1,4 @@
-# Project Name
-Trackertools
+# Trackertools
 
 ## Description
 
