@@ -2,7 +2,12 @@
 
 ## Description
 
-A collection of tools for a work with the Amiga Protracker
+This collection includes the following tools for the music editor Protracker:
+ - TonePortaStep (calculate tone portamento slide)
+ - VolSlideStep (calculate slide up or down)
+ - SearchFxCmd (find effect commands with their position in a module)
+ - UsedFxCmd (overview which effect commands are used in a module)
+ These powerful tools will make your work with Protracker modules more comfortable.
  
 ## User Stories
 
