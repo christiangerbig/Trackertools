@@ -2,12 +2,11 @@
 
 ## Description
 
-This collection includes the following tools for the music editor Protracker:
+This collection includes four tools for the music editor Protracker, which make the work with Protracker sound modules more comfortable:
  - TonePortaStep (calculate tone portamento slide)
  - VolSlideStep (calculate slide up or down)
  - SearchFxCmd (find effect commands with their position in a module)
  - UsedFxCmd (overview which effect commands are used in a module)
- These powerful tools will make your work with Protracker modules more comfortable.
  
 ## User Stories
 
