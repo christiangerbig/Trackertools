@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const RequestModel = require("../models/Request.model");
 
-/* Get home page */
+/* GET home page */
 router.get(
   "/",
   (req, res, next) => {
@@ -14,7 +14,7 @@ router.get(
   }
 );
 
-/* Get TonePortaStep page */
+/* GET TonePortaStep page */
 router.get(
   "/toneportastep",
   (req, res, next) => {
@@ -27,7 +27,7 @@ router.get(
   }
 );
 
-/* Get VolSlideStep page */
+/* GEt VolSlideStep page */
 router.get(
   "/volslidestep",
   (req, res, next) => {
@@ -40,7 +40,7 @@ router.get(
   }
 );
 
-/* Get SearchFxCmd page */
+/* GET SearchFxCmd page */
 router.get(
   "/searchfxcmd",
   (req, res, next) => {
@@ -53,7 +53,7 @@ router.get(
   }
 );
 
-/* Get UsedFxCmd page */
+/* GET UsedFxCmd page */
 router.get(
   "/usedfxcmd",
   (req, res, next) => {
@@ -66,7 +66,7 @@ router.get(
   }
 );
 
-/* Get Contact page */
+/* GET Contact page */
 router.get(
   "/contact",
   (req, res, next) => {
@@ -79,7 +79,7 @@ router.get(
   }
 );
 
-// Post Contact page
+// POST Contact page
 router.post(
   "/contact",
   (req, res, next) => {
@@ -93,8 +93,7 @@ router.post(
       );
       return;
     }
-    // validate if the user has entered email in the right format ( @ , .)
-    // regex that validates an email in javascript
+    // Validate email
     const regEx = /\S+@\S+\.\S+/;
     if (!regEx.test(email)) {
       res.render(
