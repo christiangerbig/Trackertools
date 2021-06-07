@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const RequestModel = require("../models/Request.model");
 
-/* GET home page */
+// GET Home
 router.get(
   "/",
   (req, res, next) => {
@@ -14,7 +14,7 @@ router.get(
   }
 );
 
-/* GET TonePortaStep page */
+// GET TonePortaStep
 router.get(
   "/toneportastep",
   (req, res, next) => {
@@ -27,7 +27,7 @@ router.get(
   }
 );
 
-/* GEt VolSlideStep page */
+// GET VolSlideStep
 router.get(
   "/volslidestep",
   (req, res, next) => {
@@ -40,7 +40,7 @@ router.get(
   }
 );
 
-/* GET SearchFxCmd page */
+// GET SearchFxCmd
 router.get(
   "/searchfxcmd",
   (req, res, next) => {
@@ -53,7 +53,7 @@ router.get(
   }
 );
 
-/* GET UsedFxCmd page */
+// GET UsedFxCmd
 router.get(
   "/usedfxcmd",
   (req, res, next) => {
@@ -66,7 +66,7 @@ router.get(
   }
 );
 
-/* GET Contact page */
+// GET Contact
 router.get(
   "/contact",
   (req, res, next) => {
@@ -79,7 +79,7 @@ router.get(
   }
 );
 
-// POST Contact page
+// POST Contact
 router.post(
   "/contact",
   (req, res, next) => {
