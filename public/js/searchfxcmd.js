@@ -155,10 +155,10 @@ const handleSearchFxCmd = () => {
 
   // Handler for pressed key to set command number
   const handleGetKeyCommandNumber = (e) => {
-    let character = e.which || e.keyCode;
+    const character = e.which || e.keyCode;
     for (i = 0; i < shortkeyTable.length; i++) {
       if (shortkeyTable[i] === character) {
-        let shortkeyIndex = shortkeyIndexTable[i]
+        const shortkeyIndex = shortkeyIndexTable[i]
         commandSelect.value = shortkeyIndex;
         (shortkeyIndex === 14) ? extendedCommandSelect.value = 0 : extendedCommandSelect.value = -1;
         setDefaultTextColor();
@@ -198,7 +198,7 @@ const handleSearchFxCmd = () => {
 
   // Handler for pressed key to set extended command number
   const handleGetKeyExtendedCommand = (e) => {
-    let character = e.which || e.keyCode;
+    const character = e.which || e.keyCode;
     for (i = 0; i < shortkeyTable.length; i++) {
       if (shortkeyTable[i] === character) {
         extendedCommandSelect.value = shortkeyIndexTable[i];
@@ -291,22 +291,19 @@ const handleSearchFxCmd = () => {
           }
         }
         else {
-          let songLength = scan.fileContent[songLengthOffset].charCodeAt(0);
-          let patternOffset = 0;
-          let commandNumberIndex = 0;
-          let extendedCommandNumberIndex = 0;
+          const songLength = scan.fileContent[songLengthOffset].charCodeAt(0);
           tableBody.innerHTML = ""; // Remove all <tr>/<td> tags in the table
           // Search command or extended command by number
           for (i = 0; i < songLength; i++) {
             scan.patternNumber = scan.fileContent[(songPositionOffset + i)].charCodeAt(0);
-            patternOffset = (scan.patternNumber * patternLength * noteDataLength); // Pattern offset in song structure
+            const patternOffset = (scan.patternNumber * patternLength * noteDataLength); // Pattern offset in song structure
             for (j = 0; j < (maxPatternPosition * patternRowLength); j += patternRowLength) { // 16th steps per row
               for (k = 0; k < (maxChannels * noteDataLength); k += noteDataLength) { // 4th steps per channel
-                commandNumberIndex = (patternStartOffset + patternOffset + j + k + commandOffset);
+                const commandNumberIndex = (patternStartOffset + patternOffset + j + k + commandOffset);
                 scan.commandNumber = scan.fileContent[commandNumberIndex].charCodeAt(0) & commandNumberMask; // Mask out upper nibble
                 if (scan.commandNumber === scan.searchCommandNumber && scan.commandNumber !== 14) {
                   if (scan.commandNumber === 0 && scan.searchCommandNumber === 0) {
-                    commandNumberIndex = (patternStartOffset + patternOffset + j + k + commandLowbyteOffset);
+                    const commandNumberIndex = (patternStartOffset + patternOffset + j + k + commandLowbyteOffset);
                     scan.commandLowbyte = scan.fileContent[commandNumberIndex].charCodeAt(0);
                     if (scan.commandLowbyte > 0) {
                       outputDataToTable(i, j, k, scan.patternNumber);
@@ -317,7 +314,7 @@ const handleSearchFxCmd = () => {
                   }
                 }
                 if (scan.commandNumber === 14) {
-                  extendedCommandNumberIndex = (patternStartOffset + patternOffset + j + k + commandLowbyteOffset);
+                  const extendedCommandNumberIndex = (patternStartOffset + patternOffset + j + k + commandLowbyteOffset);
                   scan.extendedCommandNumber = scan.fileContent[extendedCommandNumberIndex].charCodeAt(0) >> 4; // Shift extended command number to lower nibble		
                   if (scan.extendedCommandNumber === scan.searchExtendedCommandNumber) {
                     outputDataToTable(i, j, k, scan.patternNumber);

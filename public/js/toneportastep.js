@@ -140,7 +140,7 @@ const handleTonePortaStep = () => {
 
   // Handler for pressed key source note
   const handleGetKeySource = (e) => {
-    let chararacter = e.which || e.keyCode;
+    const chararacter = e.which || e.keyCode;
     for (i = 0; i < shortkeyTable.length; i++) {
       if (shortkeyTable[i] === chararacter) {
         if (chararacter >= 65) {
@@ -186,7 +186,7 @@ const handleTonePortaStep = () => {
 
   // Handler for pressed key destination note
   const handleGetKeyDestination = (e) => {
-    let character = e.which || e.keyCode;
+    const character = e.which || e.keyCode;
     for (i = 0; i < shortkeyTable.length; i++) {
       if (shortkeyTable[i] === character) {
         if (character >= 65) {

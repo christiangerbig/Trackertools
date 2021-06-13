@@ -130,21 +130,18 @@ const usedFxCmd = () => {
 
       // Scan mod file for commands and extended commands by number
       const scanModFile = () => {
-        let songLength = scan.fileContent[songLengthOffset].charCodeAt(0);
-        let patternOffset = 0;
-        let commandNumberIndex = 0;
-        let extendedCommandNumberIndex = 0;
+        const songLength = scan.fileContent[songLengthOffset].charCodeAt(0);
         resetValues();
         for (i = 0; i < songLength; i++) {
           scan.patternNumber = scan.fileContent[(songPositionOffset + i)].charCodeAt(0);
-          patternOffset = (scan.patternNumber * patternLength * noteDataLength); // Pattern offset in song structure
+          const patternOffset = (scan.patternNumber * patternLength * noteDataLength); // Pattern offset in song structure
           for (j = 0; j < (maxPatternPosition * patternRowLength); j += patternRowLength) { // 16th steps per row
             for (k = 0; k < (maxChannels * noteDataLength); k += noteDataLength) { // 4th steps per channel
-              commandNumberIndex = (patternStartOffset + patternOffset + j + k + commandOffset);
+              const commandNumberIndex = (patternStartOffset + patternOffset + j + k + commandOffset);
               scan.commandNumber = scan.fileContent[commandNumberIndex].charCodeAt(0) & commandNumberMask // Mask out upper nibble
               if (scan.commandNumber !== 14) {
                 if (scan.commandNumber === 0) {
-                  commandNumberIndex = (patternStartOffset + patternOffset + j + k + commandLowbyteOffset);
+                  const commandNumberIndex = (patternStartOffset + patternOffset + j + k + commandLowbyteOffset);
                   scan.commandLowbyte = scan.fileContent[commandNumberIndex].charCodeAt(0);
                   if (scan.commandLowbyte > 0) {
                     commandsStateTable[scan.commandNumber] = true;
@@ -155,7 +152,7 @@ const usedFxCmd = () => {
                 }
               }
               else {
-                extendedCommandNumberIndex = (patternStartOffset + patternOffset + j + k + commandLowbyteOffset);
+                const extendedCommandNumberIndex = (patternStartOffset + patternOffset + j + k + commandLowbyteOffset);
                 scan.extendedCommandNumber = scan.fileContent[extendedCommandNumberIndex].charCodeAt(0) >> 4; // Shift extended command number to lower nibble	
                 extendedCommandsStateTable[scan.extendedCommandNumber] = true;
                 commandsStateTable[14] = true; // Also set extended command
