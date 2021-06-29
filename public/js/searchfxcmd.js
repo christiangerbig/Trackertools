@@ -102,7 +102,7 @@ const handleSearchFxCmd = () => {
   // Handler for load module if "Choose file" was clicked
   const handleLoadModule = () => {
     const input = inputGroupFile01.files;
-    // let files = (input.length);
+    // const files = (input.length);
     const file = input[0];
     // const filename = input[0].name;
     // const filesize = input[0].size;
@@ -113,12 +113,11 @@ const handleSearchFxCmd = () => {
     resetValues();
 
     // Handler to wait until module is loaded
-    const handleWaitForLoad = () => {
-      reader.removeEventListener(
+    const handleWaitForLoad = () => reader.removeEventListener(
         "load",
         handleWaitForLoad
-      );
-    }
+      )
+
     // Add handler for wait until module is loaded
     reader.addEventListener(
       "load",
@@ -134,7 +133,7 @@ const handleSearchFxCmd = () => {
   // Handler for set extended command number to 0 if command number E was selected
   const handleCheckCommandNumber = () => {
     (commandSelect.value == 14) ? extendedCommandSelect.value = 0 : extendedCommandSelect.value = -1;
-    setDefaultTextColor()
+    setDefaultTextColor();
   }
   // Add handler for set extended command number to 0 if command number E was selected
   commandSelect.addEventListener(
@@ -156,7 +155,7 @@ const handleSearchFxCmd = () => {
   // Handler for pressed key to set command number
   const handleGetKeyCommandNumber = (e) => {
     const character = e.which || e.keyCode;
-    for (i = 0; i < shortkeyTable.length; i++) {
+    for (let i = 0; i < shortkeyTable.length; i++) {
       if (shortkeyTable[i] === character) {
         const shortkeyIndex = shortkeyIndexTable[i]
         commandSelect.value = shortkeyIndex;
@@ -199,7 +198,7 @@ const handleSearchFxCmd = () => {
   // Handler for pressed key to set extended command number
   const handleGetKeyExtendedCommand = (e) => {
     const character = e.which || e.keyCode;
-    for (i = 0; i < shortkeyTable.length; i++) {
+    for (let i = 0; i < shortkeyTable.length; i++) {
       if (shortkeyTable[i] === character) {
         extendedCommandSelect.value = shortkeyIndexTable[i];
         commandSelect.value = 14;
@@ -267,7 +266,7 @@ const handleSearchFxCmd = () => {
 
       // Get highest pattern number in pattern position table
       const getHighestPattern = () => {
-        for (i = 0; i < positionTableLength; i++) {
+        for (let i = 0; i < positionTableLength; i++) {
           scan.patternNumber = scan.fileContent[songPositionOffset + i].charCodeAt(0);
           if (scan.patternNumber > scan.highestPatternNumber) {
             scan.highestPatternNumber = scan.patternNumber;
@@ -294,11 +293,11 @@ const handleSearchFxCmd = () => {
           const songLength = scan.fileContent[songLengthOffset].charCodeAt(0);
           tableBody.innerHTML = ""; // Remove all <tr>/<td> tags in the table
           // Search command or extended command by number
-          for (i = 0; i < songLength; i++) {
+          for (let i = 0; i < songLength; i++) {
             scan.patternNumber = scan.fileContent[(songPositionOffset + i)].charCodeAt(0);
             const patternOffset = (scan.patternNumber * patternLength * noteDataLength); // Pattern offset in song structure
-            for (j = 0; j < (maxPatternPosition * patternRowLength); j += patternRowLength) { // 16th steps per row
-              for (k = 0; k < (maxChannels * noteDataLength); k += noteDataLength) { // 4th steps per channel
+            for (let j = 0; j < (maxPatternPosition * patternRowLength); j += patternRowLength) { // 16th steps per row
+              for (let k = 0; k < (maxChannels * noteDataLength); k += noteDataLength) { // 4th steps per channel
                 const commandNumberIndex = (patternStartOffset + patternOffset + j + k + commandOffset);
                 scan.commandNumber = scan.fileContent[commandNumberIndex].charCodeAt(0) & commandNumberMask; // Mask out upper nibble
                 if (scan.commandNumber === scan.searchCommandNumber && scan.commandNumber !== 14) {

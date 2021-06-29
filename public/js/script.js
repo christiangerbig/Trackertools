@@ -5,12 +5,11 @@ const handleMainPart = () => {
   const loadCatMeowSound = () => {
 
     // Handler for load cat meow sound
-    const handleCatMeowSoundLoad = () => {
-      catMeowSound.removeEventListener(
-        "load",
-        handleCatMeowSoundLoad
-      );
-    }
+    const handleCatMeowSoundLoad = () => catMeowSound.removeEventListener(
+      "load",
+      handleCatMeowSoundLoad
+    )
+
     // Add handler for load cat meow sound
     const catMeowSound = new Audio("./sounds/cute-cat-meow.mp3");
     catMeowSound.addEventListener(
@@ -22,11 +21,10 @@ const handleMainPart = () => {
   const catMeowSound = loadCatMeowSound();
 
   // Handler for playing cat meow sound
-  const handlePlayCatMeowSound = () => {
-    catMeowSound.play();
-  }
-  const gitHubLinkElement = document.querySelector("#gitHubLink");
+  const handlePlayCatMeowSound = () => catMeowSound.play()
+
   // Add handler for playing cat meow sound
+  const gitHubLinkElement = document.querySelector("#gitHubLink");
   gitHubLinkElement.addEventListener(
     "click",
     handlePlayCatMeowSound

@@ -119,7 +119,7 @@ const usedFxCmd = () => {
 
       // Get highest pattern number in pattern position table
       const getHighestPattern = () => {
-        for (i = 0; i < positionTableLength; i++) {
+        for (let i = 0; i < positionTableLength; i++) {
           scan.patternNumber = scan.fileContent[songPositionOffset + i].charCodeAt(0);
           if (scan.patternNumber > scan.highestPatternNumber) {
             scan.highestPatternNumber = scan.patternNumber;
@@ -132,11 +132,11 @@ const usedFxCmd = () => {
       const scanModFile = () => {
         const songLength = scan.fileContent[songLengthOffset].charCodeAt(0);
         resetValues();
-        for (i = 0; i < songLength; i++) {
+        for (let i = 0; i < songLength; i++) {
           scan.patternNumber = scan.fileContent[(songPositionOffset + i)].charCodeAt(0);
           const patternOffset = (scan.patternNumber * patternLength * noteDataLength); // Pattern offset in song structure
-          for (j = 0; j < (maxPatternPosition * patternRowLength); j += patternRowLength) { // 16th steps per row
-            for (k = 0; k < (maxChannels * noteDataLength); k += noteDataLength) { // 4th steps per channel
+          for (let j = 0; j < (maxPatternPosition * patternRowLength); j += patternRowLength) { // 16th steps per row
+            for (let k = 0; k < (maxChannels * noteDataLength); k += noteDataLength) { // 4th steps per channel
               const commandNumberIndex = (patternStartOffset + patternOffset + j + k + commandOffset);
               scan.commandNumber = scan.fileContent[commandNumberIndex].charCodeAt(0) & commandNumberMask // Mask out upper nibble
               if (scan.commandNumber !== 14) {
@@ -172,7 +172,7 @@ const usedFxCmd = () => {
     // Output command and extended command names to table
     const outputDataToTable = () => {
       // Fill the table with used command names
-      for (i = 0; i < maxCommands; i++) {
+      for (let i = 0; i < maxCommands; i++) {
         if (commandsStateTable[i]) {
           // Append element <tr class="text-left"> </tr>
           elements.tr = document.createElement("tr");
@@ -183,7 +183,7 @@ const usedFxCmd = () => {
         }
       }
       // Fill the table with used extended command names
-      for (i = 0; i < maxExtendedCommands; i++) {
+      for (let i = 0; i < maxExtendedCommands; i++) {
         if (extendedCommandsStateTable[i]) {
           // Append element <tr class="text-left"> </tr>
           elements.tr = document.createElement("tr");
@@ -202,7 +202,7 @@ const usedFxCmd = () => {
   // Handler for load module if "Choose file" was clicked
   const handleLoadModule = () => {
     const input = inputGroupFile01.files;
-    // let files = (input.length);
+    // const files = (input.length);
     const file = input[0];
     // const filename = input[0].name;
     // const filesize = input[0].size;

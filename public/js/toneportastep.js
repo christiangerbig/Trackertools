@@ -119,9 +119,8 @@ const handleTonePortaStep = () => {
   }
 
   // Handler for switch destination finetune to source finetune value
-  const handleSwitchDestinationFinetune = () => {
-    destinationFinetuneSelect.value = sourceFinetuneSelect.value;
-  }
+  const handleSwitchDestinationFinetune = () => destinationFinetuneSelect.value = sourceFinetuneSelect.value
+
   // Add handler for change finetune value
   sourceFinetuneSelect.addEventListener(
     "click",
@@ -129,9 +128,8 @@ const handleTonePortaStep = () => {
   );
 
   // Handler for switch source finetune to destination finetune value
-  const handleSwitchSourceFinetune = () => {
-    sourceFinetuneSelect.value = destinationFinetuneSelect.value;
-  }
+  const handleSwitchSourceFinetune = () => sourceFinetuneSelect.value = destinationFinetuneSelect.value
+  
   // Add handler for change finetune value
   destinationFinetuneSelect.addEventListener(
     "click",
@@ -141,7 +139,7 @@ const handleTonePortaStep = () => {
   // Handler for pressed key source note
   const handleGetKeySource = (e) => {
     const chararacter = e.which || e.keyCode;
-    for (i = 0; i < shortkeyTable.length; i++) {
+    for (let i = 0; i < shortkeyTable.length; i++) {
       if (shortkeyTable[i] === chararacter) {
         if (chararacter >= 65) {
           sourceNoteSelect.value = shortkeyIndexTable[i];
@@ -187,7 +185,7 @@ const handleTonePortaStep = () => {
   // Handler for pressed key destination note
   const handleGetKeyDestination = (e) => {
     const character = e.which || e.keyCode;
-    for (i = 0; i < shortkeyTable.length; i++) {
+    for (let i = 0; i < shortkeyTable.length; i++) {
       if (shortkeyTable[i] === character) {
         if (character >= 65) {
           destinationNoteSelect.value = shortkeyIndexTable[i];
