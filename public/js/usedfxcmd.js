@@ -43,7 +43,7 @@ const usedFxCmd = () => {
   );
 
   // Initialize constants
-  const { inputGroupFile01, commandsTableBody, extendedCommandsTableBody } = elements;
+  const {inputGroupFile01, commandsTableBody, extendedCommandsTableBody} = elements;
 
   const songLengthOffset = 950;
   const songPositionOffset = 952;
@@ -121,9 +121,7 @@ const usedFxCmd = () => {
       const getHighestPattern = () => {
         for (let i = 0; i < positionTableLength; i++) {
           scan.patternNumber = scan.fileContent[songPositionOffset + i].charCodeAt(0);
-          if (scan.patternNumber > scan.highestPatternNumber) {
-            scan.highestPatternNumber = scan.patternNumber;
-          }
+          if (scan.patternNumber > scan.highestPatternNumber) scan.highestPatternNumber = scan.patternNumber;
         }
         scan.highestPatternNumber ++; // Count starts at 0
       }
@@ -143,9 +141,7 @@ const usedFxCmd = () => {
                 if (scan.commandNumber === 0) {
                   const commandNumberIndex = (patternStartOffset + patternOffset + j + k + commandLowbyteOffset);
                   scan.commandLowbyte = scan.fileContent[commandNumberIndex].charCodeAt(0);
-                  if (scan.commandLowbyte > 0) {
-                    commandsStateTable[scan.commandNumber] = true;
-                  }
+                  if (scan.commandLowbyte > 0) commandsStateTable[scan.commandNumber] = true;
                 }
                 else {
                   commandsStateTable[scan.commandNumber] = true;

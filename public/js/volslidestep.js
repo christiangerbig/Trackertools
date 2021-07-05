@@ -64,7 +64,7 @@ const handleVolSlideStep = () => {
     document.querySelectorAll(".groupChange")
   );
 
-  const { ticsButton, instrumentVolumeButton, unitsButton, finevolumeSlideContainer, finevolumeSlideCheckbox, commandsResult, unitsResult, resetButton, groupChange } = elements;
+  const {ticsButton, instrumentVolumeButton, unitsButton, finevolumeSlideContainer, finevolumeSlideCheckbox, commandsResult, unitsResult, resetButton, groupChange} = elements;
 
   // Set default text color if it as red
   const setDefaultTextColor = () => {

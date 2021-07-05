@@ -10,6 +10,10 @@ a:hover {
   color: rgb(122, 122, 122);
 }
 
+textarea {
+  width: 100%
+}
+
 /* own classes */
 
 .background-picture {

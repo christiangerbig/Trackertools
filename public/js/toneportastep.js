@@ -108,7 +108,7 @@ const handleTonePortaStep = () => {
     document.querySelectorAll(".groupChange")
   );
 
-  const { sourceNoteSelect, sourceOctaveSelect, sourceFinetuneSelect, sourceNoteContainer, destinationNoteSelect, destinationOctaveSelect, destinationFinetuneSelect, destinationNoteContainer, ticsButton, commandsButton, unitsResult, resetButton, groupChange } = elements;
+  const {sourceNoteSelect, sourceOctaveSelect, sourceFinetuneSelect, sourceNoteContainer, destinationNoteSelect, destinationOctaveSelect, destinationFinetuneSelect, destinationNoteContainer, ticsButton, commandsButton, unitsResult, resetButton, groupChange} = elements;
 
   // Set text color from red to default
   const setDefaultTextColour = () => {

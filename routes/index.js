@@ -6,7 +6,7 @@ router.get(
   "/",
   (req, res) => res.render(
     "index.hbs",
-    { title: "Trackertools" }
+    {title: "Trackertools"}
   )
 );
 
@@ -15,7 +15,7 @@ router.get(
   "/toneportastep",
   (req, res) => res.render(
     "toneportastep.hbs",
-    { title: "TonePortaStep" }
+    {title: "TonePortaStep"}
   )
 );
 
@@ -24,7 +24,7 @@ router.get(
   "/volslidestep",
   (req, res) => res.render(
     "volslidestep.hbs",
-    { title: "VolSlideStep" }
+    {title: "VolSlideStep"}
   )
 );
 
@@ -33,7 +33,7 @@ router.get(
   "/searchfxcmd",
   (req, res) => res.render(
     "searchfxcmd.hbs",
-    { title: "SearchFxCmd" }
+    {title: "SearchFxCmd"}
   )
 );
 
@@ -42,7 +42,7 @@ router.get(
   "/usedfxcmd",
   (req, res) => res.render(
     "usedfxcmd.hbs",
-    { title: "UsedFxCmd" }
+    {title: "UsedFxCmd"}
   )
 );
 
@@ -51,7 +51,7 @@ router.get(
   "/contact",
   (req, res) => res.render(
     "contact.hbs",
-    { title: "Contact" }
+    {title: "Contact"}
   )
 );
 
@@ -59,11 +59,11 @@ router.get(
 router.post(
   "/contact",
   (req, res) => {
-    const { email, message } = req.body;
+    const {email, message }= req.body;
     if (!email || !message) {
       res.render(
         "contact.hbs",
-        { errorMessage: "Please enter all fields" }
+        {errorMessage: "Please enter all fields"}
       );
       return;
     }
@@ -72,7 +72,7 @@ router.post(
     if (!regEx.test(email)) {
       res.render(
         "contact.hbs",
-        { errorMessage: "Email not in valid format" }
+        {errorMessage: "Email not in valid format"}
       );
       return;
     }

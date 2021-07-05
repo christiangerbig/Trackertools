@@ -157,7 +157,7 @@ const handleSearchFxCmd = () => {
     const character = e.which || e.keyCode;
     for (let i = 0; i < shortkeyTable.length; i++) {
       if (shortkeyTable[i] === character) {
-        const shortkeyIndex = shortkeyIndexTable[i]
+        const shortkeyIndex = shortkeyIndexTable[i];
         commandSelect.value = shortkeyIndex;
         (shortkeyIndex === 14) ? extendedCommandSelect.value = 0 : extendedCommandSelect.value = -1;
         setDefaultTextColor();
@@ -268,9 +268,7 @@ const handleSearchFxCmd = () => {
       const getHighestPattern = () => {
         for (let i = 0; i < positionTableLength; i++) {
           scan.patternNumber = scan.fileContent[songPositionOffset + i].charCodeAt(0);
-          if (scan.patternNumber > scan.highestPatternNumber) {
-            scan.highestPatternNumber = scan.patternNumber;
-          }
+          if (scan.patternNumber > scan.highestPatternNumber) scan.highestPatternNumber = scan.patternNumber;
         }
         scan.highestPatternNumber ++; // Count starts at 0
       }
@@ -304,9 +302,7 @@ const handleSearchFxCmd = () => {
                   if (scan.commandNumber === 0 && scan.searchCommandNumber === 0) {
                     const commandNumberIndex = (patternStartOffset + patternOffset + j + k + commandLowbyteOffset);
                     scan.commandLowbyte = scan.fileContent[commandNumberIndex].charCodeAt(0);
-                    if (scan.commandLowbyte > 0) {
-                      outputDataToTable(i, j, k, scan.patternNumber);
-                    }
+                    if (scan.commandLowbyte > 0) outputDataToTable(i, j, k, scan.patternNumber);
                   }
                   else {
                     outputDataToTable(i, j, k, scan.patternNumber);
@@ -315,9 +311,7 @@ const handleSearchFxCmd = () => {
                 if (scan.commandNumber === 14) {
                   const extendedCommandNumberIndex = (patternStartOffset + patternOffset + j + k + commandLowbyteOffset);
                   scan.extendedCommandNumber = scan.fileContent[extendedCommandNumberIndex].charCodeAt(0) >> 4; // Shift extended command number to lower nibble		
-                  if (scan.extendedCommandNumber === scan.searchExtendedCommandNumber) {
-                    outputDataToTable(i, j, k, scan.patternNumber);
-                  }
+                  if (scan.extendedCommandNumber === scan.searchExtendedCommandNumber) outputDataToTable(i, j, k, scan.patternNumber);
                 }
               }
             }
