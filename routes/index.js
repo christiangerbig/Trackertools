@@ -60,22 +60,16 @@ router.post(
   "/contact",
   (req, res) => {
     const {email, message }= req.body;
-    if (!email || !message) {
-      res.render(
-        "contact.hbs",
-        {errorMessage: "Please enter all fields"}
-      );
-      return;
-    }
+    if (!email || !message) return res.render(
+      "contact.hbs",
+      {errorMessage: "Please enter all fields"}
+    );
     // Validate email
     const regEx = /\S+@\S+\.\S+/;
-    if (!regEx.test(email)) {
-      res.render(
-        "contact.hbs",
-        {errorMessage: "Email not in valid format"}
-      );
-      return;
-    }
+    if (!regEx.test(email)) return res.render(
+      "contact.hbs",
+      {errorMessage: "Email not in valid format"}
+    );
     const request = {
       email,
       message
