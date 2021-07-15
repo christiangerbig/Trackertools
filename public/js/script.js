@@ -18,7 +18,7 @@ const handleMainPart = () => {
     );
     return catMeowSound;
   }
-  const catMeowSound = loadCatMeowSound();
+  const catMeowSound = loadCatMeowSound()
 
   // Handler for playing cat meow sound
   const handlePlayCatMeowSound = () => catMeowSound.play()
