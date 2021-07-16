@@ -112,10 +112,10 @@ const usedFxCmd = () => {
       ];
 
       // Command found states
-      const commandsStateTable = new Array(16).fill(false);
+      const hasCommandTable = new Array(16).fill(false);
       
       // Extended command found states
-      const extendedCommandsStateTable = new Array(16).fill(false);
+      const hasExtendedCommandTable = new Array(16).fill(false);
 
       // Get highest pattern number in pattern position table
       const getHighestPattern = () => {
@@ -141,17 +141,17 @@ const usedFxCmd = () => {
                 if (scan.commandNumber === 0) {
                   const commandNumberIndex = (patternStartOffset + patternOffset + j + k + commandLowbyteOffset);
                   scan.commandLowbyte = scan.fileContent[commandNumberIndex].charCodeAt(0);
-                  if (scan.commandLowbyte > 0) commandsStateTable[scan.commandNumber] = true;
+                  if (scan.commandLowbyte > 0) hasCommandTable[scan.commandNumber] = true;
                 }
                 else {
-                  commandsStateTable[scan.commandNumber] = true;
+                  hasCommandTable[scan.commandNumber] = true;
                 }
               }
               else {
                 const extendedCommandNumberIndex = (patternStartOffset + patternOffset + j + k + commandLowbyteOffset);
                 scan.extendedCommandNumber = scan.fileContent[extendedCommandNumberIndex].charCodeAt(0) >> 4; // Shift extended command number to lower nibble	
-                extendedCommandsStateTable[scan.extendedCommandNumber] = true;
-                commandsStateTable[14] = true; // Also set extended command
+                hasExtendedCommandTable[scan.extendedCommandNumber] = true;
+                hasCommandTable[14] = true; // Also set extended command
               }
             }
           }
