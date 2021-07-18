@@ -16,7 +16,7 @@ textarea {
 
 /* own classes */
 
-.background-picture {
+.backgroundPicture {
   text-shadow: 0px 0px 1px black;
   background-image: url("../images/mixer-821537_640x423.jpg");
   background-color: grey;
@@ -25,59 +25,59 @@ textarea {
   background-attachment: fixed;
 }
 
-.container-opacity {
+.containerOpacity {
   background: rgba(0, 0, 0, 0.8);
 }
 
-.disable-text-shadow {
+.disableTextShadow {
   text-shadow: none;
 }
 
-.no-list-markers {
+.noListMarkers {
   list-style: none;
 }
 
-.sfc-table-wrap {
+.sfcTableWrap {
   overflow-y: scroll;
   height: 12rem;
 }
 
-.sfc-table-wrap th {
+.sfcTableWrap th {
   position: sticky;
   top: 0px;
 }
 
-.ufc-table-wrap {
+.ufcTableWrap {
   overflow-y: scroll;
   height: 22rem;
 }
 
-.ufc-table-wrap th {
+.ufcTableWrap th {
   position: sticky;
   top: 0px;
 }
 
-.text-colored {
+.textColored {
   color: rgb(116, 116, 218);
 }
 
-.text-light-grey {
+.textLightGrey {
   color: rgb(202, 200, 200);
 }
 
-.text-dark-grey {
+.textDarkGrey {
   color: rgb(122, 122, 122);
 }
 
-.text-red {
+.textRed {
   color: red;
 }
 
-.bg-color-light {
+.bgColorLight {
   background-color: rgb(116, 116, 218);
 }
 
-.bg-color-dark {
+.bgColorDark {
   background-color: rgb(63, 63, 129);
 }
 

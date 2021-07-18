@@ -70,9 +70,9 @@ const handleVolSlideStep = () => {
   const setDefaultTextColor = () => {
     if (commandsResult.classList.contains("text-danger") || unitsResult.classList.contains("text-danger")) {
       commandsResult.classList.remove("text-danger");
-      commandsResult.classList.add("text-color");
+      commandsResult.classList.add("textColored");
       unitsResult.classList.remove("text-danger");
-      unitsResult.classList.add("text-color");
+      unitsResult.classList.add("textColored");
     }
   }
 
@@ -91,8 +91,7 @@ const handleVolSlideStep = () => {
   // Check checkbox state and show/hide fine volume slide
   const handleCheckboxState = () => {
     checkFinevolume();
-    let volumeSlideTooltipText = definedVolumeslideTooltipText;
-    let finevolumeSlideTooltipText = definedFinevolumeSlideTooltipText;
+    let [volumeSlideTooltipText, finevolumeSlideTooltipText] = [definedVolumeslideTooltipText, definedFinevolumeSlideTooltipText];
     if ((calculation.commandsToggle <= maxVolumeSlideCommands) && (calculation.finevolumeSlideUnits <= maxFinevolumeSlideUnits)) {
       calculation.finevolumeSlideUnits = calculation.finevolumeSlideUnits;
     }			
@@ -138,8 +137,7 @@ const handleVolSlideStep = () => {
 
     // Check maxinun of volume slide commands number or fine volume slide units number and output units
     const outputUnits = () => {
-      let volumeSlideTooltipText = definedVolumeslideTooltipText;
-      let finevolumeSlideTooltipText = definedFinevolumeSlideTooltipText;
+      let [volumeSlideTooltipText, finevolumeSlideTooltipText] = [definedVolumeslideTooltipText, definedFinevolumeSlideTooltipText];
       if (calculation.volumeSlideCommands <= maxVolumeSlideCommands && calculation.finevolumeSlideUnits <= maxFinevolumeSlideUnits) {
         calculation.finevolumeSlideUnits = calculation.finevolumeSlideUnits;
         setDefaultTextColor();
@@ -149,10 +147,10 @@ const handleVolSlideStep = () => {
         volumeSlideTooltipText = volumeSlideTooltipErrorText;
         calculation.finevolumeSlideUnits = outputErrorText;
         finevolumeSlideTooltipText = finevolumeSlideTooltipErrorText;
-        if ((commandsResult.classList.contains("text-color")) || (unitsResult.classList.contains("text-color"))) {
-          commandsResult.classList.remove("text-color");
+        if ((commandsResult.classList.contains("textColored")) || (unitsResult.classList.contains("textColored"))) {
+          commandsResult.classList.remove("textColored");
           commandsResult.classList.add("text-danger");
-          unitsResult.classList.remove("text-color");
+          unitsResult.classList.remove("textColored");
           unitsResult.classList.add("text-danger");
         }
       }

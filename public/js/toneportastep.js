@@ -114,7 +114,7 @@ const handleTonePortaStep = () => {
   const setDefaultTextColour = () => {
     if (unitsResult.classList.contains("text-danger")) {
       unitsResult.classList.remove("text-danger");
-      unitsResult.classList.add("text-color");
+      unitsResult.classList.add("textColored");
     }
   }
 
@@ -349,8 +349,8 @@ const handleTonePortaStep = () => {
       else {
         calculation.commandUnits = outputErrorText;
         tooltipText = tooltipErrorText;
-        if (unitsResult.classList.contains("text-color")) {
-          unitsResult.classList.remove("text-color");
+        if (unitsResult.classList.contains("textColored")) {
+          unitsResult.classList.remove("textColored");
           unitsResult.classList.add("text-danger");
         }
       }

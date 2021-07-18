@@ -169,7 +169,7 @@ const usedFxCmd = () => {
     const outputDataToTable = () => {
       // Fill the table with used command names
       for (let i = 0; i < maxCommands; i++) {
-        if (commandsStateTable[i]) {
+        if (hasCommandTable[i]) {
           // Append element <tr class="text-left"> </tr>
           elements.tr = document.createElement("tr");
           elements.tr.classList.add("text-left");
@@ -180,7 +180,7 @@ const usedFxCmd = () => {
       }
       // Fill the table with used extended command names
       for (let i = 0; i < maxExtendedCommands; i++) {
-        if (extendedCommandsStateTable[i]) {
+        if (hasExtendedCommandTable[i]) {
           // Append element <tr class="text-left"> </tr>
           elements.tr = document.createElement("tr");
           elements.tr.classList.add("text-left");
