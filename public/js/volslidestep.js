@@ -169,7 +169,7 @@ const handleVolSlideStep = () => {
   }
   // Add handler for values calculation
   groupChange.forEach(
-    (element) => element.addEventListener(
+    element => element.addEventListener(
       "change", 
       handleCalculateValues
     )

@@ -137,8 +137,8 @@ const handleTonePortaStep = () => {
   );
 
   // Handler for pressed key source note
-  const handleGetKeySource = (e) => {
-    const chararacter = e.which || e.keyCode;
+  const handleGetKeySource = event => {
+    const chararacter = event.which || event.keyCode;
     for (let i = 0; i < shortkeyTable.length; i++) {
       if (shortkeyTable[i] === chararacter) {
         if (chararacter >= 65) {
@@ -183,8 +183,8 @@ const handleTonePortaStep = () => {
   );
 
   // Handler for pressed key destination note
-  const handleGetKeyDestination = (e) => {
-    const character = e.which || e.keyCode;
+  const handleGetKeyDestination = event => {
+    const character = event.which || event.keyCode;
     for (let i = 0; i < shortkeyTable.length; i++) {
       if (shortkeyTable[i] === character) {
         if (character >= 65) {
@@ -365,7 +365,7 @@ const handleTonePortaStep = () => {
   }
   // Add handler for value calculation
   groupChange.forEach(
-    (element) => element.addEventListener(
+    element => element.addEventListener(
       "change", 
       handleCalculateValue
     )

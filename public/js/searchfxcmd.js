@@ -109,7 +109,7 @@ const handleSearchFxCmd = () => {
     // const filetype = input[0].type;
     const reader = new FileReader();
     reader.readAsBinaryString(file);
-    reader.onload = (e) => scan.fileContent = e.target.result;
+    reader.onload = event => scan.fileContent = event.target.result;
     resetValues();
 
     // Handler to wait until module is loaded
@@ -153,13 +153,13 @@ const handleSearchFxCmd = () => {
   );
 
   // Handler for pressed key to set command number
-  const handleGetKeyCommandNumber = (e) => {
-    const character = e.which || e.keyCode;
+  const handleGetKeyCommandNumber = event => {
+    const character = event.which || event.keyCode;
     for (let i = 0; i < shortkeyTable.length; i++) {
       if (shortkeyTable[i] === character) {
         const shortkeyIndex = shortkeyIndexTable[i];
         commandSelect.value = shortkeyIndex;
-        (shortkeyIndex === 14) ? extendedCommandSelect.value = 0 : extendedCommandSelect.value = -1;
+        shortkeyIndex === 14 ? extendedCommandSelect.value = 0 : extendedCommandSelect.value = -1;
         setDefaultTextColor();
         break;
       }
@@ -196,8 +196,8 @@ const handleSearchFxCmd = () => {
   );
 
   // Handler for pressed key to set extended command number
-  const handleGetKeyExtendedCommand = (e) => {
-    const character = e.which || e.keyCode;
+  const handleGetKeyExtendedCommand = (event) => {
+    const character = event.which || event.keyCode;
     for (let i = 0; i < shortkeyTable.length; i++) {
       if (shortkeyTable[i] === character) {
         extendedCommandSelect.value = shortkeyIndexTable[i];
@@ -244,7 +244,7 @@ const handleSearchFxCmd = () => {
     const outputDataToTable = (i, j, k) => {
 
       // Append <td> element
-      const appendTdElement = (text) => {
+      const appendTdElement = text => {
         elements.td = document.createElement("td");
         elements.td.innerHTML = text.toString();
         elements.tr.append(elements.td);
@@ -325,7 +325,7 @@ const handleSearchFxCmd = () => {
   }
   // Add handler for search command in patterns if module was a loaded
   groupChange.forEach(
-    (element) => element.addEventListener(
+    element => element.addEventListener(
       "change", 
       handleSearchCommand
     )

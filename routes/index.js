@@ -79,7 +79,7 @@ router.post(
         () => res.redirect("/")
       )
       .catch(
-        (err) => console.log(err)
+        err => console.log(err)
       );
   }
 );

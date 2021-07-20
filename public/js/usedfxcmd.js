@@ -159,7 +159,7 @@ const usedFxCmd = () => {
       }
 
       // Append <td> element in table
-      const appendTdElement = (text) => {
+      const appendTdElement = text => {
         elements.td = document.createElement("td");
         elements.td.innerHTML = text.toString();
         elements.tr.append(elements.td);
@@ -205,7 +205,7 @@ const usedFxCmd = () => {
     // const filetype = input[0].type;
     const reader = new FileReader();
     reader.readAsBinaryString(file);
-    reader.onload = (e) => scan.fileContent = e.target.result;
+    reader.onload = event => scan.fileContent = event.target.result;
     resetValues();
 
     // Handler to wait until module is loaded
