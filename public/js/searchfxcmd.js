@@ -132,7 +132,7 @@ const handleSearchFxCmd = () => {
 
   // Handler for set extended command number to 0 if command number E was selected
   const handleCheckCommandNumber = () => {
-    (commandSelect.value == 14) ? extendedCommandSelect.value = 0 : extendedCommandSelect.value = -1;
+    commandSelect.value == 14 ? extendedCommandSelect.value = 0 : extendedCommandSelect.value = -1;
     setDefaultTextColor();
   }
   // Add handler for set extended command number to 0 if command number E was selected
@@ -143,7 +143,7 @@ const handleSearchFxCmd = () => {
 
   // Handler for set command number to hex E if extended command number was selected
   const handleCheckExtendedCommandNumber = () => {
-    (extendedCommandSelect.value == -1) ? commandSelect.value = -1 : commandSelect.value = 14;
+    extendedCommandSelect.value == -1 ? commandSelect.value = -1 : commandSelect.value = 14;
     setDefaultTextColor();
   }
   // Add handler for set command number to hex E if extended command number was selected
