@@ -1,35 +1,7 @@
 // Handler for VolSlideStep
 const handleVolSlideStep = () => {
   // ---------- Global ---------
-
-  // Init classes
-  class CalculationObject {
-    constructor(volumeSlideCommands, finevolumeSlideCommands, finevolumeSlideUnits, commandsToggle,tics, instrumentVolume, units) {
-      this.volumeSlideCommands = volumeSlideCommands;
-      this.finevolumeSlideCommands = finevolumeSlideCommands;
-      this.finevolumeSlideUnits = finevolumeSlideUnits;
-      this.commandsToggle = commandsToggle;
-      this.tics = tics;
-      this.instrumentVolume = instrumentVolume;
-      this.units = units;
-    }
-  };
-
-  class ElementsObject {
-    constructor(ticsButton, instrumentVolumeButton, unitsButton, finevolumeSlideContainer, finevolumeSlideCheckbox, commandsResult, unitsResult, resetButton, groupChange) {
-      this.ticsButton = ticsButton;
-      this.instrumentVolumeButton = instrumentVolumeButton;
-      this.unitsButton = unitsButton;
-      this.finevolumeSlideContainer = finevolumeSlideContainer;
-      this.finevolumeSlideCheckbox = finevolumeSlideCheckbox;
-      this.commandsResult = commandsResult;
-      this.unitsResult = unitsResult;
-      this.resetButton = resetButton;
-      this.groupChange = groupChange;
-    }
-  };
-
-  // Constants
+  // Initialize constants
   const definedTics = 6;
   const definedInstrumentVolume = 64;
   const definedUnits = 1;
@@ -41,28 +13,28 @@ const handleVolSlideStep = () => {
   const finevolumeSlideTooltipErrorText = "Number of units is greater than hex F";
   const outputErrorText = "**";
 
-  // Init objects
-  const calculation = new CalculationObject(
-    0,
-    0,
-    0,
-    0,
-    definedTics,
-    definedInstrumentVolume,
-    definedUnits
-  );
+  // Initialize objects
+  const elements = {
+    ticsButton: document.querySelector("#ticsButton"),
+    instrumentVolumeButton: document.querySelector("#instrumentVolumeButton"),
+    unitsButton: document.querySelector("#unitsButton"),
+    finevolumeSlideContainer: document.querySelector("#finevolumeSlideContainer"),
+    finevolumeSlideCheckbox: document.querySelector("#finevolumeSlideCheckbox"),
+    commandsResult: document.querySelector("#commandsResult"),
+    unitsResult: document.querySelector("#unitsResult"),
+    resetButton: document.querySelector("#resetButton"),
+    groupChange: document.querySelectorAll(".groupChange")
+  };
 
-  const elements = new ElementsObject(
-    document.querySelector("#ticsButton"),
-    document.querySelector("#instrumentVolumeButton"),
-    document.querySelector("#unitsButton"),
-    document.querySelector("#finevolumeSlideContainer"),
-    document.querySelector("#finevolumeSlideCheckbox"),
-    document.querySelector("#commandsResult"),
-    document.querySelector("#unitsResult"),
-    document.querySelector("#resetButton"),
-    document.querySelectorAll(".groupChange")
-  );
+  const calculation = {
+    volumeSlideCommands: 0,
+    finevolumeSlideCommands: 0,
+    finevolumeSlideUnits: 0,
+    commandsToggle: 0,
+    tics: definedTics,
+    instrumentVolume: definedInstrumentVolume,
+    units: definedUnits
+  };
 
   const {ticsButton, instrumentVolumeButton, unitsButton, finevolumeSlideContainer, finevolumeSlideCheckbox, commandsResult, unitsResult, resetButton, groupChange} = elements;
 

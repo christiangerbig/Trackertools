@@ -1,8 +1,12 @@
 // Handler for TonePortaStep
 const handleTonePortaStep = () => {
   // ---------- Global ----------
+  // Initialize constants
+  const definedTics = 6;
+  const definedCommands = 1;
+  const definedTooltipText = "Number of units ranges from hex 01 to FF";
 
-  // Init classes
+  // Initialize class
   class NoteObject {
     constructor(periodIndex, octaveIndex, finetuneIndex, periodsTableIndex, period) {
       this.periodIndex = periodIndex;
@@ -13,36 +17,7 @@ const handleTonePortaStep = () => {
     }
   };
 
-  class CalculationObject {
-    constructor(tics, commands, periodDiff, ticsPeriodDiff, commandsPeriodDiff, commandUnits) {
-      this.tics = tics;
-      this.commands = commands;
-      this.periodDiff = periodDiff;
-      this.ticsPeriodDiff = ticsPeriodDiff;
-      this.commandsPeriodDiff = commandsPeriodDiff;
-      this.commandUnits = commandUnits;
-    }
-  }
-
-  class ElementsObject {
-    constructor(sourceNoteSelect, sourceOctaveSelect, sourceFinetuneSelect, sourceNoteContainer, destinationNoteSelect, destinationOctaveSelect, destinationFinetuneSelect, destinationNoteContainer, ticsButton, commandsButton, unitsResult, resetButton, groupChange) {
-      this.sourceNoteSelect = sourceNoteSelect;
-      this.sourceOctaveSelect = sourceOctaveSelect;
-      this.sourceFinetuneSelect = sourceFinetuneSelect;
-      this.sourceNoteContainer = sourceNoteContainer;
-      this.destinationNoteSelect = destinationNoteSelect;
-      this.destinationOctaveSelect = destinationOctaveSelect;
-      this.destinationFinetuneSelect = destinationFinetuneSelect;
-      this.destinationNoteContainer = destinationNoteContainer;
-      this.ticsButton = ticsButton;
-      this.commandsButton = commandsButton;
-      this.unitsResult = unitsResult;
-      this.resetButton = resetButton;
-      this.groupChange = groupChange;
-    }
-  }
-
-  // Init arrays
+  // Initialize arrays
   const shortkeyTable = [
     /* Character codes for note period
     C   C#  D    D#  E    F    F#  G    G#  A   A#  B */
@@ -61,12 +36,23 @@ const handleTonePortaStep = () => {
     0, 1, 2
   ];
 
-  // Init constants
-  const definedTics = 6;
-  const definedCommands = 1;
-  const definedTooltipText = "Number of units ranges from hex 01 to FF";
-  
-  // Init objects
+  // Initialize objects
+  const elements = {
+    sourceNoteSelect: document.querySelector("#sourceNoteSelect"),
+    sourceOctaveSelect: document.querySelector("#sourceOctaveSelect"),
+    sourceFinetuneSelect: document.querySelector("#sourceFinetuneSelect"),
+    sourceNoteContainer: document.querySelector("#sourceNoteContainer"),
+    destinationNoteSelect: document.querySelector("#destinationNoteSelect"),
+    destinationOctaveSelect: document.querySelector("#destinationOctaveSelect"),
+    destinationFinetuneSelect: document.querySelector("#destinationFinetuneSelect"),
+    destinationNoteContainer: document.querySelector("#destinationNoteContainer"),
+    ticsButton: document.querySelector("#ticsButton"),
+    commandsButton:  document.querySelector("#commandsButton"),
+    unitsResult: document.querySelector("#unitsResult"),
+    resetButton: document.querySelector("#resetButton"),
+    groupChange: document.querySelectorAll(".groupChange")
+  };
+
   const sourceNote = new NoteObject(
     0,
     0,
@@ -83,30 +69,14 @@ const handleTonePortaStep = () => {
     0
   );
 
-  const calculation = new CalculationObject(
-    definedTics,
-    definedCommands,
-    0,
-    0,
-    0,
-    0
-  );
-
-  const elements = new ElementsObject(
-    document.querySelector("#sourceNoteSelect"),
-    document.querySelector("#sourceOctaveSelect"),
-    document.querySelector("#sourceFinetuneSelect"),
-    document.querySelector("#sourceNoteContainer"),
-    document.querySelector("#destinationNoteSelect"),
-    document.querySelector("#destinationOctaveSelect"),
-    document.querySelector("#destinationFinetuneSelect"),
-    document.querySelector("#destinationNoteContainer"),
-    document.querySelector("#ticsButton"),
-    document.querySelector("#commandsButton"),
-    document.querySelector("#unitsResult"),
-    document.querySelector("#resetButton"),
-    document.querySelectorAll(".groupChange")
-  );
+  const calculation = {
+    tics: definedTics,
+    commands: definedCommands,
+    periodDiff: 0,
+    ticsPeriodDiff: 0,
+    commandsPeriodDiff: 0,
+    commandUnits: 0
+  };
 
   const {sourceNoteSelect, sourceOctaveSelect, sourceFinetuneSelect, sourceNoteContainer, destinationNoteSelect, destinationOctaveSelect, destinationFinetuneSelect, destinationNoteContainer, ticsButton, commandsButton, unitsResult, resetButton, groupChange} = elements;
 

@@ -1,50 +1,7 @@
 // ---------- UsedFxCmd ----------
 const usedFxCmd = () => {
   // ---------- Global ---------
-
-  // Initialize classes
-  class ScanObject {
-    constructor(fileContent, patternNumber, highestPatternNumber, commandNumber, extendedCommandNumber, commandLowbyte) {
-      this.fileContent = fileContent;
-      this.patternNumber = patternNumber;
-      this.highestPatternNumber = highestPatternNumber;
-      this.commandNumber = commandNumber;
-      this.extendedCommandNumber = extendedCommandNumber;
-      this.commandLowbyte = commandLowbyte;
-    }
-  }
-
-  class ElementsObject {
-    constructor(inputGroupFile01, commandsTableBody, extendedCommandsTableBody, tr, td) {
-      this.inputGroupFile01 = inputGroupFile01;
-      this.commandsTableBody = commandsTableBody;
-      this.extendedCommandsTableBody = extendedCommandsTableBody;
-      this.tr = tr;
-      this.td = td;
-    }
-  }
-
-  // Initialize objects
-  const elements = new ElementsObject(
-    document.querySelector("#inputGroupFile01"),
-    document.querySelector("#commandsTableBody"),
-    document.querySelector("#extendedCommandsTableBody"),
-    null,
-    null
-  );
-
-  const scan = new ScanObject(
-    "",
-    0,
-    0,
-    0,
-    0,
-    0
-  );
-
   // Initialize constants
-  const {inputGroupFile01, commandsTableBody, extendedCommandsTableBody} = elements;
-
   const songLengthOffset = 950;
   const songPositionOffset = 952;
   const patternStartOffset = 1084;
@@ -60,6 +17,26 @@ const usedFxCmd = () => {
   const maxCommands = 16;
   const maxExtendedCommands = 16;
   const commandNumberMask = 0xF;
+
+  // Initialize objects
+  const elements = {
+    inputGroupFile01: document.querySelector("#inputGroupFile01"),
+    commandsTableBody: document.querySelector("#commandsTableBody"),
+    extendedCommandsTableBody: document.querySelector("#extendedCommandsTableBody"),
+    tr: null,
+    td: null
+  };
+
+  const scan = {
+    fileContent: "",
+    patternNumber: 0,
+    highestPatternNumber: 0,
+    commandNumber: 0,
+    extendedCommandNumber: 0,
+    commandLowbyte: 0
+  };
+
+  const {inputGroupFile01, commandsTableBody, extendedCommandsTableBody} = elements;
 
   // Reset all and remove all tr/td tags in the table
   const resetValues = () => {

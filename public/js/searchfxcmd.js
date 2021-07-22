@@ -1,75 +1,7 @@
 // Handler for SearchFxCmd
 const handleSearchFxCmd = () => {
   // ---------- Global ----------
-
-  // Init classes
-  class ScanObject {
-    constructor(fileContent ,patternNumber, highestPatternNumber, commandNumber, extendedCommandNumber, commandLowByte, searchCommandNumber, searchExtendedCommandNumber) {
-      this.fileContent = fileContent;
-      this.patternNumber = patternNumber;
-      this.highestPatternNumber = highestPatternNumber;
-      this.commandNumber = commandNumber;
-      this.extendedCommandNumber = extendedCommandNumber;
-      this.commandLowbyte = commandLowByte;
-      this.searchCommandNumber = searchCommandNumber;
-      this.searchExtendedCommandNumber = searchExtendedCommandNumber;
-    }
-  }
-
-  class ElementsObject {
-    constructor(inputGroupFile01, commandSelect, extendedCommandSelect, commandSearchContainer, extendedCommandSearchContainer, tableBody, tr, td, groupChange) {
-      this.inputGroupFile01 = inputGroupFile01;
-      this.commandSelect = commandSelect;
-      this.extendedCommandSelect = extendedCommandSelect;
-      this.commandSearchContainer = commandSearchContainer;
-      this.extendedCommandSearchContainer = extendedCommandSearchContainer;
-      this.tableBody = tableBody;
-      this.tr = tr;
-      this.td = td;
-      this.groupChange = groupChange;
-    }
-  }
-
-  // Arrays
-  shortkeyTable = [
-    /* Character codes for command numbers
-    0   1   2   3   4   5   6   7   8   9   A   B   C   D    E    F */
-    48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 97, 98, 99, 100, 101, 102
-  ];
-
-  shortkeyIndexTable = [
-    /* Index for command and extended command numbers
-    0  1  2  3  4  5  6  7  8  9  A   B   C   D   E   F */
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
-  ];
-
-  // Init objects
-  const scan = new ScanObject(
-    "",
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0
-  );
-
-  const elements = new ElementsObject(
-    document.querySelector("#inputGroupFile01"),
-    document.querySelector("#commandSelect"),
-    document.querySelector("#extendedCommandSelect"),
-    document.querySelector("#commandSearchContainer"),
-    document.querySelector("#extendedCommandSearchContainer"),
-    document.querySelector("#tableBody"),
-    null,
-    null,
-    document.querySelectorAll(".groupChange")
-  );
-
-    // Constants
-  const { inputGroupFile01, commandSelect, extendedCommandSelect, commandSearchContainer, extendedCommandSearchContainer, tableBody, groupChange } = elements;
-
+  // Initialize constants
   const songLengthOffset = 950;
   const songPositionOffset = 952;
   const patternStartOffset = 1084;
@@ -83,6 +15,45 @@ const handleSearchFxCmd = () => {
   const noteDataLength = 4;
   const patternRowLength = noteDataLength * maxChannels
   const commandNumberMask = 0xF;
+
+  // Initialize arrays
+  shortkeyTable = [
+    /* Character codes for command numbers
+    0   1   2   3   4   5   6   7   8   9   A   B   C   D    E    F */
+    48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 97, 98, 99, 100, 101, 102
+  ];
+
+  shortkeyIndexTable = [
+    /* Index for command and extended command numbers
+    0  1  2  3  4  5  6  7  8  9  A   B   C   D   E   F */
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+  ];
+
+  // Initialize objects
+  const elements = {
+    inputGroupFile01: document.querySelector("#inputGroupFile01"),
+    commandSelect: document.querySelector("#commandSelect"),
+    extendedCommandSelect: document.querySelector("#extendedCommandSelect"),
+    commandSearchContainer: document.querySelector("#commandSearchContainer"),
+    extendedCommandSearchContainer: document.querySelector("#extendedCommandSearchContainer"),
+    tableBody: document.querySelector("#tableBody"),
+    tr: null,
+    td: null,
+    groupChange: document.querySelectorAll(".groupChange")
+  };
+
+  const scan = {
+    fileContent: "",
+    patternNumber: 0,
+    highestPatternNumber: 0, 
+    commandNumber: 0,
+    extendedCommandNumber: 0, 
+    commandLowbyte: 0,
+    searchCommandNumber: 0,
+    searchExtendedCommandNumber: 0
+  };
+
+  const {inputGroupFile01, commandSelect, extendedCommandSelect, commandSearchContainer, extendedCommandSearchContainer, tableBody, groupChange} = elements;
 
   // If text color is red then set to default color
   const setDefaultTextColor = () => {
@@ -231,7 +202,7 @@ const handleSearchFxCmd = () => {
       handleGetKeyExtendedCommand
     );
   }
-  // Add handler for mouse leave to set command number
+  // Add handler for mouse leave to set extended command number
   extendedCommandSearchContainer.addEventListener(
     "mouseleave",
     handleMouseLeaveExtendedCommand
