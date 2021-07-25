@@ -1,13 +1,11 @@
 // ---------- UsedFxCmd ----------
 const usedFxCmd = () => {
   // ---------- Global ---------
-  // Initialize constants
   const songLengthOffset = 950;
   const songPositionOffset = 952;
   const patternStartOffset = 1084;
   const commandOffset = 2;
   const commandLowbyteOffset = 3;
-
   const positionTableLength = 128;
   const maxPatternPosition = 64;
   const maxChannels = 4;
@@ -18,7 +16,6 @@ const usedFxCmd = () => {
   const maxExtendedCommands = 16;
   const commandNumberMask = 0xF;
 
-  // Initialize objects
   const elements = {
     inputGroupFile01: document.querySelector("#inputGroupFile01"),
     commandsTableBody: document.querySelector("#commandsTableBody"),

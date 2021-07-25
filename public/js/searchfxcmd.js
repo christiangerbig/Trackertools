@@ -1,7 +1,6 @@
 // Handler for SearchFxCmd
 const handleSearchFxCmd = () => {
   // ---------- Global ----------
-  // Initialize constants
   const songLengthOffset = 950;
   const songPositionOffset = 952;
   const patternStartOffset = 1084;
@@ -16,7 +15,6 @@ const handleSearchFxCmd = () => {
   const patternRowLength = noteDataLength * maxChannels
   const commandNumberMask = 0xF;
 
-  // Initialize arrays
   shortkeyTable = [
     /* Character codes for command numbers
     0   1   2   3   4   5   6   7   8   9   A   B   C   D    E    F */
@@ -29,7 +27,6 @@ const handleSearchFxCmd = () => {
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
   ];
 
-  // Initialize objects
   const elements = {
     inputGroupFile01: document.querySelector("#inputGroupFile01"),
     commandSelect: document.querySelector("#commandSelect"),

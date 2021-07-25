@@ -1,7 +1,6 @@
 // Handler for VolSlideStep
 const handleVolSlideStep = () => {
   // ---------- Global ---------
-  // Initialize constants
   const definedTics = 6;
   const definedInstrumentVolume = 64;
   const definedUnits = 1;
@@ -13,7 +12,6 @@ const handleVolSlideStep = () => {
   const finevolumeSlideTooltipErrorText = "Number of units is greater than hex F";
   const outputErrorText = "**";
 
-  // Initialize objects
   const elements = {
     ticsButton: document.querySelector("#ticsButton"),
     instrumentVolumeButton: document.querySelector("#instrumentVolumeButton"),

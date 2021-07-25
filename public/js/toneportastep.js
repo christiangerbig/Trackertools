@@ -1,12 +1,10 @@
 // Handler for TonePortaStep
 const handleTonePortaStep = () => {
   // ---------- Global ----------
-  // Initialize constants
   const definedTics = 6;
   const definedCommands = 1;
   const definedTooltipText = "Number of units ranges from hex 01 to FF";
 
-  // Initialize class
   class NoteObject {
     constructor(periodIndex, octaveIndex, finetuneIndex, periodsTableIndex, period) {
       this.periodIndex = periodIndex;
@@ -17,7 +15,6 @@ const handleTonePortaStep = () => {
     }
   };
 
-  // Initialize arrays
   const shortkeyTable = [
     /* Character codes for note period
     C   C#  D    D#  E    F    F#  G    G#  A   A#  B */
@@ -36,7 +33,6 @@ const handleTonePortaStep = () => {
     0, 1, 2
   ];
 
-  // Initialize objects
   const elements = {
     sourceNoteSelect: document.querySelector("#sourceNoteSelect"),
     sourceOctaveSelect: document.querySelector("#sourceOctaveSelect"),
@@ -53,21 +49,9 @@ const handleTonePortaStep = () => {
     groupChange: document.querySelectorAll(".groupChange")
   };
 
-  const sourceNote = new NoteObject(
-    0,
-    0,
-    0,
-    0,
-    0
-  );
+  const sourceNote = new NoteObject(0, 0, 0, 0, 0);
 
-  const destinationNote = new NoteObject(
-    0,
-    0,
-    0,
-    0,
-    0
-  );
+  const destinationNote = new NoteObject(0, 0, 0, 0, 0);
 
   const calculation = {
     tics: definedTics,
