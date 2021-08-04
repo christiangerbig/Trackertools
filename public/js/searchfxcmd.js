@@ -1,45 +1,46 @@
 // Handler for SearchFxCmd
 const handleSearchFxCmd = () => {
   // ---------- Global ----------
-  const songLengthOffset = 950;
-  const songPositionOffset = 952;
-  const patternStartOffset = 1084;
-  const commandOffset = 2;
-  const commandLowbyteOffset = 3;
+  const constants = {
+    songLengthOffset: 950,
+    songPositionOffset: 952,
+    patternStartOffset: 1084,
+    commandOffset: 2,
+    commandLowbyteOffset: 3,
+    positionTableLength: 128,
+    maxPatternPosition: 64,
+    maxChannels: 4,
+    patternLength: null,
+    noteDataLength: 4,
+    patternRowLength: null,
+    commandNumberMask: 0xF,
+    // HTML elements
+    elements: {
+      inputGroupFile01: document.querySelector("#inputGroupFile01"),
+      commandSelect: document.querySelector("#commandSelect"),
+      extendedCommandSelect: document.querySelector("#extendedCommandSelect"),
+      commandSearchContainer: document.querySelector("#commandSearchContainer"),
+      extendedCommandSearchContainer: document.querySelector("#extendedCommandSearchContainer"),
+      tableBody: document.querySelector("#tableBody"),
+      groupChange: document.querySelectorAll(".groupChange")
+    },
+    shortkeyTable: [
+      /* Character codes for command numbers
+      0   1   2   3   4   5   6   7   8   9   A   B   C   D    E    F */
+      48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 97, 98, 99, 100, 101, 102
+    ],
+    shortkeyIndexTable: [
+      /* Index for command and extended command numbers
+      0  1  2  3  4  5  6  7  8  9  A   B   C   D   E   F */
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+    ]
+  }
 
-  const positionTableLength = 128;
-  const maxPatternPosition = 64;
-  const maxChannels = 4;
-  const patternLength = maxPatternPosition * maxChannels;
-  const noteDataLength = 4;
-  const patternRowLength = noteDataLength * maxChannels
-  const commandNumberMask = 0xF;
+  constants.patternLength = constants.maxPatternPosition * constants.maxChannels;
+  constants.patternRowLength = constants.noteDataLength * constants.maxChannels;
 
-  shortkeyTable = [
-    /* Character codes for command numbers
-    0   1   2   3   4   5   6   7   8   9   A   B   C   D    E    F */
-    48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 97, 98, 99, 100, 101, 102
-  ];
-
-  shortkeyIndexTable = [
-    /* Index for command and extended command numbers
-    0  1  2  3  4  5  6  7  8  9  A   B   C   D   E   F */
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
-  ];
-
-  const elements = {
-    inputGroupFile01: document.querySelector("#inputGroupFile01"),
-    commandSelect: document.querySelector("#commandSelect"),
-    extendedCommandSelect: document.querySelector("#extendedCommandSelect"),
-    commandSearchContainer: document.querySelector("#commandSearchContainer"),
-    extendedCommandSearchContainer: document.querySelector("#extendedCommandSearchContainer"),
-    tableBody: document.querySelector("#tableBody"),
-    tr: null,
-    td: null,
-    groupChange: document.querySelectorAll(".groupChange")
-  };
-
-  const scan = {
+  const variables = {
+    isFileLoaded: false,
     fileContent: "",
     patternNumber: 0,
     highestPatternNumber: 0, 
@@ -50,10 +51,105 @@ const handleSearchFxCmd = () => {
     searchExtendedCommandNumber: 0
   };
 
-  const {inputGroupFile01, commandSelect, extendedCommandSelect, commandSearchContainer, extendedCommandSearchContainer, tableBody, groupChange} = elements;
+  // Handler for search command in patterns if module was a loaded
+  const handleSearchCommand = (constants, variables) => {
+    if (variables.isFileLoaded) {
+
+      // Get highest pattern number in pattern position table
+      const getHighestPattern = ({songPositionOffset, positionTableLength}, variables) => {
+        for (let i = 0; i < positionTableLength; i++) {
+          ((variables.patternNumber = variables.fileContent[songPositionOffset + i].charCodeAt(0)) > variables.highestPatternNumber) && (variables.highestPatternNumber = variables.patternNumber);
+        }
+        variables.highestPatternNumber ++; // Count starts at 0
+      }
+
+      // Get button values and convert them to integers
+      const getInputElementValues = ({elements}, variables) => {
+        const {commandSelect, extendedCommandSelect} = elements;
+        variables.searchCommandNumber = parseInt(commandSelect.value);
+        variables.searchExtendedCommandNumber = parseInt(extendedCommandSelect.value);
+      }
+
+      // Scan for commands in Mod file
+      const scanModFile = (constants, variables) => {
+
+        // Search command or extended command by number
+        const searchForCommand = (constants, variables) => {
+
+          // Fill the table with the values: Position, Pattern, Patternrow and Channel number
+          const outputDataToTable = ({noteDataLength, patternRowLength, elements}, variables, i, j, k) => {
+
+            // Create list entry
+            const createListEntry = (tr, entryText) => {
+              const td = document.createElement("td");
+              td.innerHTML = entryText.toString();
+              tr.append(td);
+            }
+
+            const tr = document.createElement("tr");
+            elements.tableBody.append(tr);
+            createListEntry(tr, i);
+            createListEntry(tr, variables.patternNumber);
+            createListEntry(tr, j / patternRowLength);
+            createListEntry(tr, k / noteDataLength);
+          }
+
+          const {songLengthOffset, songPositionOffset, patternStartOffset, commandOffset, commandLowbyteOffset, maxPatternPosition, maxChannels, patternLength, noteDataLength, patternRowLength, commandNumberMask} = constants;
+          const songLength = variables.fileContent[songLengthOffset].charCodeAt(0);
+          for (let i = 0; i < songLength; i++) {
+            variables.patternNumber = variables.fileContent[(songPositionOffset + i)].charCodeAt(0);
+            const patternOffset = (variables.patternNumber * patternLength * noteDataLength); // Pattern offset in song structure
+            for (let j = 0; j < (maxPatternPosition * patternRowLength); j += patternRowLength) { // 16th steps per row
+              for (let k = 0; k < (maxChannels * noteDataLength); k += noteDataLength) { // 4th steps per channel
+                const commandNumberIndex = (patternStartOffset + patternOffset + j + k + commandOffset);
+                variables.commandNumber = variables.fileContent[commandNumberIndex].charCodeAt(0) & commandNumberMask; // Mask out upper nibble
+                if (variables.commandNumber === variables.searchCommandNumber && variables.commandNumber !== 14) {
+                  if (variables.commandNumber === 0 && variables.searchCommandNumber === 0) {
+                    const commandNumberIndex = (patternStartOffset + patternOffset + j + k + commandLowbyteOffset);
+                    (( variables.commandLowbyte = variables.fileContent[commandNumberIndex].charCodeAt(0)) > 0) && (outputDataToTable(constants, variables, i, j, k, variables.patternNumber));
+                  }
+                  else {
+                    outputDataToTable(constants, variables, i, j, k, variables.patternNumber);
+                  }
+                }
+                if (variables.commandNumber === 14) {
+                  const extendedCommandNumberIndex = (patternStartOffset + patternOffset + j + k + commandLowbyteOffset);
+                  ((variables.extendedCommandNumber = variables.fileContent[extendedCommandNumberIndex].charCodeAt(0) >> 4) === variables.searchExtendedCommandNumber) && (outputDataToTable(constants, variables, i, j, k, variables.patternNumber));
+                }
+              }
+            }
+          }
+        }
+
+        const {elements} = constants;
+        const {commandSelect, extendedCommandSelect, tableBody} = elements;
+        if (variables.searchCommandNumber === -1) {
+          if (!commandSelect.classList.contains("text-danger") || extendedCommandSelect.classList.contains("text-danger")) {
+            commandSelect.classList.add("text-danger");
+            extendedCommandSelect.classList.add("text-danger");
+          }
+        }
+        else {
+          tableBody.innerHTML = ""; // Remove <tr>/<td> tags from table
+          searchForCommand(constants, variables);
+        }
+      }
+      getHighestPattern(constants, variables);
+      getInputElementValues(constants, variables);
+      scanModFile(constants, variables);
+    }
+  }
+  // Add handler for search command in patterns if module was a loaded
+  constants.elements.groupChange.forEach(
+    element => element.addEventListener(
+      "change", 
+      () => handleSearchCommand(constants, variables)
+    )
+  );
 
   // If text color is red then set to default color
-  const setDefaultTextColor = () => {
+  const setDefaultTextColor = ({elements}) => {
+    const {commandSelect, extendedCommandSelect} = elements;
     if (commandSelect.classList.contains("text-danger") || extendedCommandSelect.classList.contains("text-danger")) {
       commandSelect.classList.remove("text-danger");
       extendedCommandSelect.classList.remove("text-danger");
@@ -61,14 +157,17 @@ const handleSearchFxCmd = () => {
   }
 
   // Reset all values
-  const resetValues = () => {
+  const resetValues = ({elements}) => {
+    const {commandSelect, extendedCommandSelect, tableBody} = elements;
     commandSelect.value = -1;
     extendedCommandSelect.value = -1;
-    tableBody.innerHTML = ""; // Remove all tr/td tags in the table
+    tableBody.innerHTML = ""; // Remove tr/td tags from table
   }
 
   // Handler for load module if "Choose file" was clicked
-  const handleLoadModule = () => {
+  const handleLoadModule = (constants, variables) => {
+    variables.isFileLoaded = false;
+    const {inputGroupFile01} = constants.elements;
     const input = inputGroupFile01.files;
     // const files = (input.length);
     const file = input[0];
@@ -76,122 +175,132 @@ const handleSearchFxCmd = () => {
     // const filesize = input[0].size;
     // const filetype = input[0].type;
     const reader = new FileReader();
+    reader.onload = event => variables.fileContent = event.target.result;
     reader.readAsBinaryString(file);
-    reader.onload = event => scan.fileContent = event.target.result;
-    resetValues();
-
+    
     // Handler to wait until module is loaded
-    const handleWaitForLoad = () => reader.removeEventListener(
-        "load",
-        handleWaitForLoad
-      )
-
+    const handleWaitForLoad = (constants, variables) => {
+      variables.isFileLoaded = true;
+      resetValues(constants);
+      reader.removeEventListener(
+      "load",
+      handleWaitForLoad
+      );
+    }
     // Add handler for wait until module is loaded
     reader.addEventListener(
       "load",
-      handleWaitForLoad
+      () => handleWaitForLoad(constants, variables)
     );
   }
   // Add handler for load module if "Choose file" button was clicked
-  inputGroupFile01.addEventListener(
+  constants.elements.inputGroupFile01.addEventListener(
     "change",
-    handleLoadModule
+    () => handleLoadModule(constants, variables)
   );
 
   // Handler for set extended command number to 0 if command number E was selected
-  const handleCheckCommandNumber = () => {
-    commandSelect.value == 14 ? extendedCommandSelect.value = 0 : extendedCommandSelect.value = -1;
-    setDefaultTextColor();
+  const handleCheckCommand = (constants, setDefaultTextColor) => {
+    const {commandSelect, extendedCommandSelect} = constants.elements;
+    commandSelect.value === 14 ? extendedCommandSelect.value = 0 : extendedCommandSelect.value = -1;
+    setDefaultTextColor(constants);
   }
   // Add handler for set extended command number to 0 if command number E was selected
-  commandSelect.addEventListener(
+  constants.elements.commandSelect.addEventListener(
     "change",
-    handleCheckCommandNumber
+    () => handleCheckCommand(constants, setDefaultTextColor)
   );
 
   // Handler for set command number to hex E if extended command number was selected
-  const handleCheckExtendedCommandNumber = () => {
-    extendedCommandSelect.value == -1 ? commandSelect.value = -1 : commandSelect.value = 14;
-    setDefaultTextColor();
+  const handleCheckExtendedCommand = (constants, setDefaultTextColor) => {
+    const {commandSelect, extendedCommandSelect} = constants.elements;
+    extendedCommandSelect.value === -1 ? commandSelect.value = -1 : commandSelect.value = 14;
+    setDefaultTextColor(constants);
   }
   // Add handler for set command number to hex E if extended command number was selected
-  extendedCommandSelect.addEventListener(
+  constants.elements.extendedCommandSelect.addEventListener(
     "change",
-    handleCheckExtendedCommandNumber
+    () => handleCheckExtendedCommand(constants, setDefaultTextColor)
   );
 
   // Handler for pressed key to set command number
-  const handleGetKeyCommandNumber = event => {
-    const character = event.which || event.keyCode;
+  const handleGetKeyCommand= ({which, keyCode}, constants, variables) => {
+    const {shortkeyTable, shortkeyIndexTable, elements} = constants;
+    const {commandSelect, extendedCommandSelect} = elements;
+    const character = which || keyCode;
     for (let i = 0; i < shortkeyTable.length; i++) {
       if (shortkeyTable[i] === character) {
-        const shortkeyIndex = shortkeyIndexTable[i];
-        commandSelect.value = shortkeyIndex;
-        shortkeyIndex === 14 ? extendedCommandSelect.value = 0 : extendedCommandSelect.value = -1;
-        setDefaultTextColor();
+        (commandSelect.value = shortkeyIndexTable[i]) === 14 ? extendedCommandSelect.value = 0 : extendedCommandSelect.value = -1;
+        setDefaultTextColor(constants);
         break;
       }
     }
-    handleSearchCommand();
+    handleSearchCommand(constants, variables);
   }
   // Handler for manual key mode to set command number
-  const handleSetManualCommandNumber = () => {
+  const handleSetManualCommand = (constants, variables) => {
+    const {commandSearchContainer} = constants.elements;
     commandSearchContainer.focus();
     // Add handler to get pressed key to set command number
     commandSearchContainer.addEventListener(
       "keypress",
-      handleGetKeyCommandNumber
+      (event) => handleGetKeyCommand(event, constants, variables)
     );
   }
   // Add handler to for manual key mode to set command number
-  commandSearchContainer.addEventListener(
+  constants.elements.commandSearchContainer.addEventListener(
     "mouseenter",
-    handleSetManualCommandNumber
+    () => handleSetManualCommand(constants, variables)
   );
   // Handler for mouse leave command number
-  const handleMouseLeaveCommandNumber = () => {
+  const handleMouseLeaveCommand = ({elements}) => {
+    const {commandSearchContainer} = elements;
     commandSearchContainer.blur();
     // Remove handler to get pressed key source note
     commandSearchContainer.removeEventListener(
       "keypress",
-      handleGetKeyCommandNumber
+      handleGetKeyCommand
     );
   }
   // Add handler for mouse leave to set command number
-  commandSearchContainer.addEventListener(
+  constants.elements.commandSearchContainer.addEventListener(
     "mouseleave",
-    handleMouseLeaveCommandNumber
+    () => handleMouseLeaveCommand(constants)
   );
 
   // Handler for pressed key to set extended command number
-  const handleGetKeyExtendedCommand = (event) => {
-    const character = event.which || event.keyCode;
+  const handleGetKeyExtendedCommand = ({which, keyCode}, constants, variables) => {
+    const {shortkeyTable, shortkeyIndexTable, elements} = constants;
+    const {commandSelect, extendedCommandSelect} = elements;
+    const character = which || keyCode;
     for (let i = 0; i < shortkeyTable.length; i++) {
       if (shortkeyTable[i] === character) {
         extendedCommandSelect.value = shortkeyIndexTable[i];
         commandSelect.value = 14;
-        setDefaultTextColor();
+        setDefaultTextColor(constants);
         break;
       }
     }
-    handleSearchCommand();
+    handleSearchCommand(constants, variables);
   }
   // Handler for manual key mode to set extended command number
-  const handleSetManualExtendedCommand = () => {
+  const handleSetManualExtendedCommand = (constants, variables) => {
+    const {extendedCommandSearchContainer} = constants.elements;
     extendedCommandSearchContainer.focus();
     // Add handler to get pressed key to set extended command number
     extendedCommandSearchContainer.addEventListener(
       "keypress",
-      handleGetKeyExtendedCommand
+      event => handleGetKeyExtendedCommand(event, constants, variables)
     );
   }
   // Add handler to for manual key mode to set extended command number
-  extendedCommandSearchContainer.addEventListener(
+  constants.elements.extendedCommandSearchContainer.addEventListener(
     "mouseenter",
-    handleSetManualExtendedCommand
+    () => handleSetManualExtendedCommand(constants, variables)
   );
   // Handler for mouse leave extended command number
-  const handleMouseLeaveExtendedCommand = () => {
+  const handleMouseLeaveExtendedCommand = ({elements}) => {
+    const {extendedCommandSearchContainer} = elements;
     extendedCommandSearchContainer.blur();
     // Remove handler to get pressed key source note
     extendedCommandSearchContainer.removeEventListener(
@@ -200,103 +309,9 @@ const handleSearchFxCmd = () => {
     );
   }
   // Add handler for mouse leave to set extended command number
-  extendedCommandSearchContainer.addEventListener(
+  constants.elements.extendedCommandSearchContainer.addEventListener(
     "mouseleave",
-    handleMouseLeaveExtendedCommand
-  );
-
-  // Handler for search command in patterns if module was a loaded
-  const handleSearchCommand = () => {
-
-    // Fill the table with the values: Position, Pattern, Patternrow and Channel number
-    const outputDataToTable = (i, j, k) => {
-
-      // Append <td> element
-      const appendTdElement = text => {
-        elements.td = document.createElement("td");
-        elements.td.innerHTML = text.toString();
-        elements.tr.append(elements.td);
-      }
-
-      // Append <tr> element
-      elements.tr = document.createElement("tr");
-      tableBody.append(elements.tr);
-      // Append <td> {{ i }} </td> element
-      appendTdElement(i);
-      // Append <td> {{ pattern }} </td> element
-      appendTdElement(scan.patternNumber);
-      // Append <td> {{ j / patternRowLength }} </td> element
-      appendTdElement(j / patternRowLength);
-      // Append <td> {{ ( (k / noteDataLength) + 1 }}  </td> element
-      appendTdElement(k / noteDataLength);
-    }
-    if (scan.fileContent.length) {
-
-      // Get highest pattern number in pattern position table
-      const getHighestPattern = () => {
-        for (let i = 0; i < positionTableLength; i++) {
-          scan.patternNumber = scan.fileContent[songPositionOffset + i].charCodeAt(0);
-          if (scan.patternNumber > scan.highestPatternNumber) scan.highestPatternNumber = scan.patternNumber;
-        }
-        scan.highestPatternNumber ++; // Count starts at 0
-      }
-
-      // Get button values and convert them to integers
-      const getInputElementValues = () => {
-        scan.searchCommandNumber = parseInt(commandSelect.value);
-        scan.searchExtendedCommandNumber = parseInt(extendedCommandSelect.value);
-      }
-
-      // Scan for commands in Mod file
-      const scanModFile = () => {
-        if (scan.searchCommandNumber === -1) {
-          if (!commandSelect.classList.contains("text-danger") || extendedCommandSelect.classList.contains("text-danger")) {
-            commandSelect.classList.add("text-danger");
-            extendedCommandSelect.classList.add("text-danger");
-          }
-        }
-        else {
-          const songLength = scan.fileContent[songLengthOffset].charCodeAt(0);
-          tableBody.innerHTML = ""; // Remove all <tr>/<td> tags in the table
-          // Search command or extended command by number
-          for (let i = 0; i < songLength; i++) {
-            scan.patternNumber = scan.fileContent[(songPositionOffset + i)].charCodeAt(0);
-            const patternOffset = (scan.patternNumber * patternLength * noteDataLength); // Pattern offset in song structure
-            for (let j = 0; j < (maxPatternPosition * patternRowLength); j += patternRowLength) { // 16th steps per row
-              for (let k = 0; k < (maxChannels * noteDataLength); k += noteDataLength) { // 4th steps per channel
-                const commandNumberIndex = (patternStartOffset + patternOffset + j + k + commandOffset);
-                scan.commandNumber = scan.fileContent[commandNumberIndex].charCodeAt(0) & commandNumberMask; // Mask out upper nibble
-                if (scan.commandNumber === scan.searchCommandNumber && scan.commandNumber !== 14) {
-                  if (scan.commandNumber === 0 && scan.searchCommandNumber === 0) {
-                    const commandNumberIndex = (patternStartOffset + patternOffset + j + k + commandLowbyteOffset);
-                    scan.commandLowbyte = scan.fileContent[commandNumberIndex].charCodeAt(0);
-                    if (scan.commandLowbyte > 0) outputDataToTable(i, j, k, scan.patternNumber);
-                  }
-                  else {
-                    outputDataToTable(i, j, k, scan.patternNumber);
-                  }
-                }
-                if (scan.commandNumber === 14) {
-                  const extendedCommandNumberIndex = (patternStartOffset + patternOffset + j + k + commandLowbyteOffset);
-                  scan.extendedCommandNumber = scan.fileContent[extendedCommandNumberIndex].charCodeAt(0) >> 4; // Shift extended command number to lower nibble		
-                  if (scan.extendedCommandNumber === scan.searchExtendedCommandNumber) outputDataToTable(i, j, k, scan.patternNumber);
-                }
-              }
-            }
-          }
-        }
-      }
-      getHighestPattern();
-      getInputElementValues();
-      scanModFile();
-    }
-  }
-  // Add handler for search command in patterns if module was a loaded
-  groupChange.forEach(
-    element => element.addEventListener(
-      "change", 
-      handleSearchCommand
-    )
+    () => handleMouseLeaveExtendedCommand(constants)
   );
 }
 
