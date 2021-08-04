@@ -12,6 +12,7 @@ const handleVolSlideStep = () => {
     volumeSlideTooltipErrorText: "Number of commands is greater than 64",
     finevolumeSlideTooltipErrorText: "Number of units is greater than hex F",
     outputErrorText: "**",
+    // HTML elements
     elements: {
       ticsButton: document.querySelector("#ticsButton"),
       instrumentVolumeButton: document.querySelector("#instrumentVolumeButton"),
