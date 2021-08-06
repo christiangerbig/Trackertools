@@ -126,7 +126,7 @@ const usedFxCmd = () => {
 
       // Create list entry
       const createListEntry = (tr, entryText) => {
-        let td = document.createElement("td");
+        const td = document.createElement("td");
         td.innerHTML = entryText.toString();
         tr.append(td);
       }
@@ -135,7 +135,7 @@ const usedFxCmd = () => {
       const outputUsedCommands = ({maxCommands, elements, commandNamesTable}, hasCommandArray, createListEntry) => {
         for (let i = 0; i < maxCommands; i++) {
           if (hasCommandArray[i]) {
-            let tr = document.createElement("tr");
+            const tr = document.createElement("tr");
             tr.classList.add("text-left");
             elements.commandsTableBody.append(tr);
             createListEntry(tr, commandNamesTable[i]);
@@ -147,7 +147,7 @@ const usedFxCmd = () => {
       const outputUsedExtendedCommands = ({maxExtendedCommands, elements, extendedCommandNamesTable}, hasExtendedCommandArray, createListEntry) => {
         for (let i = 0; i < maxExtendedCommands; i++) {
           if (hasExtendedCommandArray[i]) {
-            let tr = document.createElement("tr");
+            const tr = document.createElement("tr");
             tr.classList.add("text-left");
             elements.extendedCommandsTableBody.append(tr);
             createListEntry(tr, extendedCommandNamesTable[i]);
