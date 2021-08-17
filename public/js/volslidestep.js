@@ -24,7 +24,7 @@ const handleVolSlideStep = () => {
       resetButton: document.querySelector("#resetButton"),
       groupChange: document.querySelectorAll(".groupChange")
     }
-  }
+  };
 
   const variables = {
     volumeSlideCommands: 0,
@@ -45,7 +45,7 @@ const handleVolSlideStep = () => {
       unitsResult.classList.remove("text-danger");
       unitsResult.classList.add("textColored");
     }
-  }
+  };
 
   // Check state of checkbox and show/hide fine volume slide container
   const checkFinevolume = ({elements}, variables) => {
@@ -58,7 +58,7 @@ const handleVolSlideStep = () => {
       variables.commandsToggle = variables.volumeSlideCommands;
       finevolumeSlideContainer.classList.add("d-none");
     }
-  }
+  };
 
   // Check checkbox state and show/hide fine volume slide
   const handleCheckboxState = (constants, variables) => {
@@ -75,7 +75,7 @@ const handleVolSlideStep = () => {
     }
     commandsResult.innerHTML = variables.commandsToggle.toString();
     unitsResult.innerHTML = variables.finevolumeSlideUnits.toString(16).toUpperCase();
-  }
+  };
   // Add handler for Check checkbox state and show/hide fine volume slide
   constants.elements.finevolumeSlideCheckbox.addEventListener(
     "change",
@@ -92,21 +92,21 @@ const handleVolSlideStep = () => {
       variables.tics --; // Without first tick
       variables.instrumentVolume = parseInt(instrumentVolumeButton.value);
       variables.units = parseInt(unitsButton.value);
-    }
+    };
 
     // Calculate coomands per row without fine volume slide
     const calculateUnits = variables => {
       const {tics, instrumentVolume, units} = variables;
       variables.volumeSlideCommands = Math.ceil(instrumentVolume / tics);
       variables.volumeSlideCommands = Math.ceil(variables.volumeSlideCommands / units);
-    }
+    };
 
     // Calculate comands per row and units per command considering fine volume slide
     const calculateUnitsFinevolume = variables => {
       const {tics, instrumentVolume, units} = variables;
       variables.finevolumeSlideCommands = Math.floor((instrumentVolume / tics) / units);
       variables.finevolumeSlideUnits = (instrumentVolume % tics);
-    }
+    };
 
     // Check maxinun of volume slide commands number or fine volume slide units number and output units
     const outputUnits = (constants, variables) => {
@@ -130,14 +130,14 @@ const handleVolSlideStep = () => {
       // Output commands per row and fine slide units per command
       commandsResult.innerHTML = variables.commandsToggle.toString();
       unitsResult.innerHTML = variables.finevolumeSlideUnits.toString(16).toUpperCase();
-    }
+    };
   
     getInputElementsValues(constants, variables);
     calculateUnits(variables);
     calculateUnitsFinevolume(variables);
     checkFinevolume(constants, variables);
     outputUnits(constants, variables);
-  }
+  };
   // Add handler for values variables
   constants.elements.groupChange.forEach(
     element => element.addEventListener(
@@ -173,7 +173,7 @@ const handleVolSlideStep = () => {
     "click",
     () => handleResetButton(constants, variables)
   );
-}
+};
 
 // Add handler for VolSlideStep
 document.addEventListener(

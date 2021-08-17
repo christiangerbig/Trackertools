@@ -144,13 +144,13 @@ const handleTonePortaStep = () => {
       unitsResult.classList.remove("text-danger");
       unitsResult.classList.add("textColored");
     }
-  }
+  };
 
   // Handler for switch destination finetune to source finetune value
   const handleSwitchDestinationFinetune = ({elements}) => {
     const {sourceFinetuneSelect, destinationFinetuneSelect} = elements;
     destinationFinetuneSelect.value = sourceFinetuneSelect.value;
-  }
+  };
   // Add handler for change finetune value
   constants.elements.sourceFinetuneSelect.addEventListener(
     "click",
@@ -161,7 +161,7 @@ const handleTonePortaStep = () => {
   const handleSwitchSourceFinetune = ({elements}) => {
     const {sourceFinetuneSelect, destinationFinetuneSelect} = elements;
     sourceFinetuneSelect.value = destinationFinetuneSelect.value;
-  }
+  };
   // Add handler for change finetune value
   constants.elements.destinationFinetuneSelect.addEventListener(
     "click",
@@ -186,7 +186,7 @@ const handleTonePortaStep = () => {
       }
     }
     handleCalculateValue(constants, variables, sourceNote, destinationNote);
-  }
+  };
   // Handler for manual key mode to set source note without finetune
   const handleSetSourceNote = (constants, variables, sourceNote, destinationNote) => {
     const {sourceNoteContainer} = constants.elements;
@@ -196,7 +196,7 @@ const handleTonePortaStep = () => {
       "keypress",
       (event) => handleGetKeySource(event, constants, variables, sourceNote, destinationNote)
     );
-  }
+  };
   // Add handler to set source note
   constants.elements.sourceNoteContainer.addEventListener(
     "mouseenter",
@@ -211,7 +211,7 @@ const handleTonePortaStep = () => {
       "keypress",
       (event) => handleGetKeySource(event, constants)
     );
-  }
+  };
   // Add handler for mouse leave source note
   constants.elements.sourceNoteContainer.addEventListener(
     "mouseleave",
@@ -236,7 +236,7 @@ const handleTonePortaStep = () => {
       }
     }
     handleCalculateValue(constants, variables, sourceNote, destinationNote);
-  }
+  };
   // Manual key mode to set destination note without finetune
   const handleSetDestinationNote = (constants, variables, sourceNote, destinationNote) => {
     const {destinationNoteContainer} = constants.elements;
@@ -246,7 +246,7 @@ const handleTonePortaStep = () => {
       "keypress",
       (event) => handleGetKeyDestination(event, constants, variables, sourceNote, destinationNote)
     );
-  }
+  };
   // Add handler to set destination note
   constants.elements.destinationNoteContainer.addEventListener(
     "mouseenter",
@@ -261,7 +261,7 @@ const handleTonePortaStep = () => {
       "keypress",
       (event) => handleGetKeyDestination(event, constants)
     );
-  }
+  };
   // Add handler for mouse leave destination note
   constants.elements.destinationNoteContainer.addEventListener(
     "mouseleave",
@@ -283,7 +283,7 @@ const handleTonePortaStep = () => {
       variables.tics = (parseInt(ticsButton.value))
       variables.tics --; // Without first tick
       variables.commands = parseInt(commandsButton.value);
-    }
+    };
 
     // Read period values from table
     const getPeriodValues = ({semiTones, semiToneOctaves, periodsTable}, sourceNote, destinationNote) => {
@@ -291,14 +291,14 @@ const handleTonePortaStep = () => {
       sourceNote.period = periodsTable[sourceNote.periodsTableIndex]; // Source period
       destinationNote.periodsTableIndex = destinationNote.periodIndex + (destinationNote.octaveIndex * semiToneOctaves) + (destinationNote.finetuneIndex * semiTones);
       destinationNote.period = periodsTable[destinationNote.periodsTableIndex]; // Destination period
-    }
+    };
 
     // Calculate units per command
     const calculateUnits = (variables, sourceNote, destinationNote) => {
       variables.periodDiff = Math.abs(destinationNote.period - sourceNote.period);
       variables.ticsPeriodDiff = Math.ceil(variables.periodDiff / variables.tics);
       variables.commandsPeriodDiff = Math.ceil(variables.ticsPeriodDiff / variables.commands);
-    }
+    };
 
     // Output units per command
     const outputUnits = (constants, variables) => {
@@ -319,13 +319,13 @@ const handleTonePortaStep = () => {
       }
       unitsResult.innerHTML = variables.commandUnits;
       unitsResult.title = variables.tooltipText;
-    }
+    };
 
     getInputElementsValues(constants, variables, sourceNote, destinationNote);
     getPeriodValues(constants, sourceNote, destinationNote);
     calculateUnits(variables, sourceNote, destinationNote);
     outputUnits(constants, variables);
-  }
+  };
   // Add handler for value variables
   constants.elements.groupChange.forEach(
     element => element.addEventListener(
@@ -349,13 +349,13 @@ const handleTonePortaStep = () => {
     unitsResult.innerHTML = "00";
     unitsResult.title = definedTooltipText;
     setDefaultTextColor(constants);
-  }
+  };
   // Add handler for click on reset button
   constants.elements.resetButton.addEventListener(
     "click",
     () => handleResetButton(constants, variables)
   );
-}
+};
 
 // Add handler for TonePortaStep
 document.addEventListener(

@@ -34,7 +34,7 @@ const handleSearchFxCmd = () => {
       0  1  2  3  4  5  6  7  8  9  A   B   C   D   E   F */
       0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
     ]
-  }
+  };
 
   constants.patternLength = constants.maxPatternPosition * constants.maxChannels;
   constants.patternRowLength = constants.noteDataLength * constants.maxChannels;
@@ -92,7 +92,7 @@ const handleSearchFxCmd = () => {
             createListEntry(tr, variables.patternNumber);
             createListEntry(tr, j / patternRowLength);
             createListEntry(tr, k / noteDataLength);
-          }
+          };
 
           const {songLengthOffset, songPositionOffset, patternStartOffset, commandOffset, commandLowbyteOffset, maxPatternPosition, maxChannels, patternLength, noteDataLength, patternRowLength, commandNumberMask} = constants;
           const songLength = variables.fileContent[songLengthOffset].charCodeAt(0);
@@ -119,7 +119,7 @@ const handleSearchFxCmd = () => {
               }
             }
           }
-        }
+        };
 
         const {elements} = constants;
         const {commandSelect, extendedCommandSelect, tableBody} = elements;
@@ -133,7 +133,8 @@ const handleSearchFxCmd = () => {
           tableBody.innerHTML = ""; // Remove <tr>/<td> tags from table
           searchForCommand(constants, variables);
         }
-      }
+      };
+      
       getHighestPattern(constants, variables);
       getInputElementValues(constants, variables);
       scanModFile(constants, variables);
@@ -154,7 +155,7 @@ const handleSearchFxCmd = () => {
       commandSelect.classList.remove("text-danger");
       extendedCommandSelect.classList.remove("text-danger");
     }
-  }
+  };
 
   // Reset all values
   const resetValues = ({elements}) => {
@@ -162,7 +163,7 @@ const handleSearchFxCmd = () => {
     commandSelect.value = -1;
     extendedCommandSelect.value = -1;
     tableBody.innerHTML = ""; // Remove tr/td tags from table
-  }
+  };
 
   // Handler for load module if "Choose file" was clicked
   const handleLoadModule = (constants, variables) => {
@@ -186,13 +187,13 @@ const handleSearchFxCmd = () => {
       "load",
       handleWaitForLoad
       );
-    }
+    };
     // Add handler for wait until module is loaded
     reader.addEventListener(
       "load",
       () => handleWaitForLoad(constants, variables)
     );
-  }
+  };
   // Add handler for load module if "Choose file" button was clicked
   constants.elements.inputGroupFile01.addEventListener(
     "change",
@@ -204,7 +205,7 @@ const handleSearchFxCmd = () => {
     const {commandSelect, extendedCommandSelect} = constants.elements;
     commandSelect.value === 14 ? extendedCommandSelect.value = 0 : extendedCommandSelect.value = -1;
     setDefaultTextColor(constants);
-  }
+  };
   // Add handler for set extended command number to 0 if command number E was selected
   constants.elements.commandSelect.addEventListener(
     "change",
@@ -216,7 +217,7 @@ const handleSearchFxCmd = () => {
     const {commandSelect, extendedCommandSelect} = constants.elements;
     extendedCommandSelect.value === -1 ? commandSelect.value = -1 : commandSelect.value = 14;
     setDefaultTextColor(constants);
-  }
+  };
   // Add handler for set command number to hex E if extended command number was selected
   constants.elements.extendedCommandSelect.addEventListener(
     "change",
@@ -236,7 +237,7 @@ const handleSearchFxCmd = () => {
       }
     }
     handleSearchCommand(constants, variables);
-  }
+  };
   // Handler for manual key mode to set command number
   const handleSetManualCommand = (constants, variables) => {
     const {commandSearchContainer} = constants.elements;
@@ -246,7 +247,7 @@ const handleSearchFxCmd = () => {
       "keypress",
       (event) => handleGetKeyCommand(event, constants, variables)
     );
-  }
+  };
   // Add handler to for manual key mode to set command number
   constants.elements.commandSearchContainer.addEventListener(
     "mouseenter",
@@ -261,7 +262,7 @@ const handleSearchFxCmd = () => {
       "keypress",
       handleGetKeyCommand
     );
-  }
+  };
   // Add handler for mouse leave to set command number
   constants.elements.commandSearchContainer.addEventListener(
     "mouseleave",
@@ -282,7 +283,7 @@ const handleSearchFxCmd = () => {
       }
     }
     handleSearchCommand(constants, variables);
-  }
+  };
   // Handler for manual key mode to set extended command number
   const handleSetManualExtendedCommand = (constants, variables) => {
     const {extendedCommandSearchContainer} = constants.elements;
@@ -292,7 +293,7 @@ const handleSearchFxCmd = () => {
       "keypress",
       event => handleGetKeyExtendedCommand(event, constants, variables)
     );
-  }
+  };
   // Add handler to for manual key mode to set extended command number
   constants.elements.extendedCommandSearchContainer.addEventListener(
     "mouseenter",
@@ -307,7 +308,7 @@ const handleSearchFxCmd = () => {
       "keypress",
       handleGetKeyExtendedCommand
     );
-  }
+  };
   // Add handler for mouse leave to set extended command number
   constants.elements.extendedCommandSearchContainer.addEventListener(
     "mouseleave",

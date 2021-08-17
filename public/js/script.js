@@ -17,11 +17,11 @@ const handleMainPart = () => {
       handleCatMeowSoundLoad
     );
     return catMeowSound;
-  }
+  };
   const catMeowSound = loadCatMeowSound()
 
   // Handler for playing cat meow sound
-  const handlePlayCatMeowSound = () => catMeowSound.play()
+  const handlePlayCatMeowSound = () => catMeowSound.play();
 
   // Add handler for playing cat meow sound
   const gitHubLinkElement = document.querySelector("#gitHubLink");
@@ -35,7 +35,7 @@ const handleMainPart = () => {
     handlePlayCatMeowSound
   );
 
-}
+};
 // Add handler for main part
 document.addEventListener(
   "DOMContentLoaded",
