@@ -13,7 +13,7 @@ const usedFxCmd = () => {
     patternLength: null,
     noteDataLength: 4,
     patternRowLength: null,
-    maxCommands:16,
+    maxCommands: 16,
     maxExtendedCommands: 16,
     commandNumberMask: 0xF,
     // HTML elements
@@ -80,18 +80,18 @@ const usedFxCmd = () => {
     const hasExtendedCommandArray = new Array(16).fill(false); // Extended command found states
 
     // Get highest pattern number in pattern position table
-    const getHighestPattern = ({songPositionOffset, positionTableLength}, variables) => {
+    const getHighestPattern = ({ songPositionOffset, positionTableLength }, variables) => {
       for (let i = 0; i < positionTableLength; i++) {
         ((variables.patternNumber = variables.fileContent[songPositionOffset + i].charCodeAt(0)) > variables.highestPatternNumber) && (variables.highestPatternNumber = variables.patternNumber);
       }
-      variables.highestPatternNumber ++; // Count starts at 0
+      variables.highestPatternNumber++; // Count starts at 0
     };
 
     // Scan for commands in Mod file
     const scanModFile = (constants, variables, hasCommandArray, hasExtendedCommandArray) => {
 
       // Search command or extended command by number
-      const searchForCommand = ({songLengthOffset, songPositionOffset, patternStartOffset, commandOffset, commandLowbyteOffset, maxPatternPosition, maxChannels, patternLength, noteDataLength, patternRowLength, commandNumberMask}, variables, hasCommandArray, hasExtendedCommandArray) => {
+      const searchForCommand = ({ songLengthOffset, songPositionOffset, patternStartOffset, commandOffset, commandLowbyteOffset, maxPatternPosition, maxChannels, patternLength, noteDataLength, patternRowLength, commandNumberMask }, variables, hasCommandArray, hasExtendedCommandArray) => {
         const songLength = variables.fileContent[songLengthOffset].charCodeAt(0);
         for (let i = 0; i < songLength; i++) {
           variables.patternNumber = variables.fileContent[(songPositionOffset + i)].charCodeAt(0);
@@ -110,7 +110,7 @@ const usedFxCmd = () => {
               }
               else {
                 const extendedCommandNumberIndex = (patternStartOffset + patternOffset + j + k + commandLowbyteOffset);
-                variables.extendedCommandNumber = variables.fileContent[extendedCommandNumberIndex].charCodeAt(0) >> 4;	
+                variables.extendedCommandNumber = variables.fileContent[extendedCommandNumberIndex].charCodeAt(0) >> 4;
                 hasExtendedCommandArray[variables.extendedCommandNumber] = true;
                 hasCommandArray[14] = true; // Also set extended command
               }
@@ -132,7 +132,7 @@ const usedFxCmd = () => {
       };
 
       // Fill the table with used command names
-      const outputUsedCommands = ({maxCommands, elements, commandNamesTable}, hasCommandArray, createListEntry) => {
+      const outputUsedCommands = ({ maxCommands, elements, commandNamesTable }, hasCommandArray, createListEntry) => {
         for (let i = 0; i < maxCommands; i++) {
           if (hasCommandArray[i]) {
             const tr = document.createElement("tr");
@@ -144,7 +144,7 @@ const usedFxCmd = () => {
       };
 
       // Fill the table with used extended command names
-      const outputUsedExtendedCommands = ({maxExtendedCommands, elements, extendedCommandNamesTable}, hasExtendedCommandArray, createListEntry) => {
+      const outputUsedExtendedCommands = ({ maxExtendedCommands, elements, extendedCommandNamesTable }, hasExtendedCommandArray, createListEntry) => {
         for (let i = 0; i < maxExtendedCommands; i++) {
           if (hasExtendedCommandArray[i]) {
             const tr = document.createElement("tr");
@@ -158,22 +158,22 @@ const usedFxCmd = () => {
       outputUsedCommands(constants, hasCommandArray, createListEntry);
       outputUsedExtendedCommands(constants, hasExtendedCommandArray, createListEntry);
     };
-    
+
     getHighestPattern(constants, variables);
     scanModFile(constants, variables, hasCommandArray, hasExtendedCommandArray);
     outputDataToTable(constants, hasCommandArray, hasExtendedCommandArray);
   };
 
   // Remove tr/td tags from table
-  const resetValues = ({elements}) => {
-    const {commandsTableBody, extendedCommandsTableBody} = elements;
-    commandsTableBody.innerHTML = ""; 
+  const resetValues = ({ elements }) => {
+    const { commandsTableBody, extendedCommandsTableBody } = elements;
+    commandsTableBody.innerHTML = "";
     extendedCommandsTableBody.innerHTML = "";
   };
 
   // Handler for load module if "Choose file" was clicked
   const handleLoadModule = (constants, variables) => {
-    const {inputGroupFile01} = constants.elements;
+    const { inputGroupFile01 } = constants.elements;
     const input = inputGroupFile01.files;
     // const files = (input.length);
     const file = input[0];

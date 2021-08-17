@@ -22,7 +22,7 @@ const handleTonePortaStep = () => {
       destinationFinetuneSelect: document.querySelector("#destinationFinetuneSelect"),
       destinationNoteContainer: document.querySelector("#destinationNoteContainer"),
       ticsButton: document.querySelector("#ticsButton"),
-      commandsButton:  document.querySelector("#commandsButton"),
+      commandsButton: document.querySelector("#commandsButton"),
       unitsResult: document.querySelector("#unitsResult"),
       resetButton: document.querySelector("#resetButton"),
       groupChange: document.querySelectorAll(".groupChange")
@@ -138,8 +138,8 @@ const handleTonePortaStep = () => {
   };
 
   // Set text color from red to default
-  const setDefaultTextColor = ({elements}) => {
-    const {unitsResult} = elements;
+  const setDefaultTextColor = ({ elements }) => {
+    const { unitsResult } = elements;
     if (unitsResult.classList.contains("text-danger")) {
       unitsResult.classList.remove("text-danger");
       unitsResult.classList.add("textColored");
@@ -147,8 +147,8 @@ const handleTonePortaStep = () => {
   };
 
   // Handler for switch destination finetune to source finetune value
-  const handleSwitchDestinationFinetune = ({elements}) => {
-    const {sourceFinetuneSelect, destinationFinetuneSelect} = elements;
+  const handleSwitchDestinationFinetune = ({ elements }) => {
+    const { sourceFinetuneSelect, destinationFinetuneSelect } = elements;
     destinationFinetuneSelect.value = sourceFinetuneSelect.value;
   };
   // Add handler for change finetune value
@@ -158,8 +158,8 @@ const handleTonePortaStep = () => {
   );
 
   // Handler for switch source finetune to destination finetune value
-  const handleSwitchSourceFinetune = ({elements}) => {
-    const {sourceFinetuneSelect, destinationFinetuneSelect} = elements;
+  const handleSwitchSourceFinetune = ({ elements }) => {
+    const { sourceFinetuneSelect, destinationFinetuneSelect } = elements;
     sourceFinetuneSelect.value = destinationFinetuneSelect.value;
   };
   // Add handler for change finetune value
@@ -169,10 +169,10 @@ const handleTonePortaStep = () => {
   );
 
   // Handler for pressed key source note
-  const handleGetKeySource = ({which, keyCode}, constants, variables, sourceNote, destinationNote) => {
+  const handleGetKeySource = ({ which, keyCode }, constants, variables, sourceNote, destinationNote) => {
     const chararacter = which || keyCode;
-    const {shortkeyTable, shortkeyIndexTable, elements} = constants;
-    const {sourceNoteSelect, sourceOctaveSelect} = elements;
+    const { shortkeyTable, shortkeyIndexTable, elements } = constants;
+    const { sourceNoteSelect, sourceOctaveSelect } = elements;
     for (let i = 0; i < shortkeyTable.length; i++) {
       if (shortkeyTable[i] === chararacter) {
         if (chararacter >= 65) {
@@ -189,7 +189,7 @@ const handleTonePortaStep = () => {
   };
   // Handler for manual key mode to set source note without finetune
   const handleSetSourceNote = (constants, variables, sourceNote, destinationNote) => {
-    const {sourceNoteContainer} = constants.elements;
+    const { sourceNoteContainer } = constants.elements;
     sourceNoteContainer.focus();
     // Add handler to get pressed key source note
     sourceNoteContainer.addEventListener(
@@ -204,7 +204,7 @@ const handleTonePortaStep = () => {
   );
   // Handler for mouse leave source note
   const handleMouseLeaveSource = (constants) => {
-    const {sourceNoteContainer} = constants.elements;
+    const { sourceNoteContainer } = constants.elements;
     sourceNoteContainer.blur();
     // Remove handler to get pressed key source note
     sourceNoteContainer.removeEventListener(
@@ -219,10 +219,10 @@ const handleTonePortaStep = () => {
   );
 
   // Handler for pressed key destination note
-  const handleGetKeyDestination = ({which, keyCode}, constants, variables, sourceNote, destinationNote) => {
+  const handleGetKeyDestination = ({ which, keyCode }, constants, variables, sourceNote, destinationNote) => {
     const character = which || keyCode;
-    const {shortkeyTable, shortkeyIndexTable, elements} = constants;
-    const {destinationNoteSelect, destinationOctaveSelect} = elements;
+    const { shortkeyTable, shortkeyIndexTable, elements } = constants;
+    const { destinationNoteSelect, destinationOctaveSelect } = elements;
     for (let i = 0; i < shortkeyTable.length; i++) {
       if (shortkeyTable[i] === character) {
         if (character >= 65) {
@@ -239,7 +239,7 @@ const handleTonePortaStep = () => {
   };
   // Manual key mode to set destination note without finetune
   const handleSetDestinationNote = (constants, variables, sourceNote, destinationNote) => {
-    const {destinationNoteContainer} = constants.elements;
+    const { destinationNoteContainer } = constants.elements;
     destinationNoteContainer.focus();
     // Add handler to get pressed key destination note
     destinationNoteContainer.addEventListener(
@@ -254,7 +254,7 @@ const handleTonePortaStep = () => {
   );
   // Handler for mouse leave destination note
   const handleMouseLeaveDestination = constants => {
-    const {destinationNoteContainer} = constants.elements;
+    const { destinationNoteContainer } = constants.elements;
     destinationNoteContainer.blur();
     // Remove handler to get pressed key destination note
     destinationNoteContainer.removeEventListener(
@@ -272,8 +272,8 @@ const handleTonePortaStep = () => {
   const handleCalculateValue = (constants, variables, sourceNote, destinationNote) => {
 
     // Get input element values and convert them to integers
-    const getInputElementsValues = ({elements}, variables, sourceNote, destinationNote) => {
-      const {sourceNoteSelect, sourceOctaveSelect, sourceFinetuneSelect, destinationNoteSelect, destinationOctaveSelect, destinationFinetuneSelect, ticsButton, commandsButton} = elements;
+    const getInputElementsValues = ({ elements }, variables, sourceNote, destinationNote) => {
+      const { sourceNoteSelect, sourceOctaveSelect, sourceFinetuneSelect, destinationNoteSelect, destinationOctaveSelect, destinationFinetuneSelect, ticsButton, commandsButton } = elements;
       sourceNote.periodIndex = parseInt(sourceNoteSelect.value);
       sourceNote.octaveIndex = parseInt(sourceOctaveSelect.value);
       sourceNote.finetuneIndex = parseInt(sourceFinetuneSelect.value);
@@ -281,12 +281,12 @@ const handleTonePortaStep = () => {
       destinationNote.octaveIndex = parseInt(destinationOctaveSelect.value);
       destinationNote.finetuneIndex = parseInt(destinationFinetuneSelect.value);
       variables.tics = (parseInt(ticsButton.value))
-      variables.tics --; // Without first tick
+      variables.tics--; // Without first tick
       variables.commands = parseInt(commandsButton.value);
     };
 
     // Read period values from table
-    const getPeriodValues = ({semiTones, semiToneOctaves, periodsTable}, sourceNote, destinationNote) => {
+    const getPeriodValues = ({ semiTones, semiToneOctaves, periodsTable }, sourceNote, destinationNote) => {
       sourceNote.periodsTableIndex = sourceNote.periodIndex + (sourceNote.octaveIndex * semiToneOctaves) + (sourceNote.finetuneIndex * semiTones);
       sourceNote.period = periodsTable[sourceNote.periodsTableIndex]; // Source period
       destinationNote.periodsTableIndex = destinationNote.periodIndex + (destinationNote.octaveIndex * semiToneOctaves) + (destinationNote.finetuneIndex * semiTones);
@@ -302,8 +302,8 @@ const handleTonePortaStep = () => {
 
     // Output units per command
     const outputUnits = (constants, variables) => {
-      const {definedTooltipText, outputErrorText, tooltipErrorText, maxUnits, elements} = constants;
-      const {unitsResult} = elements;
+      const { definedTooltipText, outputErrorText, tooltipErrorText, maxUnits, elements } = constants;
+      const { unitsResult } = elements;
       variables.tooltipText = definedTooltipText;
       if (variables.commandsPeriodDiff <= maxUnits) {
         variables.commandUnits = variables.commandsPeriodDiff.toString(16).padStart(2, 0, 0).toUpperCase();
@@ -329,15 +329,15 @@ const handleTonePortaStep = () => {
   // Add handler for value variables
   constants.elements.groupChange.forEach(
     element => element.addEventListener(
-      "change", 
+      "change",
       () => handleCalculateValue(constants, variables, sourceNote, destinationNote)
     )
   );
 
   // Reset all values
   const handleResetButton = (constants, variables) => {
-    const {definedTics, definedCommands, definedTooltipText, elements} = constants;
-    const {sourceNoteSelect, sourceOctaveSelect, sourceFinetuneSelect, destinationNoteSelect, destinationOctaveSelect, destinationFinetuneSelect, ticsButton, commandsButton, unitsResult} = elements;
+    const { definedTics, definedCommands, definedTooltipText, elements } = constants;
+    const { sourceNoteSelect, sourceOctaveSelect, sourceFinetuneSelect, destinationNoteSelect, destinationOctaveSelect, destinationFinetuneSelect, ticsButton, commandsButton, unitsResult } = elements;
     sourceNoteSelect.value = 0;
     sourceOctaveSelect.value = 0;
     sourceFinetuneSelect.value = 0;

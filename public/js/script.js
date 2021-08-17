@@ -1,6 +1,6 @@
 // Handler for main part
 const handleMainPart = () => {
-  
+
   // Load cat meow sound
   const loadCatMeowSound = () => {
 
