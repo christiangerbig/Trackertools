@@ -211,7 +211,7 @@ const handleTonePortaStep = () => {
       variables,
       { sourceNote, destinationNote },
       setDefaultTextColor
-    )
+    );
   };
   // Handler for manual key mode to set source note without finetune
   const handleSetSourceNote = (
@@ -224,18 +224,28 @@ const handleTonePortaStep = () => {
     sourceNoteContainer.focus();
     // Add handler to get pressed key source note
     sourceNoteContainer.addEventListener("keypress", (event) =>
-      handleGetKeySource(event, constants, variables, {
-        sourceNote,
-        destinationNote,
-      },
-      setDefaultTextColor)
+      handleGetKeySource(
+        event,
+        constants,
+        variables,
+        {
+          sourceNote,
+          destinationNote,
+        },
+        setDefaultTextColor
+      )
     );
   };
   // Add handler to set source note
   constants.htmlElements.sourceNoteContainer.addEventListener(
     "mouseenter",
     () =>
-      handleSetSourceNote(constants, variables, { sourceNote, destinationNote }, setDefaultTextColor)
+      handleSetSourceNote(
+        constants,
+        variables,
+        { sourceNote, destinationNote },
+        setDefaultTextColor
+      )
   );
   // Handler for mouse leave source note
   const handleMouseLeaveSource = (constants) => {
@@ -243,11 +253,16 @@ const handleTonePortaStep = () => {
     sourceNoteContainer.blur();
     // Remove handler to get pressed key source note
     sourceNoteContainer.removeEventListener("keypress", (event) =>
-    handleGetKeySource(event, constants, variables, {
-      sourceNote,
-      destinationNote,
-    },
-    setDefaultTextColor)
+      handleGetKeySource(
+        event,
+        constants,
+        variables,
+        {
+          sourceNote,
+          destinationNote,
+        },
+        setDefaultTextColor
+      )
     );
   };
   // Add handler for mouse leave source note
@@ -283,7 +298,7 @@ const handleTonePortaStep = () => {
       variables,
       { sourceNote, destinationNote },
       setDefaultTextColor
-    )
+    );
   };
   // Manual key mode to set destination note without finetune
   const handleSetDestinationNote = (
@@ -296,22 +311,28 @@ const handleTonePortaStep = () => {
     destinationNoteContainer.focus();
     // Add handler to get pressed key destination note
     destinationNoteContainer.addEventListener("keypress", (event) =>
-      handleGetKeyDestination(event, constants, variables, {
-        sourceNote,
-        destinationNote,
-      },
-      setDefaultTextColor)
+      handleGetKeyDestination(
+        event,
+        constants,
+        variables,
+        {
+          sourceNote,
+          destinationNote,
+        },
+        setDefaultTextColor
+      )
     );
   };
   // Add handler to set destination note
   constants.htmlElements.destinationNoteContainer.addEventListener(
     "mouseenter",
     () =>
-      handleSetDestinationNote(constants, variables, {
-        sourceNote,
-        destinationNote,
-      },
-      setDefaultTextColor)
+      handleSetDestinationNote(
+        constants,
+        variables,
+        { sourceNote, destinationNote },
+        setDefaultTextColor
+      )
   );
   // Handler for mouse leave destination note
   const handleMouseLeaveDestination = (constants) => {
@@ -319,11 +340,16 @@ const handleTonePortaStep = () => {
     destinationNoteContainer.blur();
     // Remove handler to get pressed key destination note
     destinationNoteContainer.removeEventListener("keypress", (event) =>
-    handleGetKeyDestination(event, constants, variables, {
-      sourceNote,
-      destinationNote,
-    },
-    setDefaultTextColor)
+      handleGetKeyDestination(
+        event,
+        constants,
+        variables,
+        {
+          sourceNote,
+          destinationNote,
+        },
+        setDefaultTextColor
+      )
     );
   };
   // Add handler for mouse leave destination note
