@@ -105,8 +105,9 @@ const handleVolSlideStep = () => {
       .toUpperCase();
   };
   // Add handler for Check checkbox state and show/hide fine volume slide
-  constants.htmlElements.finevolumeSlideCheckbox.addEventListener("change", () =>
-    handleCheckboxState(constants, variables)
+  constants.htmlElements.finevolumeSlideCheckbox.addEventListener(
+    "change",
+    () => handleCheckboxState(constants, variables)
   );
 
   // Handler for values variables
@@ -200,7 +201,11 @@ const handleVolSlideStep = () => {
   );
 
   // Reset all values
-  const handleResetButton = (constants, variables, { setDefaultTextColor, handleCalculateValues }) => {
+  const handleResetButton = (
+    constants,
+    variables,
+    { setDefaultTextColor, handleCalculateValues }
+  ) => {
     const {
       definedTics,
       definedInstrumentVolume,
@@ -227,7 +232,10 @@ const handleVolSlideStep = () => {
   };
   // Add handler for click on reset button
   resetButton.addEventListener("click", () =>
-    handleResetButton(constants, variables, { setDefaultTextColor, handleCalculateValues })
+    handleResetButton(constants, variables, {
+      setDefaultTextColor,
+      handleCalculateValues,
+    })
   );
 
   // Initialize values at start

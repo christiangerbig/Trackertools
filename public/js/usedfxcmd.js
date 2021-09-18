@@ -127,7 +127,8 @@ const usedFxCmd = () => {
         const { fileContent } = variables;
         const songLength = fileContent[songLengthOffset].charCodeAt(0);
         for (let i = 0; i < songLength; i++) {
-          variables.patternNumber = fileContent[songPositionOffset + i].charCodeAt(0);
+          variables.patternNumber =
+            fileContent[songPositionOffset + i].charCodeAt(0);
           const patternOffset =
             variables.patternNumber * patternLength * noteDataLength; // Pattern offset in song structure
           for (
@@ -157,8 +158,8 @@ const usedFxCmd = () => {
                     k +
                     commandLowbyteOffset;
                   (variables.commandLowbyte =
-                    fileContent[commandNumberIndex].charCodeAt(0)) >
-                    0 && (hasCommandArray[variables.commandNumber] = true);
+                    fileContent[commandNumberIndex].charCodeAt(0)) > 0 &&
+                    (hasCommandArray[variables.commandNumber] = true);
                 } else {
                   hasCommandArray[variables.commandNumber] = true;
                 }
@@ -169,7 +170,8 @@ const usedFxCmd = () => {
                   j +
                   k +
                   commandLowbyteOffset;
-                variables.extendedCommandNumber = fileContent[extendedCommandNumberIndex].charCodeAt(0) >> 4;
+                variables.extendedCommandNumber =
+                  fileContent[extendedCommandNumberIndex].charCodeAt(0) >> 4;
                 hasExtendedCommandArray[variables.extendedCommandNumber] = true;
                 hasCommandArray[14] = true; // Also set extended command boolean state
               }
@@ -177,11 +179,10 @@ const usedFxCmd = () => {
           }
         }
       };
-      searchForCommand(
-        constants,
-        variables,
-        { hasCommandArray, hasExtendedCommandArray }
-      );
+      searchForCommand(constants, variables, {
+        hasCommandArray,
+        hasExtendedCommandArray,
+      });
     };
 
     // Output command and extended command names to table
@@ -199,7 +200,7 @@ const usedFxCmd = () => {
       // Fill the table with used command names
       const outputUsedCommands = (
         { maxCommands, htmlElements, commandNamesTable },
-        hasCommandArray, 
+        hasCommandArray,
         createListEntry
       ) => {
         for (let i = 0; i < maxCommands; i++) {
@@ -237,7 +238,10 @@ const usedFxCmd = () => {
     };
 
     getHighestPattern(constants, variables);
-    scanModFile(constants, variables, { hasCommandArray, hasExtendedCommandArray });
+    scanModFile(constants, variables, {
+      hasCommandArray,
+      hasExtendedCommandArray,
+    });
     outputDataToTable(constants, { hasCommandArray, hasExtendedCommandArray });
   };
 

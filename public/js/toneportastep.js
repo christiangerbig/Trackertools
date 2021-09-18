@@ -347,28 +347,48 @@ const handleTonePortaStep = () => {
       { sourceNote, destinationNote }
     ) => {
       // Source period
-      const getSourcePeriod = ({ semiTones, semiToneOctaves, periodsTable }, sourceNote) => {
+      const getSourcePeriod = (
+        { semiTones, semiToneOctaves, periodsTable },
+        sourceNote
+      ) => {
         const { periodIndex, octaveIndex, finetuneIndex } = sourceNote;
-        sourceNote.periodsTableIndex = periodIndex + octaveIndex * semiToneOctaves + finetuneIndex * semiTones;
+        sourceNote.periodsTableIndex =
+          periodIndex +
+          octaveIndex * semiToneOctaves +
+          finetuneIndex * semiTones;
         sourceNote.period = periodsTable[sourceNote.periodsTableIndex];
       };
       // Destination period
-      const getDestinationPeriod = ({ semiTones, semiToneOctaves, periodsTable }, destinationNote) => {
+      const getDestinationPeriod = (
+        { semiTones, semiToneOctaves, periodsTable },
+        destinationNote
+      ) => {
         const { periodIndex, octaveIndex, finetuneIndex } = destinationNote;
-        destinationNote.periodsTableIndex = periodIndex + octaveIndex * semiToneOctaves + finetuneIndex * semiTones;
-        destinationNote.period = periodsTable[destinationNote.periodsTableIndex];
+        destinationNote.periodsTableIndex =
+          periodIndex +
+          octaveIndex * semiToneOctaves +
+          finetuneIndex * semiTones;
+        destinationNote.period =
+          periodsTable[destinationNote.periodsTableIndex];
       };
 
       getSourcePeriod({ semiTones, semiToneOctaves, periodsTable }, sourceNote);
-      getDestinationPeriod({ semiTones, semiToneOctaves, periodsTable }, destinationNote);
+      getDestinationPeriod(
+        { semiTones, semiToneOctaves, periodsTable },
+        destinationNote
+      );
     };
 
     // Calculate units per command
     const calculateUnits = (variables, { sourceNote, destinationNote }) => {
       const { tics, commands } = variables;
-      variables.periodDiff = Math.abs(destinationNote.period - sourceNote.period);
+      variables.periodDiff = Math.abs(
+        destinationNote.period - sourceNote.period
+      );
       variables.ticsPeriodDiff = Math.ceil(variables.periodDiff / tics);
-      variables.commandsPeriodDiff = Math.ceil(variables.ticsPeriodDiff / commands);
+      variables.commandsPeriodDiff = Math.ceil(
+        variables.ticsPeriodDiff / commands
+      );
     };
 
     // Output units per command
@@ -384,7 +404,10 @@ const handleTonePortaStep = () => {
       variables.tooltipText = definedTooltipText;
       const { commandsPeriodDiff } = variables;
       if (commandsPeriodDiff <= maxUnits) {
-        variables.commandUnits = commandsPeriodDiff.toString(16).padStart(2, 0, 0).toUpperCase();
+        variables.commandUnits = commandsPeriodDiff
+          .toString(16)
+          .padStart(2, 0, 0)
+          .toUpperCase();
         setDefaultTextColor(constants);
       } else {
         variables.commandUnits = outputErrorText;
@@ -398,7 +421,10 @@ const handleTonePortaStep = () => {
       unitsResult.title = variables.tooltipText;
     };
 
-    getInputElementsValues(constants, variables, { sourceNote, destinationNote });
+    getInputElementsValues(constants, variables, {
+      sourceNote,
+      destinationNote,
+    });
     getPeriodValues(constants, { sourceNote, destinationNote });
     calculateUnits(variables, { sourceNote, destinationNote });
     outputUnits(constants, variables, setDefaultTextColor);
@@ -406,7 +432,12 @@ const handleTonePortaStep = () => {
   // Add handler for value variables
   constants.htmlElements.groupChange.forEach((element) =>
     element.addEventListener("change", () =>
-      handleCalculateValue(constants, variables, { sourceNote, destinationNote }, setDefaultTextColor)
+      handleCalculateValue(
+        constants,
+        variables,
+        { sourceNote, destinationNote },
+        setDefaultTextColor
+      )
     )
   );
 
