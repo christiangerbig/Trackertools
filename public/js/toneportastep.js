@@ -189,7 +189,8 @@ const handleTonePortaStep = () => {
     { which, keyCode },
     constants,
     variables,
-    { sourceNote, destinationNote }
+    { sourceNote, destinationNote },
+    setDefaultTextColor
   ) => {
     const chararacter = which || keyCode;
     const { shortkeyTable, shortkeyIndexTable, htmlElements } = constants;
@@ -205,13 +206,19 @@ const handleTonePortaStep = () => {
         }
       }
     }
-    handleCalculateValue(constants, variables, { sourceNote, destinationNote });
+    handleCalculateValue(
+      constants,
+      variables,
+      { sourceNote, destinationNote },
+      setDefaultTextColor
+    )
   };
   // Handler for manual key mode to set source note without finetune
   const handleSetSourceNote = (
     constants,
     variables,
-    { sourceNote, destinationNote }
+    { sourceNote, destinationNote },
+    setDefaultTextColor
   ) => {
     const { sourceNoteContainer } = constants.htmlElements;
     sourceNoteContainer.focus();
@@ -220,14 +227,15 @@ const handleTonePortaStep = () => {
       handleGetKeySource(event, constants, variables, {
         sourceNote,
         destinationNote,
-      })
+      },
+      setDefaultTextColor)
     );
   };
   // Add handler to set source note
   constants.htmlElements.sourceNoteContainer.addEventListener(
     "mouseenter",
     () =>
-      handleSetSourceNote(constants, variables, { sourceNote, destinationNote })
+      handleSetSourceNote(constants, variables, { sourceNote, destinationNote }, setDefaultTextColor)
   );
   // Handler for mouse leave source note
   const handleMouseLeaveSource = (constants) => {
@@ -235,7 +243,11 @@ const handleTonePortaStep = () => {
     sourceNoteContainer.blur();
     // Remove handler to get pressed key source note
     sourceNoteContainer.removeEventListener("keypress", (event) =>
-      handleGetKeySource(event, constants)
+    handleGetKeySource(event, constants, variables, {
+      sourceNote,
+      destinationNote,
+    },
+    setDefaultTextColor)
     );
   };
   // Add handler for mouse leave source note
@@ -249,7 +261,8 @@ const handleTonePortaStep = () => {
     { which, keyCode },
     constants,
     variables,
-    { sourceNote, destinationNote }
+    { sourceNote, destinationNote },
+    setDefaultTextColor
   ) => {
     const character = which || keyCode;
     const { shortkeyTable, shortkeyIndexTable, htmlElements } = constants;
@@ -265,13 +278,19 @@ const handleTonePortaStep = () => {
         }
       }
     }
-    handleCalculateValue(constants, variables, { sourceNote, destinationNote });
+    handleCalculateValue(
+      constants,
+      variables,
+      { sourceNote, destinationNote },
+      setDefaultTextColor
+    )
   };
   // Manual key mode to set destination note without finetune
   const handleSetDestinationNote = (
     constants,
     variables,
-    { sourceNote, destinationNote }
+    { sourceNote, destinationNote },
+    setDefaultTextColor
   ) => {
     const { destinationNoteContainer } = constants.htmlElements;
     destinationNoteContainer.focus();
@@ -280,7 +299,8 @@ const handleTonePortaStep = () => {
       handleGetKeyDestination(event, constants, variables, {
         sourceNote,
         destinationNote,
-      })
+      },
+      setDefaultTextColor)
     );
   };
   // Add handler to set destination note
@@ -290,7 +310,8 @@ const handleTonePortaStep = () => {
       handleSetDestinationNote(constants, variables, {
         sourceNote,
         destinationNote,
-      })
+      },
+      setDefaultTextColor)
   );
   // Handler for mouse leave destination note
   const handleMouseLeaveDestination = (constants) => {
@@ -298,7 +319,11 @@ const handleTonePortaStep = () => {
     destinationNoteContainer.blur();
     // Remove handler to get pressed key destination note
     destinationNoteContainer.removeEventListener("keypress", (event) =>
-      handleGetKeyDestination(event, constants)
+    handleGetKeyDestination(event, constants, variables, {
+      sourceNote,
+      destinationNote,
+    },
+    setDefaultTextColor)
     );
   };
   // Add handler for mouse leave destination note
