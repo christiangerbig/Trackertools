@@ -14,9 +14,9 @@ const handleVolSlideStep = () => {
     outputErrorText: "**",
     // HTML element objects
     htmlElements: {
-      ticsButton: document.querySelector("#ticsButton"),
-      instrumentVolumeButton: document.querySelector("#instrumentVolumeButton"),
-      unitsButton: document.querySelector("#unitsButton"),
+      ticsInput: document.querySelector("#ticsInput"),
+      instrumentVolumeInput: document.querySelector("#instrumentVolumeInput"),
+      unitsInput: document.querySelector("#unitsInput"),
       finevolumeSlideContainer: document.querySelector(
         "#finevolumeSlideContainer"
       ),
@@ -39,6 +39,9 @@ const handleVolSlideStep = () => {
     tics: definedTics,
     instrumentVolume: definedInstrumentVolume,
     units: definedUnits,
+    handleCheckboxStateCallback: null,
+    handleCalculateValuesCallback: null,
+    handleResetButtonCallback: null,
   };
 
   // Set default text color if it as red
@@ -105,107 +108,105 @@ const handleVolSlideStep = () => {
       .toUpperCase();
   };
   // Add handler for Check checkbox state and show/hide fine volume slide
+  variables.handleCheckboxStateCallback = () =>
+    handleCheckboxState(constants, variables);
   constants.htmlElements.finevolumeSlideCheckbox.addEventListener(
     "change",
-    () => handleCheckboxState(constants, variables)
+    variables.handleCheckboxStateCallback
   );
 
-  // Handler for values variables
-  const handleCalculateValues = (constants, variables, setDefaultTextColor) => {
-    // Get input element values and convert them to integers
-    const getInputElementsValues = ({ htmlElements }, variables) => {
-      const { ticsButton, instrumentVolumeButton, unitsButton } = htmlElements;
-      variables.tics = parseInt(ticsButton.value);
-      variables.tics--; // Without first tick
-      variables.instrumentVolume = parseInt(instrumentVolumeButton.value);
-      variables.units = parseInt(unitsButton.value);
-    };
+  // Get input element values and convert them to integers
+  const getInputElementsValues = ({ htmlElements }, variables) => {
+    const { ticsInput, instrumentVolumeInput, unitsInput } = htmlElements;
+    variables.tics = parseInt(ticsInput.value);
+    variables.tics--; // Without first tick
+    variables.instrumentVolume = parseInt(instrumentVolumeInput.value);
+    variables.units = parseInt(unitsInput.value);
+  };
 
-    // Calculate coomands per row without fine volume slide
-    const calculateUnits = (variables) => {
-      const { tics, instrumentVolume, units } = variables;
-      variables.volumeSlideCommands = Math.ceil(instrumentVolume / tics);
-      variables.volumeSlideCommands = Math.ceil(
-        variables.volumeSlideCommands / units
-      );
-    };
+  // Calculate coomands per row without fine volume slide
+  const calculateUnits = (variables) => {
+    const { tics, instrumentVolume, units } = variables;
+    variables.volumeSlideCommands = Math.ceil(instrumentVolume / tics);
+    variables.volumeSlideCommands = Math.ceil(
+      variables.volumeSlideCommands / units
+    );
+  };
 
-    // Calculate comands per row and units per command considering fine volume slide
-    const calculateUnitsFinevolume = (variables) => {
-      const { tics, instrumentVolume, units } = variables;
-      variables.finevolumeSlideCommands = Math.floor(
-        instrumentVolume / tics / units
-      );
-      variables.finevolumeSlideUnits = instrumentVolume % tics;
-    };
+  // Calculate comands per row and units per command considering fine volume slide
+  const calculateUnitsFinevolume = (variables) => {
+    const { tics, instrumentVolume, units } = variables;
+    variables.finevolumeSlideCommands = Math.floor(
+      instrumentVolume / tics / units
+    );
+    variables.finevolumeSlideUnits = instrumentVolume % tics;
+  };
 
-    // Check maxinun of volume slide commands number or fine volume slide units number and output units
-    const outputUnits = (constants, variables, setDefaultTextColor) => {
-      const {
-        maxVolumeSlideCommands,
-        maxFinevolumeSlideUnits,
-        definedVolumeslideTooltipText,
-        definedFinevolumeSlideTooltipText,
+  // Check maxinun of volume slide commands number or fine volume slide units number and output units
+  const outputUnits = (constants, variables) => {
+    const {
+      maxVolumeSlideCommands,
+      maxFinevolumeSlideUnits,
+      definedVolumeslideTooltipText,
+      definedFinevolumeSlideTooltipText,
+      volumeSlideTooltipErrorText,
+      finevolumeSlideTooltipErrorText,
+      outputErrorText,
+      htmlElements,
+    } = constants;
+    const { commandsResult, unitsResult } = htmlElements;
+    [commandsResult.title, unitsResult.title] = [
+      definedVolumeslideTooltipText,
+      definedFinevolumeSlideTooltipText,
+    ];
+    if (
+      variables.volumeSlideCommands <= maxVolumeSlideCommands &&
+      variables.finevolumeSlideUnits <= maxFinevolumeSlideUnits
+    ) {
+      setDefaultTextColor(constants);
+    } else {
+      [variables.commandsToggle, variables.finevolumeSlideUnits] = [
+        outputErrorText,
+        outputErrorText,
+      ];
+      [commandsResult.title, unitsResult.title] = [
         volumeSlideTooltipErrorText,
         finevolumeSlideTooltipErrorText,
-        outputErrorText,
-        htmlElements,
-      } = constants;
-      const { commandsResult, unitsResult } = htmlElements;
-      [commandsResult.title, unitsResult.title] = [
-        definedVolumeslideTooltipText,
-        definedFinevolumeSlideTooltipText,
       ];
       if (
-        variables.volumeSlideCommands <= maxVolumeSlideCommands &&
-        variables.finevolumeSlideUnits <= maxFinevolumeSlideUnits
+        commandsResult.classList.contains("textColored") ||
+        unitsResult.classList.contains("textColored")
       ) {
-        setDefaultTextColor(constants);
-      } else {
-        [variables.commandsToggle, variables.finevolumeSlideUnits] = [
-          outputErrorText,
-          outputErrorText,
-        ];
-        [commandsResult.title, unitsResult.title] = [
-          volumeSlideTooltipErrorText,
-          finevolumeSlideTooltipErrorText,
-        ];
-        if (
-          commandsResult.classList.contains("textColored") ||
-          unitsResult.classList.contains("textColored")
-        ) {
-          commandsResult.classList.remove("textColored");
-          commandsResult.classList.add("text-danger");
-          unitsResult.classList.remove("textColored");
-          unitsResult.classList.add("text-danger");
-        }
+        commandsResult.classList.remove("textColored");
+        commandsResult.classList.add("text-danger");
+        unitsResult.classList.remove("textColored");
+        unitsResult.classList.add("text-danger");
       }
-      // Output commands per row and fine slide units per command
-      commandsResult.innerHTML = variables.commandsToggle.toString();
-      unitsResult.innerHTML = variables.finevolumeSlideUnits
-        .toString(16)
-        .toUpperCase();
-    };
+    }
+    // Output commands per row and fine slide units per command
+    commandsResult.innerHTML = variables.commandsToggle.toString();
+    unitsResult.innerHTML = variables.finevolumeSlideUnits
+      .toString(16)
+      .toUpperCase();
+  };
 
+  // Handler for values variables
+  const handleCalculateValues = (constants, variables) => {
     getInputElementsValues(constants, variables);
     calculateUnits(variables);
     calculateUnitsFinevolume(variables);
     checkFinevolume(constants, variables);
-    outputUnits(constants, variables, setDefaultTextColor);
+    outputUnits(constants, variables);
   };
   // Add handler for values variables
+  variables.handleCalculateValuesCallback = () =>
+    handleCalculateValues(constants, variables);
   constants.htmlElements.groupChange.forEach((element) =>
-    element.addEventListener("change", () =>
-      handleCalculateValues(constants, variables, setDefaultTextColor)
-    )
+    element.addEventListener("change", variables.handleCalculateValuesCallback)
   );
 
   // Reset all values
-  const handleResetButton = (
-    constants,
-    variables,
-    { setDefaultTextColor, handleCalculateValues }
-  ) => {
+  const handleResetButton = (constants, variables) => {
     const {
       definedTics,
       definedInstrumentVolume,
@@ -214,32 +215,29 @@ const handleVolSlideStep = () => {
       definedFinevolumeSlideTooltipText,
       htmlElements,
     } = constants;
-    const { ticsButton, instrumentVolumeButton, unitsButton } = htmlElements;
+    const { ticsInput, instrumentVolumeInput, unitsInput } = htmlElements;
     variables.volumeslideCommands = 0;
     variables.finevolumeSlideCommands = 0;
     variables.commandsToggle = 0;
     variables.finevolumeSlideUnits = 0;
-    ticsButton.value = definedTics;
-    instrumentVolumeButton.value = definedInstrumentVolume;
-    unitsButton.value = definedUnits;
+    ticsInput.value = definedTics;
+    instrumentVolumeInput.value = definedInstrumentVolume;
+    unitsInput.value = definedUnits;
     commandsResult.innerHTML = "0";
     commandsResult.title = definedVolumeslideTooltipText;
     unitsResult.innerHTML = "0";
     unitsResult.title = definedFinevolumeSlideTooltipText;
     finevolumeSlideCheckbox.checked = false;
     finevolumeSlideContainer.classList.add("d-none");
-    handleCalculateValues(constants, variables, setDefaultTextColor);
+    handleCalculateValues(constants, variables);
   };
   // Add handler for click on reset button
-  resetButton.addEventListener("click", () =>
-    handleResetButton(constants, variables, {
-      setDefaultTextColor,
-      handleCalculateValues,
-    })
-  );
+  variables.handleResetButtonCallback = () =>
+    handleResetButton(constants, variables);
+  resetButton.addEventListener("click", variables.handleResetButtonCallback);
 
   // Initialize values at start
-  handleCalculateValues(constants, variables, setDefaultTextColor);
+  handleCalculateValues(constants, variables);
 };
 
 // Add handler for VolSlideStep

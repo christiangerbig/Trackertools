@@ -1,14 +1,13 @@
-/ * Colors */
-
 $grey1: rgb(116, 116, 218)
 $grey2: rgb(122, 122, 122)
 $grey3: rgb(202, 200, 200)
 
 $blue1: rgb(63, 63, 129)
 $blue2: rgb(81, 57, 189)
+$blue3: rgb(131,107,239)
 
 
-/ * Elements */
+/* Elements */
 
 body 
   font-family: Roboto
@@ -16,10 +15,8 @@ body
 
 a 
   text-decoration: none
-
-
-a:hover 
-  color: $grey2
+  &:hover 
+    color: $grey2
 
 
 textarea 
@@ -53,7 +50,6 @@ textarea
 .sfcTableWrap 
   overflow-y: scroll
   height: 12rem
-
   th 
     position: sticky
     top: 0px
@@ -62,7 +58,6 @@ textarea
 .ufcTableWrap 
   overflow-y: scroll
   height: 22rem
-
   th 
     position: sticky
     top: 0px
@@ -101,26 +96,24 @@ textarea
 .btn-primary 
   background-color: $grey1
   border-color: $grey1
-
-
-.btn-primary:hover 
-  background-color: $blue2
-  border-color: $blue2
-
-
-.btn-primary:focus 
-  background-color: $grey1
-  border-color: $grey1
-
-
-.btn-primary:focus:hover 
-  background-color: $blue2
-  border-color: $blue2
+  &:hover 
+    background-color: $blue2
+    border-color: $blue2
+  &:focus 
+    background-color: $grey1
+    border-color: $grey1
+    &:hover 
+      background-color: $blue2
+      border-color: $blue2
 
 
 .navbar .navbar-brand 
   color: $grey1
+  &:hover 
+    color: $blue2
 
 
-.navbar .navbar-brand:hover 
-  color: $blue2
+.link-primary
+  color: $blue3
+  &:hover
+    color: $blue2

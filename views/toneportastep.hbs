@@ -92,14 +92,14 @@
       <div class="col-10 col-md-5 pt-3 pb-4 mb-5 rounded containerOpacity">
         <h4 class="mb-2"> Song Speed </h4>
         <div>
-          <input type="number" class="rounded text-center groupChange" id="ticsButton" value="6" min="1" max="31" title="Song speed ranges from 1 to 31">
+          <input type="number" class="rounded text-center groupChange" id="ticsInput" value="6" min="1" max="31" title="Song speed ranges from 1 to 31">
           <span> tic(s) per row </span>
         </div>
       </div>
       <div class="col-10 col-md-5 pt-3 pb-4 mb-5 rounded containerOpacity">
         <h4 class="mb-2"> Tone Portamento </h4>
         <div>
-          <input type="number" class="rounded text-center groupChange" id="commandsButton" value="1" min="1" max="63" title="Number of Tone Portamento commands ranges from 1 to 64">
+          <input type="number" class="rounded text-center groupChange" id="commandsInput" value="1" min="1" max="63" title="Number of Tone Portamento commands ranges from 1 to 64">
           <span> command(s) per row </span>
         </div>
       </div>
@@ -127,7 +127,7 @@
       <div class="col-10 col-md-9 pt-3 pb-4 mb-0">
         <p class="text-justify">
           The tool <span class="fw-bold"> TonePortaStep </span> is used in conjunction with the music editor
-          <span class="fw-bold"> Protracker</span>. This tracker uses the effect command
+          <span class="fw-bold"> <a href="https://en.wikipedia.org/wiki/ProTracker" class="link-primary"> ProTracker</a></span>. This tracker uses the effect command
           <span class="fw-bold"> Tone Portamento </span> which does a linear slide from one note to another. The
           argument for this command is called <span class="fw-bold"> number of units </span> and is given
           as a hex number. This value is added to or substracted of the source note period value.
@@ -226,4 +226,4 @@
   </div>
 </section>
 
-<script src="/js/toneportastep.js"></script>
+<script src="/js/tonePortaStep/script.js"></script>

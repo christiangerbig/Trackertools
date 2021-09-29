@@ -3,12 +3,12 @@ const handleMainPart = () => {
   // Load cat meow sound
   const loadCatMeowSound = () => {
     // Handler for load cat meow sound
-    const handleCatMeowSoundLoad = () =>
-      catMeowSound.removeEventListener("load", handleCatMeowSoundLoad);
+    const handleLoadCatMeowSound = () =>
+      catMeowSound.removeEventListener("load", handleLoadCatMeowSound);
 
     // Add handler for load cat meow sound
     const catMeowSound = new Audio("./sounds/cute-cat-meow.mp3");
-    catMeowSound.addEventListener("load", handleCatMeowSoundLoad);
+    catMeowSound.addEventListener("load", handleLoadCatMeowSound);
     return catMeowSound;
   };
   const catMeowSound = loadCatMeowSound();

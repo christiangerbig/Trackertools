@@ -2,8 +2,8 @@
 const handleTonePortaStep = () => {
   // ---------- Global ----------
   const constants = {
-    definedTics: 6,
-    definedCommands: 1,
+    definedTics: "6",
+    definedCommands: "1",
     definedTooltipText: "Number of units ranges from hex 01 to FF",
     semiToneOctaves: 12,
     octaves: 3,
@@ -27,25 +27,33 @@ const handleTonePortaStep = () => {
       destinationNoteContainer: document.querySelector(
         "#destinationNoteContainer"
       ),
-      ticsButton: document.querySelector("#ticsButton"),
-      commandsButton: document.querySelector("#commandsButton"),
+      ticsInput: document.querySelector("#ticsInput"),
+      commandsInput: document.querySelector("#commandsInput"),
       unitsResult: document.querySelector("#unitsResult"),
       resetButton: document.querySelector("#resetButton"),
       groupChange: document.querySelectorAll(".groupChange"),
     },
-    // Character codes for note period and octaves
+    // Key codes for note periods C  C#  D  D#  E  F  F#  G  G#  A  A#  B and three octaves
     shortkeyTable: [
-      // C  C#  D  D#  E  F  F#  G  G#  A  A#  B
-      99, 67, 100, 68, 101, 102, 70, 103, 71, 97, 65, 98,
-      // 1  2  3
-      49, 50, 51,
+      99, 67, 100, 68, 101, 102, 70, 103, 71, 97, 65, 98, 49, 50, 51,
     ],
-    // Index for note period and octaves
+    // Index for note periods C  C# D  D# E  F  F# G  G# A  A#  B and three octaves
     shortkeyIndexTable: [
-      // C  C# D  D# E  F  F# G  G# A  A#  B
-      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
-      // 1  2  3
-      0, 1, 2,
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "0",
+      "1",
+      "2",
     ],
     // Period values for three octaves and different tunings
     periodsTable: [
@@ -152,6 +160,15 @@ const handleTonePortaStep = () => {
     commandsPeriodDiff: 0,
     commandUnits: 0,
     tooltipText: definedTooltipText,
+    handleSwitchDestinationFinetuneCallback: null,
+    handleSwitchSourceFinetuneCallback: null,
+    handleGetKeySourceCallback: null,
+    handleSetSourceNoteCallback: null,
+    handleMouseLeaveSourceCallback: null,
+    handleGetKeyDestinationCallback: null,
+    handleSetDestinationNoteCallback: null,
+    handleMouseLeaveDestinationCallback: null,
+    handleCalculateValueCallback: null,
   };
 
   // Set text color from red to default
@@ -169,8 +186,11 @@ const handleTonePortaStep = () => {
     destinationFinetuneSelect.value = sourceFinetuneSelect.value;
   };
   // Add handler for change finetune value
-  constants.htmlElements.sourceFinetuneSelect.addEventListener("click", () =>
-    handleSwitchDestinationFinetune(constants)
+  variables.handleSwitchDestinationFinetuneCallback = () =>
+    handleSwitchDestinationFinetune(constants);
+  constants.htmlElements.sourceFinetuneSelect.addEventListener(
+    "click",
+    variables.handleSwitchDestinationFinetuneCallback
   );
 
   // Handler for switch source finetune to destination finetune value
@@ -179,9 +199,11 @@ const handleTonePortaStep = () => {
     sourceFinetuneSelect.value = destinationFinetuneSelect.value;
   };
   // Add handler for change finetune value
+  variables.handleSwitchSourceFinetuneCallback = () =>
+    handleSwitchSourceFinetune(constants);
   constants.htmlElements.destinationFinetuneSelect.addEventListener(
     "click",
-    () => handleSwitchSourceFinetune(constants)
+    variables.handleSwitchSourceFinetuneCallback
   );
 
   // Handler for pressed key source note
@@ -189,8 +211,7 @@ const handleTonePortaStep = () => {
     { which, keyCode },
     constants,
     variables,
-    { sourceNote, destinationNote },
-    setDefaultTextColor
+    { sourceNote, destinationNote }
   ) => {
     const chararacter = which || keyCode;
     const { shortkeyTable, shortkeyIndexTable, htmlElements } = constants;
@@ -209,21 +230,19 @@ const handleTonePortaStep = () => {
     handleCalculateValue(
       constants,
       variables,
-      { sourceNote, destinationNote },
-      setDefaultTextColor
+      { sourceNote, destinationNote }
     );
   };
   // Handler for manual key mode to set source note without finetune
   const handleSetSourceNote = (
     constants,
     variables,
-    { sourceNote, destinationNote },
-    setDefaultTextColor
+    { sourceNote, destinationNote }
   ) => {
     const { sourceNoteContainer } = constants.htmlElements;
     sourceNoteContainer.focus();
     // Add handler to get pressed key source note
-    sourceNoteContainer.addEventListener("keypress", (event) =>
+    variables.handleGetKeySourceCallback = (event) =>
       handleGetKeySource(
         event,
         constants,
@@ -231,44 +250,40 @@ const handleTonePortaStep = () => {
         {
           sourceNote,
           destinationNote,
-        },
-        setDefaultTextColor
-      )
+        }
+      );
+    sourceNoteContainer.addEventListener(
+      "keypress",
+      variables.handleGetKeySourceCallback
     );
   };
   // Add handler to set source note
+  variables.handleSetSourceNoteCallback = () =>
+    handleSetSourceNote(
+      constants,
+      variables,
+      { sourceNote, destinationNote }
+    );
   constants.htmlElements.sourceNoteContainer.addEventListener(
     "mouseenter",
-    () =>
-      handleSetSourceNote(
-        constants,
-        variables,
-        { sourceNote, destinationNote },
-        setDefaultTextColor
-      )
+    variables.handleSetSourceNoteCallback
   );
   // Handler for mouse leave source note
-  const handleMouseLeaveSource = (constants) => {
+  const handleMouseLeaveSource = (constants, variables) => {
     const { sourceNoteContainer } = constants.htmlElements;
     sourceNoteContainer.blur();
     // Remove handler to get pressed key source note
-    sourceNoteContainer.removeEventListener("keypress", (event) =>
-      handleGetKeySource(
-        event,
-        constants,
-        variables,
-        {
-          sourceNote,
-          destinationNote,
-        },
-        setDefaultTextColor
-      )
+    sourceNoteContainer.removeEventListener(
+      "keypress",
+      variables.handleGetKeySourceCallback
     );
   };
   // Add handler for mouse leave source note
+  variables.handleMouseLeaveSourceCallback = () =>
+    handleMouseLeaveSource(constants, variables);
   constants.htmlElements.sourceNoteContainer.addEventListener(
     "mouseleave",
-    () => handleMouseLeaveSource(constants)
+    variables.handleMouseLeaveSourceCallback
   );
 
   // Handler for pressed key destination note
@@ -276,8 +291,7 @@ const handleTonePortaStep = () => {
     { which, keyCode },
     constants,
     variables,
-    { sourceNote, destinationNote },
-    setDefaultTextColor
+    { sourceNote, destinationNote }
   ) => {
     const character = which || keyCode;
     const { shortkeyTable, shortkeyIndexTable, htmlElements } = constants;
@@ -296,21 +310,19 @@ const handleTonePortaStep = () => {
     handleCalculateValue(
       constants,
       variables,
-      { sourceNote, destinationNote },
-      setDefaultTextColor
+      { sourceNote, destinationNote }
     );
   };
   // Manual key mode to set destination note without finetune
   const handleSetDestinationNote = (
     constants,
     variables,
-    { sourceNote, destinationNote },
-    setDefaultTextColor
+    { sourceNote, destinationNote }
   ) => {
     const { destinationNoteContainer } = constants.htmlElements;
     destinationNoteContainer.focus();
     // Add handler to get pressed key destination note
-    destinationNoteContainer.addEventListener("keypress", (event) =>
+    variables.handleGetKeyDestinationCallback = (event) =>
       handleGetKeyDestination(
         event,
         constants,
@@ -318,52 +330,46 @@ const handleTonePortaStep = () => {
         {
           sourceNote,
           destinationNote,
-        },
-        setDefaultTextColor
-      )
+        }
+      );
+    destinationNoteContainer.addEventListener(
+      "keypress",
+      variables.handleGetKeyDestinationCallback
     );
   };
   // Add handler to set destination note
+  variables.handleSetDestinationNoteCallback = () =>
+    handleSetDestinationNote(constants, variables, {
+      sourceNote,
+      destinationNote,
+    });
   constants.htmlElements.destinationNoteContainer.addEventListener(
     "mouseenter",
-    () =>
-      handleSetDestinationNote(
-        constants,
-        variables,
-        { sourceNote, destinationNote },
-        setDefaultTextColor
-      )
+    variables.handleSetDestinationNoteCallback
   );
   // Handler for mouse leave destination note
-  const handleMouseLeaveDestination = (constants) => {
+  const handleMouseLeaveDestination = (constants, variables) => {
     const { destinationNoteContainer } = constants.htmlElements;
     destinationNoteContainer.blur();
     // Remove handler to get pressed key destination note
-    destinationNoteContainer.removeEventListener("keypress", (event) =>
-      handleGetKeyDestination(
-        event,
-        constants,
-        variables,
-        {
-          sourceNote,
-          destinationNote,
-        },
-        setDefaultTextColor
-      )
+    destinationNoteContainer.removeEventListener(
+      "keypress",
+      variables.handleGetKeyDestination
     );
   };
   // Add handler for mouse leave destination note
+  variables.handleMouseLeaveDestinationCallback = () =>
+    handleMouseLeaveDestination(constants, variables);
   constants.htmlElements.destinationNoteContainer.addEventListener(
     "mouseleave",
-    () => handleMouseLeaveDestination(constants)
+    variables.handleMouseLeaveDestinationCallback
   );
 
   // Handler for value variables
   const handleCalculateValue = (
     constants,
     variables,
-    { sourceNote, destinationNote },
-    setDefaultTextColor
+    { sourceNote, destinationNote }
   ) => {
     // Get input element values and convert them to integers
     const getInputElementsValues = (
@@ -378,8 +384,8 @@ const handleTonePortaStep = () => {
         destinationNoteSelect,
         destinationOctaveSelect,
         destinationFinetuneSelect,
-        ticsButton,
-        commandsButton,
+        ticsInput,
+        commandsInput,
       } = htmlElements;
       sourceNote.periodIndex = parseInt(sourceNoteSelect.value);
       sourceNote.octaveIndex = parseInt(sourceOctaveSelect.value);
@@ -387,9 +393,31 @@ const handleTonePortaStep = () => {
       destinationNote.periodIndex = parseInt(destinationNoteSelect.value);
       destinationNote.octaveIndex = parseInt(destinationOctaveSelect.value);
       destinationNote.finetuneIndex = parseInt(destinationFinetuneSelect.value);
-      variables.tics = parseInt(ticsButton.value);
+      variables.tics = parseInt(ticsInput.value);
       variables.tics--; // Without first tick
-      variables.commands = parseInt(commandsButton.value);
+      variables.commands = parseInt(commandsInput.value);
+    };
+
+    // Source period
+    const getSourcePeriod = (
+      { semiTones, semiToneOctaves, periodsTable },
+      sourceNote
+    ) => {
+      const { periodIndex, octaveIndex, finetuneIndex } = sourceNote;
+      sourceNote.periodsTableIndex =
+        periodIndex + octaveIndex * semiToneOctaves + finetuneIndex * semiTones;
+      sourceNote.period = periodsTable[sourceNote.periodsTableIndex];
+    };
+
+    // Destination period
+    const getDestinationPeriod = (
+      { semiTones, semiToneOctaves, periodsTable },
+      destinationNote
+    ) => {
+      const { periodIndex, octaveIndex, finetuneIndex } = destinationNote;
+      destinationNote.periodsTableIndex =
+        periodIndex + octaveIndex * semiToneOctaves + finetuneIndex * semiTones;
+      destinationNote.period = periodsTable[destinationNote.periodsTableIndex];
     };
 
     // Read period values from table
@@ -397,32 +425,6 @@ const handleTonePortaStep = () => {
       { semiTones, semiToneOctaves, periodsTable },
       { sourceNote, destinationNote }
     ) => {
-      // Source period
-      const getSourcePeriod = (
-        { semiTones, semiToneOctaves, periodsTable },
-        sourceNote
-      ) => {
-        const { periodIndex, octaveIndex, finetuneIndex } = sourceNote;
-        sourceNote.periodsTableIndex =
-          periodIndex +
-          octaveIndex * semiToneOctaves +
-          finetuneIndex * semiTones;
-        sourceNote.period = periodsTable[sourceNote.periodsTableIndex];
-      };
-      // Destination period
-      const getDestinationPeriod = (
-        { semiTones, semiToneOctaves, periodsTable },
-        destinationNote
-      ) => {
-        const { periodIndex, octaveIndex, finetuneIndex } = destinationNote;
-        destinationNote.periodsTableIndex =
-          periodIndex +
-          octaveIndex * semiToneOctaves +
-          finetuneIndex * semiTones;
-        destinationNote.period =
-          periodsTable[destinationNote.periodsTableIndex];
-      };
-
       getSourcePeriod({ semiTones, semiToneOctaves, periodsTable }, sourceNote);
       getDestinationPeriod(
         { semiTones, semiToneOctaves, periodsTable },
@@ -443,7 +445,7 @@ const handleTonePortaStep = () => {
     };
 
     // Output units per command
-    const outputUnits = (constants, variables, setDefaultTextColor) => {
+    const outputUnits = (constants, variables) => {
       const {
         definedTooltipText,
         outputErrorText,
@@ -478,22 +480,21 @@ const handleTonePortaStep = () => {
     });
     getPeriodValues(constants, { sourceNote, destinationNote });
     calculateUnits(variables, { sourceNote, destinationNote });
-    outputUnits(constants, variables, setDefaultTextColor);
+    outputUnits(constants, variables);
   };
   // Add handler for value variables
-  constants.htmlElements.groupChange.forEach((element) =>
-    element.addEventListener("change", () =>
+  constants.htmlElements.groupChange.forEach((element) => {
+    variables.handleCalculateValueCallback = () =>
       handleCalculateValue(
         constants,
         variables,
-        { sourceNote, destinationNote },
-        setDefaultTextColor
-      )
-    )
-  );
+        { sourceNote, destinationNote }
+      );
+    element.addEventListener("change", variables.handleCalculateValueCallback);
+  });
 
   // Reset all values
-  const handleResetButton = (constants, setDefaultTextColor) => {
+  const handleResetButton = (constants) => {
     const { definedTics, definedCommands, definedTooltipText, htmlElements } =
       constants;
     const {
@@ -503,18 +504,18 @@ const handleTonePortaStep = () => {
       destinationNoteSelect,
       destinationOctaveSelect,
       destinationFinetuneSelect,
-      ticsButton,
-      commandsButton,
+      ticsInput,
+      commandsInput,
       unitsResult,
     } = htmlElements;
-    sourceNoteSelect.value = 0;
-    sourceOctaveSelect.value = 0;
-    sourceFinetuneSelect.value = 0;
-    destinationNoteSelect.value = 0;
-    destinationOctaveSelect.value = 0;
-    destinationFinetuneSelect.value = 0;
-    ticsButton.value = definedTics;
-    commandsButton.value = definedCommands;
+    sourceNoteSelect.value = "0";
+    sourceOctaveSelect.value = "0";
+    sourceFinetuneSelect.value = "0";
+    destinationNoteSelect.value = "0";
+    destinationOctaveSelect.value = "0";
+    destinationFinetuneSelect.value = "0";
+    ticsInput.value = definedTics;
+    commandsInput.value = definedCommands;
     unitsResult.innerHTML = "00";
     unitsResult.title = definedTooltipText;
     setDefaultTextColor(constants);
