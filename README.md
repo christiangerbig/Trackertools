@@ -11,23 +11,21 @@ This collection includes four tools for the music editor Protracker, which make 
 ## User Stories
 
 - 404
-   - 404 page when I go to a page that doesn’t exist so that I know it was my fault 
-- 500
-   - Error page when the super team screws it up so that I know that is not my fault
+   - 404 page when user goes to a page that doesn’t exist 
 - Homepage
    - What the app is about. 
 - Header
-   - Links to access all tools and  Link to Homepage
+   - Links to access all tools and Link to Homepage
 - Footer
    - Links to my GitHub and LinkedIn
 - TonePortaStep
-   - Input fields for the calculation Links to About and Help
+   - Input fields for the calculation and links to About and Help
 - VolSlideStep 
-   - Input fields for the calculation Links to About and Help
+   - Input fields for the calculation and links to About and Help
 - SearchFxCmd 
-   - Input fields for the calculation Links to About and Help
+   - Input fields for the serch amd and links to About and Help
 - UsedFxCmd 
-   - Input fields for the calculation Links to About
+   - Links to About
 - Contact 
    - Form to send a message
 
@@ -59,6 +57,13 @@ This collection includes four tools for the music editor Protracker, which make 
 ## Models
 
 Models: Request-Model
+
+```javascript
+{
+  email: String,
+  message: String,
+}
+```
 
 ## Links
 
