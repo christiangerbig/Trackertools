@@ -1,30 +1,55 @@
-<section class="backgroundPicture" id="contentHome">
+<section
+  id="contentHome"
+  class="backgroundPicture"
+>
   <div class="container text-center textLightGrey py-5">
     <nav class="navbar navbar-expand-sm navbar-dark">
       <span class="navbar-brand mb-0"> SearchFxCmd </span>
       <div class="navbar-nav">
-        <a class="nav-link" href="#contentAbout"> About </a>
-        <a class="nav-link" href="#contentHelp"> Help </a>
+        <a 
+          href="#contentAbout"
+          class="nav-link"
+        >
+          About
+        </a>
+        <a 
+          href="#contentHelp"
+          class="nav-link"
+        >
+          Help
+        </a>
       </div>
     </nav>
     <div class="row py-5 justify-content-around">
       <div class="col-10 col-md-4 pt-4 pb-2 mb-5 rounded containerOpacity">
         <div class="container input-group mb-3 disable-text-shadow">
-          <input type="file" class="w-75 rounded" id="inputGroupFile01">  
+          <input
+            type="file"
+            id="inputGroupFile01"
+            class="w-75 rounded"
+          >  
         </div>
       </div>
       <div class="w-100"></div>
-      <div class="col-10 col-md-5 pt-3 pb-4 mb-5 rounded containerOpacity" id="commandSearchContainer" tabindex=0>
+      <div
+        tabindex=0
+        id="commandSearchContainer"
+        class="col-10 col-md-5 pt-3 pb-4 mb-5 rounded containerOpacity"
+      >
         <h4 class="mb-2"> Search Command </h4>
-        <select class="form-select-sm rounded groupChange" id="commandSelect" title="Choose an effect command">
-          <option value="-1" selected>Choose command... </option>
+        <select
+          id="commandSelect"
+          title="Choose an effect command"
+          class="form-select-sm rounded groupChange"
+        >
+          <option value="-1" selected> Choose command... </option>
           <option value="0"> 0 - Arpeggio </option>
           <option value="1"> 1 - Portamento Up </option>
           <option value="2"> 2 - Portamento Down </option>
           <option value="3"> 3 - Tone Portamento </option>
           <option value="4"> 4 - Vibrato </option>
-          <option value="5"> 5 - Tone Porta & Vol Slide </option>
-          <option value="6"> 6 - Vib & Vol Slide </option>
+          <option value="5"> 5 - Tone Porta &amp; Vol Slide </option>
+          <option value="6"> 6 - Vib &amp; Vol Slide </option>
           <option value="7"> 7 - Tremolo </option>
           <option value="8"> 8 - NOT USED / custom </option>
           <option value="9"> 9 - Set Samp Offset </option>
@@ -36,10 +61,17 @@
           <option value="15"> F - Set Speed </option>
         </select>
       </div>
-      <div class="col-10 col-md-5 pt-3 pb-4 mb-5 rounded containerOpacity groupChange" id="extendedCommandSearchContainer"
-        tabindex=0>
+      <div
+        tabindex=0
+        id="extendedCommandSearchContainer"
+        class="col-10 col-md-5 pt-3 pb-4 mb-5 rounded containerOpacity groupChange"
+      >
         <h4 class="mb-2"> Search Extended Command </h4>
-        <select class="form-select-sm rounded groupChange" id="extendedCommandSelect" title="Choose an extended effect command">
+        <select
+          id="extendedCommandSelect"
+          title="Choose an extended effect command"
+          class="form-select-sm rounded groupChange"
+        >
           <option value="-1" selected>Choose ext command... </option>
           <option value="0"> E0 - Set Filter </option>
           <option value="1"> E1 - Fine Porta Up </option>
@@ -64,12 +96,35 @@
           <table class="table table-borderless">
             <thead>
               <tr class="disable-text-shadow text-center">
-                <th scope="col" class="text-dark-grey bg-light rounded p-1"> Pos </th>
-                <th scope="col" class="text-light bg-secondary rounded p-1"> Patt </th>
-                <th scope="col" class="text-dark-grey bg-light rounded p-1"> Row </th>
-                <th scope="col" class="text-light bg-secondary rounded p-1"> Chan </th>
+                <th
+                  scope="col"
+                  class="text-dark-grey bg-light rounded p-1"
+                > 
+                  Pos
+                </th>
+                <th
+                  scope="col"
+                  class="text-light bg-secondary rounded p-1"
+                > 
+                  Patt
+                </th>
+                <th
+                  scope="col"
+                  class="text-dark-grey bg-light rounded p-1"
+                >
+                  Row
+                </th>
+                <th
+                  scope="col"
+                  class="text-light bg-secondary rounded p-1"
+                >
+                  Chan
+                </th>
             </thead>
-            <tbody class="text-light text-center" id="tableBody">
+            <tbody
+              id="tableBody"
+              class="text-light text-center"
+            >
               <!--- Will be manually inserted
               <tr>
                 <td></td>
@@ -86,148 +141,166 @@
 </section>
 
 <section id="contentAbout">
-  <div class="container pt-5 pb-4">
-    <h2 class="text-center textColored pt-5"> About... SearchFxCmd </h2>
-    <div class="row px-3 justify-content-center">
-      <div class="col-10 col-md-9 pt-3 pb-4 mb-0">
-        <p class="text-justify">
-          The tool <span class="fw-bold"> SearchFxCmd </span> is used in conjunction with the music editor
-          <span class="fw-bold"> <a href="https://en.wikipedia.org/wiki/ProTracker" class="link-primary"> ProTracker</a></span>. This
-          tracker uses different effect commands.
-          <br>
-          <br>
-          You can search for these commands in a standard protracker module. To find certain commands with their
-          complete position in the module, this tool is a very
-          comfortable aid.
-          <br>
-          <br>
-          Have fun with it...
-        </p>
+  <article>
+    <div class="container pt-5 pb-4">
+      <header>
+        <h2 class="text-center textColored pt-5"> About... SearchFxCmd </h2>
+      </header>
+      <div class="row px-3 justify-content-center">
+        <div class="col-10 col-md-9 pt-3 pb-4 mb-0">
+          <p class="text-justify">
+            The tool <span class="fw-bold"> SearchFxCmd </span> is used in conjunction with the music editor
+            <span class="fw-bold">
+              <a
+                href="https://en.wikipedia.org/wiki/ProTracker"
+                class="link-primary"
+              >
+                ProTracker
+              </a>
+            </span>. This
+            tracker uses different effect commands.
+            <br>
+            <br>
+            You can search for these commands in a standard ProTracker module. To find certain commands with their
+            complete position in the module, this tool is a very
+            comfortable aid.
+            <br>
+            <br>
+            Have fun with it...
+          </p>
+        </div>
       </div>
     </div>
-  </div>
+  </article>
 </section>
 
-<section class="bgColorLight text-white" id="contentHelp">
-  <div class="container pt-5 pb-4">
-    <h2 class="text-center text-light-grey pt-5"> SearchFxCmd Help </h2>
-    <div class="row py-3 justify-content-center">
-      <div class="col-10 col-md-9 pt-3 pb-4 mb-0">
-        <p class="text-justify">
-          The <span class="font-weight-bold"> key quickmode: </span> If your mouse pointer on the desktop is within the
-          <span class="fw-bold"> search command / search extended command field</span>, you can select a command by its number by these keys:
-          <br>
-          <table class="table table-sm table-borderless text-center text-white">
-            <thead>
-              <tr>
-                <th scope="col"> Command </th>
-                <th scope="col"> Key </th>
-                <th scope="col"> Ext Command </th>
-                <th scope="col"> Key </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td> 0 </td>
-                <td> 0 </td>
-                <td> E0 </td>
-                <td> 0 </td>
-              </tr>
-              <tr>
-                <td> 1 </td>
-                <td> 1 </td>
-                <td> E1 </td>
-                <td> 1 </td>
-              </tr>
-              <tr>
-                <td> 2 </td>
-                <td> 2 </td>
-                <td> E2 </td>
-                <td> 2 </td>
-              </tr>
-              <tr>
-                <td> 3 </td>
-                <td> 3 </td>
-                <td> E3 </td>
-                <td> 3 </td>
-              </tr>
-              <tr>
-                <td> 4 </td>
-                <td> 4 </td>
-                <td> E4 </td>
-                <td> 4 </td>
-              </tr>
-              <tr>
-                <td> 5 </td>
-                <td> 5 </td>
-                <td> E5 </td>
-                <td> 5 </td>
-              </tr>
-              <tr>
-                <td> 6 </td>
-                <td> 6 </td>
-                <td> E6 </td>
-                <td> 6 </td>
-              </tr>
-              <tr>
-                <td> 7 </td>
-                <td> 7 </td>
-                <td> E7 </td>
-                <td> 7 </td>
-              </tr>
-              <tr>
-                <td> 8 </td>
-                <td> 8 </td>
-                <td> E8 </td>
-                <td> 8 </td>
-              </tr>
-              <tr>
-                <td> 9 </td>
-                <td> 9 </td>
-                <td> E9 </td>
-                <td> 9 </td>
-              </tr>
-              <td> A </td>
-              <td> A </td>
-              <td> EA </td>
-              <td> A </td>
-              </tr>
-              <tr>
-                <td> B </td>
-                <td> B </td>
-                <td> EB </td>
-                <td> B </td>
-              </tr>
-              <tr>
-                <td> C </td>
-                <td> C </td>
-                <td> EC </td>
-                <td> C </td>
-              </tr>
-              <tr>
-                <td> D </td>
-                <td> D </td>
-                <td> D </td>
-                <td> D </td>
-              </tr>
-              <tr>
-                <td> E </td>
-                <td> E </td>
-                <td> EE </td>
-                <td> E </td>
-              </tr>
-              <tr>
-                <td> F </td>
-                <td> F </td>
-                <td> EF </td>
-                <td> F </td>
-              </tr>
-            </tbody>
-          </table>
-        </p>
+<section
+  id="contentHelp"
+  class="bgColorLight text-white"
+>
+  <article>
+    <div class="container pt-5 pb-4">
+      <header>
+        <h2 class="text-center text-light-grey pt-5"> SearchFxCmd Help </h2>
+      </header>
+      <div class="row py-3 justify-content-center">
+        <div class="col-10 col-md-9 pt-3 pb-4 mb-0">
+          <p class="text-justify">
+            The <span class="font-weight-bold"> key quickmode: </span> If your mouse pointer on the desktop is within the
+            <span class="fw-bold"> search command / search extended command field</span>, you can select a command by its number by these keys:
+            <br><br>
+            <table class="table table-sm table-borderless text-center text-white">
+              <thead>
+                <tr>
+                  <th scope="col"> Command </th>
+                  <th scope="col"> Key </th>
+                  <th scope="col"> Ext Command </th>
+                  <th scope="col"> Key </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td> 0 </td>
+                  <td> 0 </td>
+                  <td> E0 </td>
+                  <td> 0 </td>
+                </tr>
+                <tr>
+                  <td> 1 </td>
+                  <td> 1 </td>
+                  <td> E1 </td>
+                  <td> 1 </td>
+                </tr>
+                <tr>
+                  <td> 2 </td>
+                  <td> 2 </td>
+                  <td> E2 </td>
+                  <td> 2 </td>
+                </tr>
+                <tr>
+                  <td> 3 </td>
+                  <td> 3 </td>
+                  <td> E3 </td>
+                  <td> 3 </td>
+                </tr>
+                <tr>
+                  <td> 4 </td>
+                  <td> 4 </td>
+                  <td> E4 </td>
+                  <td> 4 </td>
+                </tr>
+                <tr>
+                  <td> 5 </td>
+                  <td> 5 </td>
+                  <td> E5 </td>
+                  <td> 5 </td>
+                </tr>
+                <tr>
+                  <td> 6 </td>
+                  <td> 6 </td>
+                  <td> E6 </td>
+                  <td> 6 </td>
+                </tr>
+                <tr>
+                  <td> 7 </td>
+                  <td> 7 </td>
+                  <td> E7 </td>
+                  <td> 7 </td>
+                </tr>
+                <tr>
+                  <td> 8 </td>
+                  <td> 8 </td>
+                  <td> E8 </td>
+                  <td> 8 </td>
+                </tr>
+                <tr>
+                  <td> 9 </td>
+                  <td> 9 </td>
+                  <td> E9 </td>
+                  <td> 9 </td>
+                </tr>
+                <td> A </td>
+                <td> a </td>
+                <td> EA </td>
+                <td> a </td>
+                </tr>
+                <tr>
+                  <td> B </td>
+                  <td> b </td>
+                  <td> EB </td>
+                  <td> b </td>
+                </tr>
+                <tr>
+                  <td> C </td>
+                  <td> c </td>
+                  <td> EC </td>
+                  <td> c </td>
+                </tr>
+                <tr>
+                  <td> D </td>
+                  <td> d </td>
+                  <td> D </td>
+                  <td> d </td>
+                </tr>
+                <tr>
+                  <td> E </td>
+                  <td> e </td>
+                  <td> EE </td>
+                  <td> e </td>
+                </tr>
+                <tr>
+                  <td> F </td>
+                  <td> f </td>
+                  <td> EF </td>
+                  <td> f </td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+        </div>
       </div>
     </div>
-  </div>
+  </article>
 </section>
 
 <script src="/js/searchFxCmd/script.js"></script>

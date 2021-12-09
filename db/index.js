@@ -9,9 +9,9 @@ mongoose
     useFindAndModify: false,
     useCreateIndex: true,
   })
-  .then((x) => {
+  .then((amount) => {
     console.log(
-      `Connected to Mongo! Database name: "${x.connections[0].name}"`
+      `Connected to Mongo! Database name: "${amount.connections[0].name}"`
     );
   })
   .catch((err) => {
