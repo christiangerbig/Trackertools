@@ -75,6 +75,6 @@ Models: Request-Model
 
 [Deploy Link](https://trackertools.herokuapp.com/)
 
-#### ProTracker module format
+### Tech page
 
 [ProTracker module format Link](https://wiki.multimedia.cx/index.php/Protracker_Module)
