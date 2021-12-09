@@ -2,10 +2,10 @@
 
 ## Description
 
-This collection includes four tools for the music editor Protracker, which make the work with Protracker sound modules more comfortable:
+This collection includes four tools for the music editor ProTracker, which make the work with standard ProTracker sound modules more comfortable:
  - TonePortaStep (calculate tone portamento slide)
- - VolSlideStep (calculate slide up or down)
- - SearchFxCmd (find effect commands with their position in a module)
+ - VolSlideStep (calculate volume slide up or down)
+ - SearchFxCmd (find effect commands with their outputted position in a tracker module)
  - UsedFxCmd (overview which effect commands are used in a module)
  
 ## User Stories
@@ -32,22 +32,22 @@ This collection includes four tools for the music editor Protracker, which make 
 ## ROUTES:
 
 - GET / 
-  - renders the homepage
+  - renders homepage
 
 - GET /toneportastep
-   - renders to toneportastep
+   - renders tonePortaStep page
 
 - GET /volslidestep
-   - renders to volslidestep
+   - renders volSlideStep page
 
 - GET /searchfxcmd
-   - renders to searchfxcmd
+   - renders searchFxCmd page
 
 - GET /usedfxcmd
-   - renders to usedfxcmd
+   - renders usedFxCmd page
 
 - GET /contact
-  - renders contact
+  - renders contact page
   - option to send message
 
 - POST /contact
@@ -74,3 +74,7 @@ Models: Request-Model
 ### Heroku
 
 [Deploy Link](https://trackertools.herokuapp.com/)
+
+#### ProTracker module format
+
+[ProTracker module format Link](https://wiki.multimedia.cx/index.php/Protracker_Module)

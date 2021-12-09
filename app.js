@@ -33,11 +33,9 @@ app.use(
   })
 );
 
-// Routes
 const index = require("./routes/index");
 app.use("/", index);
 
-// Error handling
 require("./error-handling")(app);
 
 module.exports = app;
