@@ -1,10 +1,12 @@
-<section class="backgroundPicture" id="pageContentContact">
+<section id="pageContentContact" class="backgroundPicture">
   <div class="container pt-5 pb-0">
     <h2 class="text-center textLightGrey pt-5"> Contact </h2>
     <div class="row pt-1 pb-3 text-white text-center justify-content-center">
       <div class="col-10 col-md-6 pt-4 pb-2 mb-0">
         <h5> Feel free to contact me </h5>
-        <h3 class="text-center"> <i class="far fa-envelope"></i> </h3>
+        <h3 class="text-center">
+          <i class="far fa-envelope"></i>
+        </h3>
       </div>
       {{! Conditionally render the msg }}
       {{#if errorMessage}}
@@ -21,26 +23,25 @@
             <label for="email"> <h4> Your email address </h4> </label>
             <input
               type="email"
+              id="email"
               name="email"
               class="form-control form-control-sm"
-              id="email"
             />
           </div>
           <div class="form-group px-5 pt-3 pb-4 mb-5 rounded containerOpacity">
             <label for="message"> <h4> Your message </h4></label>
             <textarea
-              class="form-control form-control-sm"
               name="message"
               rows="5"
               id="message"
+              class="form-control form-control-sm"
             ></textarea>
           </div>
           <input
-            class="btn btn-secondary"
             type="submit"
-            formnovalidate="formnovalidate"
             value="Send"
-            class="mb-0"
+            formnovalidate="formnovalidate"
+            class="btn btn-secondary mb-0"
           />
         </form>
       </div>
