@@ -1,6 +1,4 @@
-// Handler for TonePortaStep
 const handleTonePortaStep = () => {
-  // ---------- Global ----------
   const constants = {
     definedTics: "6",
     definedCommands: "1",
@@ -160,18 +158,17 @@ const handleTonePortaStep = () => {
     commandsPeriodDiff: 0,
     commandUnits: 0,
     tooltipText: definedTooltipText,
-    handleSwitchDestinationFinetuneCallback: null,
-    handleSwitchSourceFinetuneCallback: null,
-    handleGetKeySourceCallback: null,
+    handleSwitchDestinationToSourceFinetuneCallback: null,
+    handleSwitchSourceToDestinationFinetuneCallback: null,
+    handleGetSourceNoteByPressedKeyCallback: null,
     handleSetSourceNoteCallback: null,
-    handleMouseLeaveSourceCallback: null,
-    handleGetKeyDestinationCallback: null,
+    handleMouseLeaveSourceNoteCallback: null,
+    handleGetDestinationNoteByPressedKeyCallback: null,
     handleSetDestinationNoteCallback: null,
-    handleMouseLeaveDestinationCallback: null,
-    handleCalculateValueCallback: null,
+    handleMouseLeaveDestinationNoteCallback: null,
+    handleCalculatePortamentoValueCallback: null,
   };
 
-  // Set text color from red to default
   const setDefaultTextColor = ({ htmlElements }) => {
     const { unitsResult } = htmlElements;
     if (unitsResult.classList.contains("text-danger")) {
@@ -180,201 +177,247 @@ const handleTonePortaStep = () => {
     }
   };
 
-  // Handler for switch destination finetune to source finetune value
-  const handleSwitchDestinationFinetune = ({ htmlElements }) => {
+  const handleSwitchDestinationToSourceFinetune = ({ htmlElements }) => {
     const { sourceFinetuneSelect, destinationFinetuneSelect } = htmlElements;
     destinationFinetuneSelect.value = sourceFinetuneSelect.value;
   };
-  // Add handler for change finetune value
-  variables.handleSwitchDestinationFinetuneCallback = () =>
-    handleSwitchDestinationFinetune(constants);
-  constants.htmlElements.sourceFinetuneSelect.addEventListener(
-    "click",
-    variables.handleSwitchDestinationFinetuneCallback
+
+  const addHandleSwitchDestinationToSourceFinetuneEventListener = (
+    handleSwitchDestinationToSourceFinetune
+  ) => {
+    variables.handleSwitchDestinationToSourceFinetuneCallback = () => {
+      handleSwitchDestinationToSourceFinetune(constants);
+    };
+
+    constants.htmlElements.sourceFinetuneSelect.addEventListener(
+      "click",
+      variables.handleSwitchDestinationToSourceFinetuneCallback
+    );
+  };
+
+  addHandleSwitchDestinationToSourceFinetuneEventListener(
+    handleSwitchDestinationToSourceFinetune
   );
 
-  // Handler for switch source finetune to destination finetune value
-  const handleSwitchSourceFinetune = ({ htmlElements }) => {
+  const handleSwitchSourceToDestinationFinetune = ({ htmlElements }) => {
     const { sourceFinetuneSelect, destinationFinetuneSelect } = htmlElements;
     sourceFinetuneSelect.value = destinationFinetuneSelect.value;
   };
-  // Add handler for change finetune value
-  variables.handleSwitchSourceFinetuneCallback = () =>
-    handleSwitchSourceFinetune(constants);
-  constants.htmlElements.destinationFinetuneSelect.addEventListener(
-    "click",
-    variables.handleSwitchSourceFinetuneCallback
-  );
 
-  // Handler for pressed key source note
-  const handleGetKeySource = (
-    { which, keyCode },
-    constants,
-    variables,
-    { sourceNote, destinationNote }
+  const addHandleSwitchSourceToDestinationFinetuneEventListener = (
+    handleSwitchSourceToDestinationFinetune
   ) => {
-    const chararacter = which || keyCode;
-    const { shortkeyTable, shortkeyIndexTable, htmlElements } = constants;
-    const { sourceNoteSelect, sourceOctaveSelect } = htmlElements;
-    for (let i = 0; i < shortkeyTable.length; i++) {
-      if (shortkeyTable[i] === chararacter) {
-        if (chararacter >= 65) {
-          sourceNoteSelect.value = shortkeyIndexTable[i];
-          break;
-        } else {
-          sourceOctaveSelect.value = shortkeyIndexTable[i];
-          break;
-        }
-      }
-    }
-    handleCalculateValue(
-      constants,
-      variables,
-      { sourceNote, destinationNote }
+    variables.handleSwitchSourceToDestinationFinetuneCallback = () => {
+      handleSwitchSourceToDestinationFinetune(constants);
+    };
+
+    constants.htmlElements.destinationFinetuneSelect.addEventListener(
+      "click",
+      variables.handleSwitchSourceToDestinationFinetuneCallback
     );
   };
-  // Handler for manual key mode to set source note without finetune
+  addHandleSwitchSourceToDestinationFinetuneEventListener(
+    handleSwitchSourceToDestinationFinetune
+  );
+
   const handleSetSourceNote = (
-    constants,
-    variables,
+    { constants, variables },
     { sourceNote, destinationNote }
   ) => {
+    const handleGetSourceNoteByPressedKey = (
+      { which, keyCode },
+      { constants, variables },
+      { sourceNote, destinationNote }
+    ) => {
+      const chararacter = which || keyCode;
+      const { shortkeyTable, shortkeyIndexTable, htmlElements } = constants;
+      const { sourceNoteSelect, sourceOctaveSelect } = htmlElements;
+      for (let i = 0; i < shortkeyTable.length; i++) {
+        if (shortkeyTable[i] === chararacter) {
+          if (chararacter >= 65) {
+            sourceNoteSelect.value = shortkeyIndexTable[i];
+            break;
+          } else {
+            sourceOctaveSelect.value = shortkeyIndexTable[i];
+            break;
+          }
+        }
+      }
+      handleCalculatePortamentoValue(
+        { constants, variables },
+        { sourceNote, destinationNote }
+      );
+    };
+
+    const addHandleGetSourceNoteByPressedKeyEventListener = (
+      handleGetSourceNoteByPressedKey
+    ) => {
+      variables.handleGetSourceNoteByPressedKeyCallback = (event) =>
+        handleGetSourceNoteByPressedKey(
+          event,
+          { constants, variables },
+          {
+            sourceNote,
+            destinationNote,
+          }
+        );
+
+      sourceNoteContainer.addEventListener(
+        "keypress",
+        variables.handleGetSourceNoteByPressedKeyCallback
+      );
+    };
+
     const { sourceNoteContainer } = constants.htmlElements;
     sourceNoteContainer.focus();
-    // Add handler to get pressed key source note
-    variables.handleGetKeySourceCallback = (event) =>
-      handleGetKeySource(
-        event,
-        constants,
-        variables,
-        {
-          sourceNote,
-          destinationNote,
-        }
-      );
-    sourceNoteContainer.addEventListener(
-      "keypress",
-      variables.handleGetKeySourceCallback
+    addHandleGetSourceNoteByPressedKeyEventListener(
+      handleGetSourceNoteByPressedKey
     );
   };
-  // Add handler to set source note
-  variables.handleSetSourceNoteCallback = () =>
-    handleSetSourceNote(
-      constants,
-      variables,
-      { sourceNote, destinationNote }
+
+  const addHandleSetSourceNoteEventListener = (handleSetSourceNote) => {
+    variables.handleSetSourceNoteCallback = () => {
+      handleSetSourceNote(
+        { constants, variables },
+        { sourceNote, destinationNote }
+      );
+    };
+
+    constants.htmlElements.sourceNoteContainer.addEventListener(
+      "mouseenter",
+      variables.handleSetSourceNoteCallback
     );
-  constants.htmlElements.sourceNoteContainer.addEventListener(
-    "mouseenter",
-    variables.handleSetSourceNoteCallback
-  );
-  // Handler for mouse leave source note
-  const handleMouseLeaveSource = (constants, variables) => {
+  };
+
+  addHandleSetSourceNoteEventListener(handleSetSourceNote);
+
+  const handleMouseLeaveSourceNote = ({ constants, variables }) => {
     const { sourceNoteContainer } = constants.htmlElements;
     sourceNoteContainer.blur();
-    // Remove handler to get pressed key source note
     sourceNoteContainer.removeEventListener(
       "keypress",
-      variables.handleGetKeySourceCallback
+      variables.handleGetSourceNoteByPressedKeyCallback
     );
   };
-  // Add handler for mouse leave source note
-  variables.handleMouseLeaveSourceCallback = () =>
-    handleMouseLeaveSource(constants, variables);
-  constants.htmlElements.sourceNoteContainer.addEventListener(
-    "mouseleave",
-    variables.handleMouseLeaveSourceCallback
-  );
 
-  // Handler for pressed key destination note
-  const handleGetKeyDestination = (
-    { which, keyCode },
-    constants,
-    variables,
+  const addHandleMouseLeaveSourceNoteEventListener = (
+    handleMouseLeaveSourceNote
+  ) => {
+    variables.handleMouseLeaveSourceNoteCallback = () => {
+      handleMouseLeaveSourceNote({ constants, variables });
+    };
+
+    constants.htmlElements.sourceNoteContainer.addEventListener(
+      "mouseleave",
+      variables.handleMouseLeaveSourceNoteCallback
+    );
+  };
+
+  addHandleMouseLeaveSourceNoteEventListener(handleMouseLeaveSourceNote);
+
+  const handleSetDestinationNote = (
+    { constants, variables },
     { sourceNote, destinationNote }
   ) => {
-    const character = which || keyCode;
-    const { shortkeyTable, shortkeyIndexTable, htmlElements } = constants;
-    const { destinationNoteSelect, destinationOctaveSelect } = htmlElements;
-    for (let i = 0; i < shortkeyTable.length; i++) {
-      if (shortkeyTable[i] === character) {
-        if (character >= 65) {
-          destinationNoteSelect.value = shortkeyIndexTable[i];
-          break;
-        } else {
-          destinationOctaveSelect.value = shortkeyIndexTable[i];
-          break;
+    const handleGetDestinationNoteByPressedKey = (
+      { which, keyCode },
+      { constants, variables },
+      { sourceNote, destinationNote }
+    ) => {
+      const character = which || keyCode;
+      const { shortkeyTable, shortkeyIndexTable, htmlElements } = constants;
+      const { destinationNoteSelect, destinationOctaveSelect } = htmlElements;
+      for (let i = 0; i < shortkeyTable.length; i++) {
+        if (shortkeyTable[i] === character) {
+          if (character >= 65) {
+            destinationNoteSelect.value = shortkeyIndexTable[i];
+            break;
+          } else {
+            destinationOctaveSelect.value = shortkeyIndexTable[i];
+            break;
+          }
         }
       }
-    }
-    handleCalculateValue(
-      constants,
-      variables,
-      { sourceNote, destinationNote }
-    );
-  };
-  // Manual key mode to set destination note without finetune
-  const handleSetDestinationNote = (
-    constants,
-    variables,
-    { sourceNote, destinationNote }
-  ) => {
+      handleCalculatePortamentoValue(
+        { constants, variables },
+        { sourceNote, destinationNote }
+      );
+    };
+
+    const addHandleGetDestinationNoteByPressedKeyEventListener = (
+      handleGetDestinationNoteByPressedKey
+    ) => {
+      variables.handleGetDestinationNoteByPressedKeyCallback = (event) => {
+        handleGetDestinationNoteByPressedKey(
+          event,
+          { constants, variables },
+          { sourceNote, destinationNote }
+        );
+      };
+
+      destinationNoteContainer.addEventListener(
+        "keypress",
+        variables.handleGetDestinationNoteByPressedKeyCallback
+      );
+    };
+
     const { destinationNoteContainer } = constants.htmlElements;
     destinationNoteContainer.focus();
-    // Add handler to get pressed key destination note
-    variables.handleGetKeyDestinationCallback = (event) =>
-      handleGetKeyDestination(
-        event,
-        constants,
-        variables,
-        {
-          sourceNote,
-          destinationNote,
-        }
-      );
-    destinationNoteContainer.addEventListener(
-      "keypress",
-      variables.handleGetKeyDestinationCallback
+    addHandleGetDestinationNoteByPressedKeyEventListener(
+      handleGetDestinationNoteByPressedKey
     );
   };
-  // Add handler to set destination note
-  variables.handleSetDestinationNoteCallback = () =>
-    handleSetDestinationNote(constants, variables, {
-      sourceNote,
-      destinationNote,
-    });
-  constants.htmlElements.destinationNoteContainer.addEventListener(
-    "mouseenter",
-    variables.handleSetDestinationNoteCallback
-  );
-  // Handler for mouse leave destination note
-  const handleMouseLeaveDestination = (constants, variables) => {
+
+  const addHandleSetDestinationNoteEventListener = (
+    handleSetDestinationNote
+  ) => {
+    variables.handleSetDestinationNoteCallback = () => {
+      handleSetDestinationNote(
+        { constants, variables },
+        { sourceNote, destinationNote }
+      );
+    };
+
+    constants.htmlElements.destinationNoteContainer.addEventListener(
+      "mouseenter",
+      variables.handleSetDestinationNoteCallback
+    );
+  };
+
+  addHandleSetDestinationNoteEventListener(handleSetDestinationNote);
+
+  const handleMouseLeaveDestinationNote = ({ constants, variables }) => {
     const { destinationNoteContainer } = constants.htmlElements;
     destinationNoteContainer.blur();
-    // Remove handler to get pressed key destination note
     destinationNoteContainer.removeEventListener(
       "keypress",
-      variables.handleGetKeyDestination
+      variables.handleGetDestinationNoteByPressedKey
     );
   };
-  // Add handler for mouse leave destination note
-  variables.handleMouseLeaveDestinationCallback = () =>
-    handleMouseLeaveDestination(constants, variables);
-  constants.htmlElements.destinationNoteContainer.addEventListener(
-    "mouseleave",
-    variables.handleMouseLeaveDestinationCallback
+
+  const addHandleMouseLeaveDestinationNoteEventListener = (
+    handleMouseLeaveDestinationNote
+  ) => {
+    variables.handleMouseLeaveDestinationNoteCallback = () => {
+      handleMouseLeaveDestinationNote({ constants, variables });
+    };
+
+    constants.htmlElements.destinationNoteContainer.addEventListener(
+      "mouseleave",
+      variables.handleMouseLeaveDestinationNoteCallback
+    );
+  };
+
+  addHandleMouseLeaveDestinationNoteEventListener(
+    handleMouseLeaveDestinationNote
   );
 
-  // Handler for value variables
-  const handleCalculateValue = (
-    constants,
-    variables,
+  const handleCalculatePortamentoValue = (
+    { constants, variables },
     { sourceNote, destinationNote }
   ) => {
-    // Get input element values and convert them to integers
-    const getInputElementsValues = (
-      { htmlElements },
-      variables,
+    const getAndConvertInputElementsValues = (
+      { constants, variables },
       { sourceNote, destinationNote }
     ) => {
       const {
@@ -386,7 +429,7 @@ const handleTonePortaStep = () => {
         destinationFinetuneSelect,
         ticsInput,
         commandsInput,
-      } = htmlElements;
+      } = constants.htmlElements;
       sourceNote.periodIndex = parseInt(sourceNoteSelect.value);
       sourceNote.octaveIndex = parseInt(sourceOctaveSelect.value);
       sourceNote.finetuneIndex = parseInt(sourceFinetuneSelect.value);
@@ -398,33 +441,35 @@ const handleTonePortaStep = () => {
       variables.commands = parseInt(commandsInput.value);
     };
 
-    // Source period
-    const getSourcePeriod = (
-      { semiTones, semiToneOctaves, periodsTable },
-      sourceNote
-    ) => {
-      const { periodIndex, octaveIndex, finetuneIndex } = sourceNote;
-      sourceNote.periodsTableIndex =
-        periodIndex + octaveIndex * semiToneOctaves + finetuneIndex * semiTones;
-      sourceNote.period = periodsTable[sourceNote.periodsTableIndex];
-    };
-
-    // Destination period
-    const getDestinationPeriod = (
-      { semiTones, semiToneOctaves, periodsTable },
-      destinationNote
-    ) => {
-      const { periodIndex, octaveIndex, finetuneIndex } = destinationNote;
-      destinationNote.periodsTableIndex =
-        periodIndex + octaveIndex * semiToneOctaves + finetuneIndex * semiTones;
-      destinationNote.period = periodsTable[destinationNote.periodsTableIndex];
-    };
-
-    // Read period values from table
-    const getPeriodValues = (
+    const getPeriodValuesFromTable = (
       { semiTones, semiToneOctaves, periodsTable },
       { sourceNote, destinationNote }
     ) => {
+      const getSourcePeriod = (
+        { semiTones, semiToneOctaves, periodsTable },
+        sourceNote
+      ) => {
+        const { periodIndex, octaveIndex, finetuneIndex } = sourceNote;
+        sourceNote.periodsTableIndex =
+          periodIndex +
+          octaveIndex * semiToneOctaves +
+          finetuneIndex * semiTones;
+        sourceNote.period = periodsTable[sourceNote.periodsTableIndex];
+      };
+
+      const getDestinationPeriod = (
+        { semiTones, semiToneOctaves, periodsTable },
+        destinationNote
+      ) => {
+        const { periodIndex, octaveIndex, finetuneIndex } = destinationNote;
+        destinationNote.periodsTableIndex =
+          periodIndex +
+          octaveIndex * semiToneOctaves +
+          finetuneIndex * semiTones;
+        destinationNote.period =
+          periodsTable[destinationNote.periodsTableIndex];
+      };
+
       getSourcePeriod({ semiTones, semiToneOctaves, periodsTable }, sourceNote);
       getDestinationPeriod(
         { semiTones, semiToneOctaves, periodsTable },
@@ -432,8 +477,10 @@ const handleTonePortaStep = () => {
       );
     };
 
-    // Calculate units per command
-    const calculateUnits = (variables, { sourceNote, destinationNote }) => {
+    const calculateUnitsPerCommand = (
+      variables,
+      { sourceNote, destinationNote }
+    ) => {
       const { tics, commands } = variables;
       variables.periodDiff = Math.abs(
         destinationNote.period - sourceNote.period
@@ -444,8 +491,7 @@ const handleTonePortaStep = () => {
       );
     };
 
-    // Output units per command
-    const outputUnits = (constants, variables) => {
+    const outputUnitsPerCommand = ({ constants, variables }) => {
       const {
         definedTooltipText,
         outputErrorText,
@@ -474,26 +520,37 @@ const handleTonePortaStep = () => {
       unitsResult.title = variables.tooltipText;
     };
 
-    getInputElementsValues(constants, variables, {
-      sourceNote,
-      destinationNote,
-    });
-    getPeriodValues(constants, { sourceNote, destinationNote });
-    calculateUnits(variables, { sourceNote, destinationNote });
-    outputUnits(constants, variables);
+    getAndConvertInputElementsValues(
+      { constants, variables },
+      { sourceNote, destinationNote }
+    );
+    getPeriodValuesFromTable(constants, { sourceNote, destinationNote });
+    calculateUnitsPerCommand(variables, { sourceNote, destinationNote });
+    outputUnitsPerCommand({ constants, variables });
   };
-  // Add handler for value variables
-  constants.htmlElements.groupChange.forEach((element) => {
-    variables.handleCalculateValueCallback = () =>
-      handleCalculateValue(
-        constants,
-        variables,
-        { sourceNote, destinationNote }
-      );
-    element.addEventListener("change", variables.handleCalculateValueCallback);
-  });
 
-  // Reset all values
+  const addHandleCalculatePortamentoValueEventListener = (
+    handleCalculatePortamentoValue
+  ) => {
+    constants.htmlElements.groupChange.forEach((element) => {
+      variables.handleCalculatePortamentoValueCallback = () => {
+        handleCalculatePortamentoValue(
+          { constants, variables },
+          { sourceNote, destinationNote }
+        );
+      };
+
+      element.addEventListener(
+        "change",
+        variables.handleCalculatePortamentoValueCallback
+      );
+    });
+  };
+
+  addHandleCalculatePortamentoValueEventListener(
+    handleCalculatePortamentoValue
+  );
+
   const handleResetButton = (constants) => {
     const { definedTics, definedCommands, definedTooltipText, htmlElements } =
       constants;
@@ -520,11 +577,23 @@ const handleTonePortaStep = () => {
     unitsResult.title = definedTooltipText;
     setDefaultTextColor(constants);
   };
-  // Add handler for click on reset button
-  constants.htmlElements.resetButton.addEventListener("click", () =>
-    handleResetButton(constants, setDefaultTextColor)
-  );
+
+  const addHandleResetButtonEventListener = (handleResetButton) => {
+    const handleResetButtonCallback = () => {
+      handleResetButton(constants);
+    };
+
+    constants.htmlElements.resetButton.addEventListener(
+      "click",
+      handleResetButtonCallback
+    );
+  };
+
+  addHandleResetButtonEventListener(handleResetButton);
 };
 
-// Add handler for TonePortaStep
-document.addEventListener("DOMContentLoaded", handleTonePortaStep, false);
+const addHandleTonePortaStepEventHandler = (handleTonePortaStep) => {
+  document.addEventListener("DOMContentLoaded", handleTonePortaStep, false);
+};
+
+addHandleTonePortaStepEventHandler(handleTonePortaStep);
