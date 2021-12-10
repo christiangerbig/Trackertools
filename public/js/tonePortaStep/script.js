@@ -183,7 +183,8 @@ const handleTonePortaStep = () => {
   };
 
   const addSwitchDestinationToSourceFinetuneHandler = (
-    handleSwitchDestinationToSourceFinetune
+    handleSwitchDestinationToSourceFinetune,
+    { constants, variables }
   ) => {
     variables.handleSwitchDestinationToSourceFinetuneCallback = () => {
       handleSwitchDestinationToSourceFinetune(constants);
@@ -196,7 +197,8 @@ const handleTonePortaStep = () => {
   };
 
   addSwitchDestinationToSourceFinetuneHandler(
-    handleSwitchDestinationToSourceFinetune
+    handleSwitchDestinationToSourceFinetune,
+    { constants, variables }
   );
 
   const handleSwitchSourceToDestinationFinetune = ({ htmlElements }) => {
@@ -205,7 +207,8 @@ const handleTonePortaStep = () => {
   };
 
   const addSwitchSourceToDestinationFinetuneHandler = (
-    handleSwitchSourceToDestinationFinetune
+    handleSwitchSourceToDestinationFinetune,
+    { constants, variables }
   ) => {
     variables.handleSwitchSourceToDestinationFinetuneCallback = () => {
       handleSwitchSourceToDestinationFinetune(constants);
@@ -217,7 +220,8 @@ const handleTonePortaStep = () => {
     );
   };
   addSwitchSourceToDestinationFinetuneHandler(
-    handleSwitchSourceToDestinationFinetune
+    handleSwitchSourceToDestinationFinetune,
+    { constants, variables }
   );
 
   const handleSetSourceNote = (
@@ -250,7 +254,8 @@ const handleTonePortaStep = () => {
     };
 
     const addGetSourceNoteByPressedKeyHandler = (
-      handleGetSourceNoteByPressedKey
+      handleGetSourceNoteByPressedKey,
+      { constants, variables }
     ) => {
       variables.handleGetSourceNoteByPressedKeyCallback = (event) =>
         handleGetSourceNoteByPressedKey(
@@ -270,10 +275,16 @@ const handleTonePortaStep = () => {
 
     const { sourceNoteContainer } = constants.htmlElements;
     sourceNoteContainer.focus();
-    addGetSourceNoteByPressedKeyHandler(handleGetSourceNoteByPressedKey);
+    addGetSourceNoteByPressedKeyHandler(handleGetSourceNoteByPressedKey, {
+      constants,
+      variables,
+    });
   };
 
-  const addSetSourceNoteHandler = (handleSetSourceNote) => {
+  const addSetSourceNoteHandler = (
+    handleSetSourceNote,
+    { constants, variables }
+  ) => {
     variables.handleSetSourceNoteCallback = () => {
       handleSetSourceNote(
         { constants, variables },
@@ -287,7 +298,7 @@ const handleTonePortaStep = () => {
     );
   };
 
-  addSetSourceNoteHandler(handleSetSourceNote);
+  addSetSourceNoteHandler(handleSetSourceNote, { constants, variables });
 
   const handleMouseLeaveSourceNote = ({ constants, variables }) => {
     const { sourceNoteContainer } = constants.htmlElements;
@@ -298,7 +309,10 @@ const handleTonePortaStep = () => {
     );
   };
 
-  const addMouseLeaveSourceNoteHandler = (handleMouseLeaveSourceNote) => {
+  const addMouseLeaveSourceNoteHandler = (
+    handleMouseLeaveSourceNote,
+    { constants, variables }
+  ) => {
     variables.handleMouseLeaveSourceNoteCallback = () => {
       handleMouseLeaveSourceNote({ constants, variables });
     };
@@ -309,7 +323,10 @@ const handleTonePortaStep = () => {
     );
   };
 
-  addMouseLeaveSourceNoteHandler(handleMouseLeaveSourceNote);
+  addMouseLeaveSourceNoteHandler(handleMouseLeaveSourceNote, {
+    constants,
+    variables,
+  });
 
   const handleSetDestinationNote = (
     { constants, variables },
@@ -341,7 +358,8 @@ const handleTonePortaStep = () => {
     };
 
     const addGetDestinationNoteByPressedKeyHandler = (
-      handleGetDestinationNoteByPressedKey
+      handleGetDestinationNoteByPressedKey,
+      { constants, variables }
     ) => {
       variables.handleGetDestinationNoteByPressedKeyCallback = (event) => {
         handleGetDestinationNoteByPressedKey(
@@ -360,11 +378,15 @@ const handleTonePortaStep = () => {
     const { destinationNoteContainer } = constants.htmlElements;
     destinationNoteContainer.focus();
     addGetDestinationNoteByPressedKeyHandler(
-      handleGetDestinationNoteByPressedKey
+      handleGetDestinationNoteByPressedKey,
+      { constants, variables }
     );
   };
 
-  const addSetDestinationNoteHandler = (handleSetDestinationNote) => {
+  const addSetDestinationNoteHandler = (
+    handleSetDestinationNote,
+    { constants, variables }
+  ) => {
     variables.handleSetDestinationNoteCallback = () => {
       handleSetDestinationNote(
         { constants, variables },
@@ -378,7 +400,10 @@ const handleTonePortaStep = () => {
     );
   };
 
-  addSetDestinationNoteHandler(handleSetDestinationNote);
+  addSetDestinationNoteHandler(handleSetDestinationNote, {
+    constants,
+    variables,
+  });
 
   const handleMouseLeaveDestinationNote = ({ constants, variables }) => {
     const { destinationNoteContainer } = constants.htmlElements;
@@ -390,7 +415,8 @@ const handleTonePortaStep = () => {
   };
 
   const addMouseLeaveDestinationNoteHandler = (
-    handleMouseLeaveDestinationNote
+    handleMouseLeaveDestinationNote,
+    { constants, variables }
   ) => {
     variables.handleMouseLeaveDestinationNoteCallback = () => {
       handleMouseLeaveDestinationNote({ constants, variables });
@@ -402,7 +428,10 @@ const handleTonePortaStep = () => {
     );
   };
 
-  addMouseLeaveDestinationNoteHandler(handleMouseLeaveDestinationNote);
+  addMouseLeaveDestinationNoteHandler(handleMouseLeaveDestinationNote, {
+    constants,
+    variables,
+  });
 
   const handleCalculatePortamento = (
     { constants, variables },
@@ -521,7 +550,10 @@ const handleTonePortaStep = () => {
     outputUnitsPerCommand({ constants, variables });
   };
 
-  const addCalculatePortamentoHandler = (handleCalculatePortamento) => {
+  const addCalculatePortamentoHandler = (
+    handleCalculatePortamento,
+    { constants, variables }
+  ) => {
     constants.htmlElements.groupChange.forEach((element) => {
       variables.handleCalculatePortamentoCallback = () => {
         handleCalculatePortamento(
@@ -537,7 +569,10 @@ const handleTonePortaStep = () => {
     });
   };
 
-  addCalculatePortamentoHandler(handleCalculatePortamento);
+  addCalculatePortamentoHandler(handleCalculatePortamento, {
+    constants,
+    variables,
+  });
 
   const handleResetButton = (constants) => {
     const { definedTics, definedCommands, definedTooltipText, htmlElements } =
@@ -566,7 +601,7 @@ const handleTonePortaStep = () => {
     setDefaultTextColor(constants);
   };
 
-  const addResetButtonHandler = (handleResetButton) => {
+  const addResetButtonHandler = (handleResetButton, constants) => {
     const handleResetButtonCallback = () => {
       handleResetButton(constants);
     };
@@ -577,7 +612,7 @@ const handleTonePortaStep = () => {
     );
   };
 
-  addResetButtonHandler(handleResetButton);
+  addResetButtonHandler(handleResetButton, constants);
 };
 
 const addTonePortaStepHandler = (handleTonePortaStep) => {

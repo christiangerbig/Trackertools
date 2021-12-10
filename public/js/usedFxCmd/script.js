@@ -247,7 +247,10 @@ const handleUsedFxCmd = () => {
       reader.removeEventListener("load", handleWaitForModuleLoad);
     };
 
-    const addWaitForModuleLoadHandler = (handleWaitForModuleLoad) => {
+    const addWaitForModuleLoadHandler = (
+      handleWaitForModuleLoad,
+      { constants, variables }
+    ) => {
       variables.handleWaitForModuleLoadCallback = () => {
         handleWaitForModuleLoad({ constants, variables });
       };
@@ -264,10 +267,13 @@ const handleUsedFxCmd = () => {
       );
     };
 
-    addWaitForModuleLoadHandler(handleWaitForModuleLoad);
+    addWaitForModuleLoadHandler(handleWaitForModuleLoad, {
+      constants,
+      variables,
+    });
   };
 
-  const addLoadModuleHandler = (handleLoadModule) => {
+  const addLoadModuleHandler = (handleLoadModule, { constants, variables }) => {
     variables.handleLoadModuleCallback = () => {
       handleLoadModule({ constants, variables });
     };
@@ -278,7 +284,7 @@ const handleUsedFxCmd = () => {
     );
   };
 
-  addLoadModuleHandler(handleLoadModule);
+  addLoadModuleHandler(handleLoadModule, { constants, variables });
 };
 
 const addUsedFxCmdHandler = (handleUsedFxCmd) => {

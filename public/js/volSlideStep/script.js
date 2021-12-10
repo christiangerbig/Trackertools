@@ -91,7 +91,10 @@ const handleVolSlideStep = () => {
       .toUpperCase();
   };
 
-  const addCheckboxStateHandler = (handleFinevolumeCheckboxState) => {
+  const addCheckboxStateHandler = (
+    handleFinevolumeCheckboxState,
+    { constants, variables }
+  ) => {
     variables.handleFinevolumeCheckboxStateCallback = () => {
       handleFinevolumeCheckboxState({ constants, variables });
     };
@@ -102,7 +105,10 @@ const handleVolSlideStep = () => {
     );
   };
 
-  addCheckboxStateHandler(handleFinevolumeCheckboxState);
+  addCheckboxStateHandler(handleFinevolumeCheckboxState, {
+    constants,
+    variables,
+  });
 
   const getAndConvertInputElementsValues = ({ constants, variables }) => {
     const { ticsInput, instrumentVolumeInput, unitsInput } =
@@ -196,7 +202,10 @@ const handleVolSlideStep = () => {
     outputAmountOfCommandsAndUnits({ constants, variables });
   };
 
-  const addCalculateVolumeHandler = (handleCalculateVolume) => {
+  const addCalculateVolumeHandler = (
+    handleCalculateVolume,
+    { constants, variables }
+  ) => {
     variables.handleCalculateVolumeCallback = () => {
       handleCalculateVolume({ constants, variables });
     };
@@ -209,7 +218,7 @@ const handleVolSlideStep = () => {
     });
   };
 
-  addCalculateVolumeHandler(handleCalculateVolume);
+  addCalculateVolumeHandler(handleCalculateVolume, { constants, variables });
 
   const handleResetButton = ({ constants, variables }) => {
     const clearVariables = ({ constants, variables }) => {
@@ -241,7 +250,10 @@ const handleVolSlideStep = () => {
     clearVariables({ constants, variables });
   };
 
-  const addResetButtonHandler = (handleResetButton) => {
+  const addResetButtonHandler = (
+    handleResetButton,
+    { constants, variables }
+  ) => {
     variables.handleResetButtonCallback = () => {
       handleResetButton({ constants, variables });
     };
@@ -249,7 +261,7 @@ const handleVolSlideStep = () => {
     resetButton.addEventListener("click", variables.handleResetButtonCallback);
   };
 
-  addResetButtonHandler(handleResetButton);
+  addResetButtonHandler(handleResetButton, { constants, variables });
   handleCalculateVolume({ constants, variables });
 };
 

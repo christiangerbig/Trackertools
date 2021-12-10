@@ -241,7 +241,10 @@ const handleSearchFxCmd = () => {
       );
     };
 
-    const addWaitForModuleLoadHandler = (handleWaitForModuleLoad) => {
+    const addWaitForModuleLoadHandler = (
+      handleWaitForModuleLoad,
+      { constants, variables }
+    ) => {
       variables.handleWaitForModuleLoadCallback = () => {
         handleWaitForModuleLoad({ constants, variables });
       };
@@ -259,10 +262,16 @@ const handleSearchFxCmd = () => {
     const reader = new FileReader();
     reader.onload = (event) => (variables.fileContent = event.target.result);
     reader.readAsBinaryString(file);
-    addWaitForModuleLoadHandler(handleWaitForModuleLoad);
+    addWaitForModuleLoadHandler(handleWaitForModuleLoad, {
+      constants,
+      variables,
+    });
   };
 
-  const addLoadTrackerModuleHandler = (handleLoadTrackerModule) => {
+  const addLoadTrackerModuleHandler = (
+    handleLoadTrackerModule,
+    { constants, variables }
+  ) => {
     variables.handleLoadTrackerModuleCallback = () => {
       handleLoadTrackerModule({ constants, variables });
     };
@@ -273,7 +282,10 @@ const handleSearchFxCmd = () => {
     );
   };
 
-  addLoadTrackerModuleHandler(handleLoadTrackerModule);
+  addLoadTrackerModuleHandler(handleLoadTrackerModule, {
+    constants,
+    variables,
+  });
 
   const handleCheckCommand = ({ constants, variables }) => {
     const { commandSelect, extendedCommandSelect } = constants.htmlElements;
@@ -283,7 +295,10 @@ const handleSearchFxCmd = () => {
     handleSearchCommand({ constants, variables });
   };
 
-  const addCheckCommandHandler = (handleCheckCommand) => {
+  const addCheckCommandHandler = (
+    handleCheckCommand,
+    { constants, variables }
+  ) => {
     variables.handleCheckCommandCallback = () => {
       handleCheckCommand({ constants, variables });
     };
@@ -294,7 +309,7 @@ const handleSearchFxCmd = () => {
     );
   };
 
-  addCheckCommandHandler(handleCheckCommand);
+  addCheckCommandHandler(handleCheckCommand, { constants, variables });
 
   const handleCheckExtendedCommand = ({ constants, variables }) => {
     const { commandSelect, extendedCommandSelect } = constants.htmlElements;
@@ -304,7 +319,10 @@ const handleSearchFxCmd = () => {
     handleSearchCommand({ constants, variables });
   };
 
-  const addCheckExtendedCommandHandler = (handleCheckExtendedCommand) => {
+  const addCheckExtendedCommandHandler = (
+    handleCheckExtendedCommand,
+    { constants, variables }
+  ) => {
     variables.handleCheckExtendedCommandCallback = () => {
       handleCheckExtendedCommand({ constants, variables });
     };
@@ -315,7 +333,10 @@ const handleSearchFxCmd = () => {
     );
   };
 
-  addCheckExtendedCommandHandler(handleCheckExtendedCommand);
+  addCheckExtendedCommandHandler(handleCheckExtendedCommand, {
+    constants,
+    variables,
+  });
 
   const handleSetCommandByPressedKey = ({ constants, variables }) => {
     const handleGetKeyCommand = (
@@ -336,7 +357,10 @@ const handleSearchFxCmd = () => {
       handleSearchCommand({ constants, variables });
     };
 
-    const addGetKeyCommandHandler = (handleGetKeyCommand) => {
+    const addGetKeyCommandHandler = (
+      handleGetKeyCommand,
+      { constants, variables }
+    ) => {
       variables.handleGetKeyCommandCallback = (event) => {
         handleGetKeyCommand(event, { constants, variables });
       };
@@ -349,10 +373,13 @@ const handleSearchFxCmd = () => {
 
     const { commandSearchContainer } = constants.htmlElements;
     commandSearchContainer.focus();
-    addGetKeyCommandHandler(handleGetKeyCommand);
+    addGetKeyCommandHandler(handleGetKeyCommand, { constants, variables });
   };
 
-  const addCommandByPressedKeyHandler = (handleSetCommandByPressedKey) => {
+  const addCommandByPressedKeyHandler = (
+    handleSetCommandByPressedKey,
+    { constants, variables }
+  ) => {
     variables.handleSetCommandByPressedKeyCallback = () => {
       handleSetCommandByPressedKey({ constants, variables });
     };
@@ -363,7 +390,10 @@ const handleSearchFxCmd = () => {
     );
   };
 
-  addCommandByPressedKeyHandler(handleSetCommandByPressedKey);
+  addCommandByPressedKeyHandler(handleSetCommandByPressedKey, {
+    constants,
+    variables,
+  });
 
   const handleMouseLeaveCommand = ({ constants, variables }) => {
     const { commandSearchContainer } = constants.htmlElements;
@@ -374,7 +404,10 @@ const handleSearchFxCmd = () => {
     );
   };
 
-  const addMouseLeaveCommandHandler = (handleMouseLeaveCommand) => {
+  const addMouseLeaveCommandHandler = (
+    handleMouseLeaveCommand,
+    { constants, variables }
+  ) => {
     variables.handleMouseLeaveCommandCallback = () => {
       handleMouseLeaveCommand({ constants, variables });
     };
@@ -385,7 +418,10 @@ const handleSearchFxCmd = () => {
     );
   };
 
-  addMouseLeaveCommandHandler(handleMouseLeaveCommand);
+  addMouseLeaveCommandHandler(handleMouseLeaveCommand, {
+    constants,
+    variables,
+  });
 
   const handleSetExtendedCommandByPressedKey = ({ constants, variables }) => {
     const handleGetKeyExtendedCommand = (
@@ -405,7 +441,10 @@ const handleSearchFxCmd = () => {
       handleSearchCommand({ constants, variables });
     };
 
-    const addGetKeyExtendedCommandHandler = (handleGetKeyExtendedCommand) => {
+    const addGetKeyExtendedCommandHandler = (
+      handleGetKeyExtendedCommand,
+      { constants, variables }
+    ) => {
       variables.handleGetKeyExtendedCommandCallback = (event) => {
         handleGetKeyExtendedCommand(event, { constants, variables });
       };
@@ -418,11 +457,15 @@ const handleSearchFxCmd = () => {
 
     const { extendedCommandSearchContainer } = constants.htmlElements;
     extendedCommandSearchContainer.focus();
-    addGetKeyExtendedCommandHandler(handleGetKeyExtendedCommand);
+    addGetKeyExtendedCommandHandler(handleGetKeyExtendedCommand, {
+      constants,
+      variables,
+    });
   };
 
   const addSetExtendedCommandByPressedKeyHandler = (
-    handleSetExtendedCommandByPressedKey
+    handleSetExtendedCommandByPressedKey,
+    { constants, variables }
   ) => {
     variables.handleSetExtendedCommandByPressedKeyCallback = () => {
       handleSetExtendedCommandByPressedKey({ constants, variables });
@@ -435,7 +478,8 @@ const handleSearchFxCmd = () => {
   };
 
   addSetExtendedCommandByPressedKeyHandler(
-    handleSetExtendedCommandByPressedKey
+    handleSetExtendedCommandByPressedKey,
+    { constants, variables }
   );
 
   const handleMouseLeaveExtendedCommand = ({ constants, variables }) => {
@@ -448,7 +492,8 @@ const handleSearchFxCmd = () => {
   };
 
   const addMouseLeaveExtendedCommandHandler = (
-    handleMouseLeaveExtendedCommand
+    handleMouseLeaveExtendedCommand,
+    { constants, variables }
   ) => {
     variables.handleMouseLeaveExtendedCommandCallback = () => {
       handleMouseLeaveExtendedCommand({ constants, variables });
@@ -460,7 +505,10 @@ const handleSearchFxCmd = () => {
     );
   };
 
-  addMouseLeaveExtendedCommandHandler(handleMouseLeaveExtendedCommand);
+  addMouseLeaveExtendedCommandHandler(handleMouseLeaveExtendedCommand, {
+    constants,
+    variables,
+  });
 };
 
 const addSearchFxCmdHandler = (handleSearchFxCmd) => {
