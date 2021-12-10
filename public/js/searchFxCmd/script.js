@@ -67,7 +67,7 @@ const handleSearchFxCmd = () => {
     searchCommandNumber: 0,
     searchExtendedCommandNumber: 0,
     handleSearchCommandCallback: null,
-    handleWaitForLoadCallback: null,
+    handleWaitForModuleLoadCallback: null,
     handleLoadTrackerModuleCallback: null,
     handleCheckCommandCallback: null,
     handleCheckExtendedCommandCallback: null,
@@ -93,7 +93,7 @@ const handleSearchFxCmd = () => {
       variables.highestPatternNumber++; // Count starts at 0
     };
 
-    const getAndConvertInputElementValues = ({ constants, variables }) => {
+    const convertInputElementValues = ({ constants, variables }) => {
       const { commandSelect, extendedCommandSelect } = constants.htmlElements;
       variables.searchCommandNumber = parseInt(commandSelect.value);
       variables.searchExtendedCommandNumber = parseInt(
@@ -218,13 +218,13 @@ const handleSearchFxCmd = () => {
 
     if (variables.isFileLoaded) {
       getHighestSongPattern({ constants, variables });
-      getAndConvertInputElementValues({ constants, variables });
+      convertInputElementValues({ constants, variables });
       scanForCommandsInModFile({ constants, variables });
     }
   };
 
   const handleLoadTrackerModule = ({ constants, variables }) => {
-    const handleWaitForLoad = ({ constants, variables }) => {
+    const handleWaitForModuleLoad = ({ constants, variables }) => {
       const resetValues = ({ constants, variables }) => {
         const { commandSelect, extendedCommandSelect, tableBody } =
           constants.htmlElements;
@@ -235,15 +235,21 @@ const handleSearchFxCmd = () => {
       };
 
       resetValues({ constants, variables });
-      reader.removeEventListener("load", variables.handleWaitForLoadCallback);
+      reader.removeEventListener(
+        "load",
+        variables.handleWaitForModuleLoadCallback
+      );
     };
 
-    const addHandleWaitForLoadEventListener = (handleWaitForLoad) => {
-      variables.handleWaitForLoadCallback = () => {
-        handleWaitForLoad({ constants, variables });
+    const addWaitForModuleLoadHandler = (handleWaitForModuleLoad) => {
+      variables.handleWaitForModuleLoadCallback = () => {
+        handleWaitForModuleLoad({ constants, variables });
       };
 
-      reader.addEventListener("load", variables.handleWaitForLoadCallback);
+      reader.addEventListener(
+        "load",
+        variables.handleWaitForModuleLoadCallback
+      );
     };
 
     variables.isFileLoaded = false;
@@ -253,10 +259,10 @@ const handleSearchFxCmd = () => {
     const reader = new FileReader();
     reader.onload = (event) => (variables.fileContent = event.target.result);
     reader.readAsBinaryString(file);
-    addHandleWaitForLoadEventListener(handleWaitForLoad);
+    addWaitForModuleLoadHandler(handleWaitForModuleLoad);
   };
 
-  const addHandleLoadTrackerModuleEventListener = (handleLoadTrackerModule) => {
+  const addLoadTrackerModuleHandler = (handleLoadTrackerModule) => {
     variables.handleLoadTrackerModuleCallback = () => {
       handleLoadTrackerModule({ constants, variables });
     };
@@ -267,7 +273,7 @@ const handleSearchFxCmd = () => {
     );
   };
 
-  addHandleLoadTrackerModuleEventListener(handleLoadTrackerModule);
+  addLoadTrackerModuleHandler(handleLoadTrackerModule);
 
   const handleCheckCommand = ({ constants, variables }) => {
     const { commandSelect, extendedCommandSelect } = constants.htmlElements;
@@ -277,7 +283,7 @@ const handleSearchFxCmd = () => {
     handleSearchCommand({ constants, variables });
   };
 
-  const addHandleCheckCommandEventListener = (handleCheckCommand) => {
+  const addCheckCommandHandler = (handleCheckCommand) => {
     variables.handleCheckCommandCallback = () => {
       handleCheckCommand({ constants, variables });
     };
@@ -288,7 +294,7 @@ const handleSearchFxCmd = () => {
     );
   };
 
-  addHandleCheckCommandEventListener(handleCheckCommand);
+  addCheckCommandHandler(handleCheckCommand);
 
   const handleCheckExtendedCommand = ({ constants, variables }) => {
     const { commandSelect, extendedCommandSelect } = constants.htmlElements;
@@ -298,7 +304,7 @@ const handleSearchFxCmd = () => {
     handleSearchCommand({ constants, variables });
   };
 
-  const addHandleCheckExtendedCommand = (handleCheckExtendedCommand) => {
+  const addCheckExtendedCommandHandler = (handleCheckExtendedCommand) => {
     variables.handleCheckExtendedCommandCallback = () => {
       handleCheckExtendedCommand({ constants, variables });
     };
@@ -309,7 +315,7 @@ const handleSearchFxCmd = () => {
     );
   };
 
-  addHandleCheckExtendedCommand(handleCheckExtendedCommand);
+  addCheckExtendedCommandHandler(handleCheckExtendedCommand);
 
   const handleSetCommandByPressedKey = ({ constants, variables }) => {
     const handleGetKeyCommand = (
@@ -330,7 +336,7 @@ const handleSearchFxCmd = () => {
       handleSearchCommand({ constants, variables });
     };
 
-    const addHandleGetKeyCommandEventListner = (handleGetKeyCommand) => {
+    const addGetKeyCommandHandler = (handleGetKeyCommand) => {
       variables.handleGetKeyCommandCallback = (event) => {
         handleGetKeyCommand(event, { constants, variables });
       };
@@ -343,12 +349,10 @@ const handleSearchFxCmd = () => {
 
     const { commandSearchContainer } = constants.htmlElements;
     commandSearchContainer.focus();
-    addHandleGetKeyCommandEventListner(handleGetKeyCommand);
+    addGetKeyCommandHandler(handleGetKeyCommand);
   };
 
-  const addHandleSetCommandByPressedKeyEventListener = (
-    handleSetCommandByPressedKey
-  ) => {
+  const addCommandByPressedKeyHandler = (handleSetCommandByPressedKey) => {
     variables.handleSetCommandByPressedKeyCallback = () => {
       handleSetCommandByPressedKey({ constants, variables });
     };
@@ -359,7 +363,7 @@ const handleSearchFxCmd = () => {
     );
   };
 
-  addHandleSetCommandByPressedKeyEventListener(handleSetCommandByPressedKey);
+  addCommandByPressedKeyHandler(handleSetCommandByPressedKey);
 
   const handleMouseLeaveCommand = ({ constants, variables }) => {
     const { commandSearchContainer } = constants.htmlElements;
@@ -370,7 +374,7 @@ const handleSearchFxCmd = () => {
     );
   };
 
-  const addHandleMouseLeaveCommandEventListener = (handleMouseLeaveCommand) => {
+  const addMouseLeaveCommandHandler = (handleMouseLeaveCommand) => {
     variables.handleMouseLeaveCommandCallback = () => {
       handleMouseLeaveCommand({ constants, variables });
     };
@@ -381,10 +385,13 @@ const handleSearchFxCmd = () => {
     );
   };
 
-  addHandleMouseLeaveCommandEventListener(handleMouseLeaveCommand);
+  addMouseLeaveCommandHandler(handleMouseLeaveCommand);
 
   const handleSetExtendedCommandByPressedKey = ({ constants, variables }) => {
-    const handleGetKeyExtendedCommand = ({ which, keyCode }, {constants, variables}) => {
+    const handleGetKeyExtendedCommand = (
+      { which, keyCode },
+      { constants, variables }
+    ) => {
       const { shortkeyHTMLCodes, shortkeyIndexTable, htmlElements } = constants;
       const { commandSelect, extendedCommandSelect } = htmlElements;
       const pressedKeyHTMLCode = which || keyCode;
@@ -398,9 +405,7 @@ const handleSearchFxCmd = () => {
       handleSearchCommand({ constants, variables });
     };
 
-    const addHandleGetKeyExtendedCommandEventListener = (
-      handleGetKeyExtendedCommand
-    ) => {
+    const addGetKeyExtendedCommandHandler = (handleGetKeyExtendedCommand) => {
       variables.handleGetKeyExtendedCommandCallback = (event) => {
         handleGetKeyExtendedCommand(event, { constants, variables });
       };
@@ -413,10 +418,10 @@ const handleSearchFxCmd = () => {
 
     const { extendedCommandSearchContainer } = constants.htmlElements;
     extendedCommandSearchContainer.focus();
-    addHandleGetKeyExtendedCommandEventListener(handleGetKeyExtendedCommand);
+    addGetKeyExtendedCommandHandler(handleGetKeyExtendedCommand);
   };
 
-  const addHandleSetExtendedCommandByPressedKeyEventListener = (
+  const addSetExtendedCommandByPressedKeyHandler = (
     handleSetExtendedCommandByPressedKey
   ) => {
     variables.handleSetExtendedCommandByPressedKeyCallback = () => {
@@ -429,7 +434,7 @@ const handleSearchFxCmd = () => {
     );
   };
 
-  addHandleSetExtendedCommandByPressedKeyEventListener(
+  addSetExtendedCommandByPressedKeyHandler(
     handleSetExtendedCommandByPressedKey
   );
 
@@ -442,7 +447,7 @@ const handleSearchFxCmd = () => {
     );
   };
 
-  const addHandleMouseLeaveExtendedCommandEventListener = (
+  const addMouseLeaveExtendedCommandHandler = (
     handleMouseLeaveExtendedCommand
   ) => {
     variables.handleMouseLeaveExtendedCommandCallback = () => {
@@ -455,13 +460,11 @@ const handleSearchFxCmd = () => {
     );
   };
 
-  addHandleMouseLeaveExtendedCommandEventListener(
-    handleMouseLeaveExtendedCommand
-  );
+  addMouseLeaveExtendedCommandHandler(handleMouseLeaveExtendedCommand);
 };
 
-const addHandleSearchFxCmd = (handleSearchFxCmd) => {
+const addSearchFxCmdHandler = (handleSearchFxCmd) => {
   document.addEventListener("DOMContentLoaded", handleSearchFxCmd, false);
 };
 
-addHandleSearchFxCmd(handleSearchFxCmd);
+addSearchFxCmdHandler(handleSearchFxCmd);

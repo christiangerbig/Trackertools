@@ -166,7 +166,7 @@ const handleTonePortaStep = () => {
     handleGetDestinationNoteByPressedKeyCallback: null,
     handleSetDestinationNoteCallback: null,
     handleMouseLeaveDestinationNoteCallback: null,
-    handleCalculatePortamentoValueCallback: null,
+    handleCalculatePortamentoCallback: null,
   };
 
   const setDefaultTextColor = ({ htmlElements }) => {
@@ -182,7 +182,7 @@ const handleTonePortaStep = () => {
     destinationFinetuneSelect.value = sourceFinetuneSelect.value;
   };
 
-  const addHandleSwitchDestinationToSourceFinetuneEventListener = (
+  const addSwitchDestinationToSourceFinetuneHandler = (
     handleSwitchDestinationToSourceFinetune
   ) => {
     variables.handleSwitchDestinationToSourceFinetuneCallback = () => {
@@ -195,7 +195,7 @@ const handleTonePortaStep = () => {
     );
   };
 
-  addHandleSwitchDestinationToSourceFinetuneEventListener(
+  addSwitchDestinationToSourceFinetuneHandler(
     handleSwitchDestinationToSourceFinetune
   );
 
@@ -204,7 +204,7 @@ const handleTonePortaStep = () => {
     sourceFinetuneSelect.value = destinationFinetuneSelect.value;
   };
 
-  const addHandleSwitchSourceToDestinationFinetuneEventListener = (
+  const addSwitchSourceToDestinationFinetuneHandler = (
     handleSwitchSourceToDestinationFinetune
   ) => {
     variables.handleSwitchSourceToDestinationFinetuneCallback = () => {
@@ -216,7 +216,7 @@ const handleTonePortaStep = () => {
       variables.handleSwitchSourceToDestinationFinetuneCallback
     );
   };
-  addHandleSwitchSourceToDestinationFinetuneEventListener(
+  addSwitchSourceToDestinationFinetuneHandler(
     handleSwitchSourceToDestinationFinetune
   );
 
@@ -243,13 +243,13 @@ const handleTonePortaStep = () => {
           }
         }
       }
-      handleCalculatePortamentoValue(
+      handleCalculatePortamento(
         { constants, variables },
         { sourceNote, destinationNote }
       );
     };
 
-    const addHandleGetSourceNoteByPressedKeyEventListener = (
+    const addGetSourceNoteByPressedKeyHandler = (
       handleGetSourceNoteByPressedKey
     ) => {
       variables.handleGetSourceNoteByPressedKeyCallback = (event) =>
@@ -270,12 +270,10 @@ const handleTonePortaStep = () => {
 
     const { sourceNoteContainer } = constants.htmlElements;
     sourceNoteContainer.focus();
-    addHandleGetSourceNoteByPressedKeyEventListener(
-      handleGetSourceNoteByPressedKey
-    );
+    addGetSourceNoteByPressedKeyHandler(handleGetSourceNoteByPressedKey);
   };
 
-  const addHandleSetSourceNoteEventListener = (handleSetSourceNote) => {
+  const addSetSourceNoteHandler = (handleSetSourceNote) => {
     variables.handleSetSourceNoteCallback = () => {
       handleSetSourceNote(
         { constants, variables },
@@ -289,7 +287,7 @@ const handleTonePortaStep = () => {
     );
   };
 
-  addHandleSetSourceNoteEventListener(handleSetSourceNote);
+  addSetSourceNoteHandler(handleSetSourceNote);
 
   const handleMouseLeaveSourceNote = ({ constants, variables }) => {
     const { sourceNoteContainer } = constants.htmlElements;
@@ -300,9 +298,7 @@ const handleTonePortaStep = () => {
     );
   };
 
-  const addHandleMouseLeaveSourceNoteEventListener = (
-    handleMouseLeaveSourceNote
-  ) => {
+  const addMouseLeaveSourceNoteHandler = (handleMouseLeaveSourceNote) => {
     variables.handleMouseLeaveSourceNoteCallback = () => {
       handleMouseLeaveSourceNote({ constants, variables });
     };
@@ -313,7 +309,7 @@ const handleTonePortaStep = () => {
     );
   };
 
-  addHandleMouseLeaveSourceNoteEventListener(handleMouseLeaveSourceNote);
+  addMouseLeaveSourceNoteHandler(handleMouseLeaveSourceNote);
 
   const handleSetDestinationNote = (
     { constants, variables },
@@ -338,13 +334,13 @@ const handleTonePortaStep = () => {
           }
         }
       }
-      handleCalculatePortamentoValue(
+      handleCalculatePortamento(
         { constants, variables },
         { sourceNote, destinationNote }
       );
     };
 
-    const addHandleGetDestinationNoteByPressedKeyEventListener = (
+    const addGetDestinationNoteByPressedKeyHandler = (
       handleGetDestinationNoteByPressedKey
     ) => {
       variables.handleGetDestinationNoteByPressedKeyCallback = (event) => {
@@ -363,14 +359,12 @@ const handleTonePortaStep = () => {
 
     const { destinationNoteContainer } = constants.htmlElements;
     destinationNoteContainer.focus();
-    addHandleGetDestinationNoteByPressedKeyEventListener(
+    addGetDestinationNoteByPressedKeyHandler(
       handleGetDestinationNoteByPressedKey
     );
   };
 
-  const addHandleSetDestinationNoteEventListener = (
-    handleSetDestinationNote
-  ) => {
+  const addSetDestinationNoteHandler = (handleSetDestinationNote) => {
     variables.handleSetDestinationNoteCallback = () => {
       handleSetDestinationNote(
         { constants, variables },
@@ -384,7 +378,7 @@ const handleTonePortaStep = () => {
     );
   };
 
-  addHandleSetDestinationNoteEventListener(handleSetDestinationNote);
+  addSetDestinationNoteHandler(handleSetDestinationNote);
 
   const handleMouseLeaveDestinationNote = ({ constants, variables }) => {
     const { destinationNoteContainer } = constants.htmlElements;
@@ -395,7 +389,7 @@ const handleTonePortaStep = () => {
     );
   };
 
-  const addHandleMouseLeaveDestinationNoteEventListener = (
+  const addMouseLeaveDestinationNoteHandler = (
     handleMouseLeaveDestinationNote
   ) => {
     variables.handleMouseLeaveDestinationNoteCallback = () => {
@@ -408,15 +402,13 @@ const handleTonePortaStep = () => {
     );
   };
 
-  addHandleMouseLeaveDestinationNoteEventListener(
-    handleMouseLeaveDestinationNote
-  );
+  addMouseLeaveDestinationNoteHandler(handleMouseLeaveDestinationNote);
 
-  const handleCalculatePortamentoValue = (
+  const handleCalculatePortamento = (
     { constants, variables },
     { sourceNote, destinationNote }
   ) => {
-    const getAndConvertInputElementsValues = (
+    const convertInputElementsValues = (
       { constants, variables },
       { sourceNote, destinationNote }
     ) => {
@@ -520,7 +512,7 @@ const handleTonePortaStep = () => {
       unitsResult.title = variables.tooltipText;
     };
 
-    getAndConvertInputElementsValues(
+    convertInputElementsValues(
       { constants, variables },
       { sourceNote, destinationNote }
     );
@@ -529,12 +521,10 @@ const handleTonePortaStep = () => {
     outputUnitsPerCommand({ constants, variables });
   };
 
-  const addHandleCalculatePortamentoValueEventListener = (
-    handleCalculatePortamentoValue
-  ) => {
+  const addCalculatePortamentoHandler = (handleCalculatePortamento) => {
     constants.htmlElements.groupChange.forEach((element) => {
-      variables.handleCalculatePortamentoValueCallback = () => {
-        handleCalculatePortamentoValue(
+      variables.handleCalculatePortamentoCallback = () => {
+        handleCalculatePortamento(
           { constants, variables },
           { sourceNote, destinationNote }
         );
@@ -542,14 +532,12 @@ const handleTonePortaStep = () => {
 
       element.addEventListener(
         "change",
-        variables.handleCalculatePortamentoValueCallback
+        variables.handleCalculatePortamentoCallback
       );
     });
   };
 
-  addHandleCalculatePortamentoValueEventListener(
-    handleCalculatePortamentoValue
-  );
+  addCalculatePortamentoHandler(handleCalculatePortamento);
 
   const handleResetButton = (constants) => {
     const { definedTics, definedCommands, definedTooltipText, htmlElements } =
@@ -578,7 +566,7 @@ const handleTonePortaStep = () => {
     setDefaultTextColor(constants);
   };
 
-  const addHandleResetButtonEventListener = (handleResetButton) => {
+  const addResetButtonHandler = (handleResetButton) => {
     const handleResetButtonCallback = () => {
       handleResetButton(constants);
     };
@@ -589,11 +577,11 @@ const handleTonePortaStep = () => {
     );
   };
 
-  addHandleResetButtonEventListener(handleResetButton);
+  addResetButtonHandler(handleResetButton);
 };
 
-const addHandleTonePortaStepEventHandler = (handleTonePortaStep) => {
+const addTonePortaStepHandler = (handleTonePortaStep) => {
   document.addEventListener("DOMContentLoaded", handleTonePortaStep, false);
 };
 
-addHandleTonePortaStepEventHandler(handleTonePortaStep);
+addTonePortaStepHandler(handleTonePortaStep);

@@ -9,7 +9,7 @@ const handleMainPart = () => {
     return catMeowSound;
   };
 
-  const addPlayCatMeowSoundEventListener = (catMeowSound) => {
+  const addPlayCatMeowSoundHandler = (catMeowSound) => {
     const handlePlayCatMeowSound = () => {
       catMeowSound.play();
     };
@@ -20,11 +20,11 @@ const handleMainPart = () => {
   };
 
   const catMeowSound = loadCatMeowSound();
-  addPlayCatMeowSoundEventListener(catMeowSound);
+  addPlayCatMeowSoundHandler(catMeowSound);
 };
 
-const addHandleMainPart = (handleMainPart) => {
+const addMainPartHandler = (handleMainPart) => {
   document.addEventListener("DOMContentLoaded", handleMainPart, false);
 };
 
-addHandleMainPart(handleMainPart);
+addMainPartHandler(handleMainPart);

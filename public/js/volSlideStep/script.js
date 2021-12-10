@@ -38,7 +38,7 @@ const handleVolSlideStep = () => {
     instrumentVolume: definedInstrumentVolume,
     units: definedUnits,
     handleFinevolumeCheckboxStateCallback: null,
-    handleCalculateVolumeValuesCallback: null,
+    handleCalculateVolumeCallback: null,
     handleResetButtonCallback: null,
   };
 
@@ -91,9 +91,7 @@ const handleVolSlideStep = () => {
       .toUpperCase();
   };
 
-  const addHandleCheckboxStateEventListener = (
-    handleFinevolumeCheckboxState
-  ) => {
+  const addCheckboxStateHandler = (handleFinevolumeCheckboxState) => {
     variables.handleFinevolumeCheckboxStateCallback = () => {
       handleFinevolumeCheckboxState({ constants, variables });
     };
@@ -104,7 +102,7 @@ const handleVolSlideStep = () => {
     );
   };
 
-  addHandleCheckboxStateEventListener(handleFinevolumeCheckboxState);
+  addCheckboxStateHandler(handleFinevolumeCheckboxState);
 
   const getAndConvertInputElementsValues = ({ constants, variables }) => {
     const { ticsInput, instrumentVolumeInput, unitsInput } =
@@ -190,7 +188,7 @@ const handleVolSlideStep = () => {
       .toUpperCase();
   };
 
-  const handleCalculateVolumeValues = ({ constants, variables }) => {
+  const handleCalculateVolume = ({ constants, variables }) => {
     getAndConvertInputElementsValues({ constants, variables });
     calculateVolumeUnits(variables);
     calculateFinevolumeUnits(variables);
@@ -198,22 +196,20 @@ const handleVolSlideStep = () => {
     outputAmountOfCommandsAndUnits({ constants, variables });
   };
 
-  const addHandleCalculateVolumeValuesEventListener = (
-    handleCalculateVolumeValues
-  ) => {
-    variables.handleCalculateVolumeValuesCallback = () => {
-      handleCalculateVolumeValues({ constants, variables });
+  const addCalculateVolumeHandler = (handleCalculateVolume) => {
+    variables.handleCalculateVolumeCallback = () => {
+      handleCalculateVolume({ constants, variables });
     };
 
     constants.htmlElements.groupChange.forEach((element) => {
       element.addEventListener(
         "change",
-        variables.handleCalculateVolumeValuesCallback
+        variables.handleCalculateVolumeCallback
       );
     });
   };
 
-  addHandleCalculateVolumeValuesEventListener(handleCalculateVolumeValues);
+  addCalculateVolumeHandler(handleCalculateVolume);
 
   const handleResetButton = ({ constants, variables }) => {
     const clearVariables = ({ constants, variables }) => {
@@ -239,13 +235,13 @@ const handleVolSlideStep = () => {
       unitsResult.title = definedFinevolumeSlideTooltipText;
       finevolumeSlideCheckbox.checked = false;
       finevolumeSlideContainer.classList.add("d-none");
-      handleCalculateVolumeValues({ constants, variables });
+      handleCalculateVolume({ constants, variables });
     };
 
     clearVariables({ constants, variables });
   };
 
-  const addHandleResetButtonEventListener = (handleResetButton) => {
+  const addResetButtonHandler = (handleResetButton) => {
     variables.handleResetButtonCallback = () => {
       handleResetButton({ constants, variables });
     };
@@ -253,12 +249,12 @@ const handleVolSlideStep = () => {
     resetButton.addEventListener("click", variables.handleResetButtonCallback);
   };
 
-  addHandleResetButtonEventListener(handleResetButton);
-  handleCalculateVolumeValues({ constants, variables });
+  addResetButtonHandler(handleResetButton);
+  handleCalculateVolume({ constants, variables });
 };
 
-const addHandleVolSlideStepEventListener = (handleVolSlideStep) => {
+const addVolSlideStepHandler = (handleVolSlideStep) => {
   document.addEventListener("DOMContentLoaded", handleVolSlideStep, false);
 };
 
-addHandleVolSlideStepEventListener(handleVolSlideStep);
+addVolSlideStepHandler(handleVolSlideStep);

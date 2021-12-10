@@ -76,7 +76,7 @@ const handleUsedFxCmd = () => {
     commandNumber: 0,
     extendedCommandNumber: 0,
     commandLowbyte: 0,
-    handleWaitForLoadCallback: null,
+    handleWaitForModuleLoadCallback: null,
     handleLoadModuleCallback: null,
   };
 
@@ -235,7 +235,7 @@ const handleUsedFxCmd = () => {
   };
 
   const handleLoadModule = ({ constants, variables }) => {
-    const handleWaitForLoad = ({ constants, variables }) => {
+    const handleWaitForModuleLoad = ({ constants, variables }) => {
       const resetValues = ({ htmlElements }) => {
         const { commandsTableBody, extendedCommandsTableBody } = htmlElements;
         commandsTableBody.innerHTML = "";
@@ -244,12 +244,12 @@ const handleUsedFxCmd = () => {
 
       resetValues(constants);
       handleSearchCommands({ constants, variables });
-      reader.removeEventListener("load", handleWaitForLoad);
+      reader.removeEventListener("load", handleWaitForModuleLoad);
     };
 
-    const addHandleWaitForLoadEventListener = (handleWaitForLoad) => {
-      variables.handleWaitForLoadCallback = () => {
-        handleWaitForLoad({ constants, variables });
+    const addWaitForModuleLoadHandler = (handleWaitForModuleLoad) => {
+      variables.handleWaitForModuleLoadCallback = () => {
+        handleWaitForModuleLoad({ constants, variables });
       };
 
       const { inputGroupFile01 } = constants.htmlElements;
@@ -258,13 +258,16 @@ const handleUsedFxCmd = () => {
       const reader = new FileReader();
       reader.onload = (event) => (variables.fileContent = event.target.result);
       reader.readAsBinaryString(file);
-      reader.addEventListener("load", variables.handleWaitForLoadCallback);
+      reader.addEventListener(
+        "load",
+        variables.handleWaitForModuleLoadCallback
+      );
     };
 
-    addHandleWaitForLoadEventListener(handleWaitForLoad);
+    addWaitForModuleLoadHandler(handleWaitForModuleLoad);
   };
 
-  const addHandleLoadModuleEventListener = (handleLoadModule) => {
+  const addLoadModuleHandler = (handleLoadModule) => {
     variables.handleLoadModuleCallback = () => {
       handleLoadModule({ constants, variables });
     };
@@ -275,11 +278,11 @@ const handleUsedFxCmd = () => {
     );
   };
 
-  addHandleLoadModuleEventListener(handleLoadModule);
+  addLoadModuleHandler(handleLoadModule);
 };
 
-const addHandleUsedFxCmdEventListener = (handleUsedFxCmd) => {
+const addUsedFxCmdHandler = (handleUsedFxCmd) => {
   document.addEventListener("DOMContentLoaded", handleUsedFxCmd, false);
 };
 
-addHandleUsedFxCmdEventListener(handleUsedFxCmd);
+addUsedFxCmdHandler(handleUsedFxCmd);
