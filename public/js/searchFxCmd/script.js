@@ -67,7 +67,7 @@ const handleSearchFxCmd = () => {
     searchCommandNumber: 0,
     searchExtendedCommandNumber: 0,
     handleSearchCommandCallback: null,
-    handleWaitProtrackerModuleLoadCallback: null,
+    handleWaitProtrackerModuleLoadingCallback: null,
     handleLoadProTrackerModuleCallback: null,
     handleCheckCommandCallback: null,
     handleCheckExtendedCommandCallback: null,
@@ -227,7 +227,7 @@ const handleSearchFxCmd = () => {
   };
 
   const handleLoadProTrackerModule = ({ constants, variables }) => {
-    const handleWaitProtrackerModuleLoad = (
+    const handleWaitProtrackerModuleLoading = (
       reader,
       { constants, variables }
     ) => {
@@ -243,22 +243,22 @@ const handleSearchFxCmd = () => {
       clearSongDataTable(constants);
       reader.removeEventListener(
         "load",
-        variables.handleWaitProtrackerModuleLoadCallback
+        variables.handleWaitProtrackerModuleLoadingCallback
       );
     };
 
-    const addWaitProtrackerModuleLoadHandler = (
+    const addWaitProtrackerModuleLoadingHandler = (
       reader,
-      handleWaitProtrackerModuleLoad,
+      handleWaitProtrackerModuleLoading,
       { constants, variables }
     ) => {
-      variables.handleWaitProtrackerModuleLoadCallback = () => {
-        handleWaitProtrackerModuleLoad(reader, { constants, variables });
+      variables.handleWaitProtrackerModuleLoadingCallback = () => {
+        handleWaitProtrackerModuleLoading(reader, { constants, variables });
       };
 
       reader.addEventListener(
         "load",
-        variables.handleWaitProtrackerModuleLoadCallback
+        variables.handleWaitProtrackerModuleLoadingCallback
       );
     };
 
@@ -269,7 +269,7 @@ const handleSearchFxCmd = () => {
     const reader = new FileReader();
     reader.onload = (event) => (variables.fileContent = event.target.result);
     reader.readAsBinaryString(file);
-    addWaitProtrackerModuleLoadHandler(reader, handleWaitProtrackerModuleLoad, {
+    addWaitProtrackerModuleLoadingHandler(reader, handleWaitProtrackerModuleLoading, {
       constants,
       variables,
     });
