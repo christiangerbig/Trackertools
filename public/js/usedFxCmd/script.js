@@ -77,8 +77,8 @@ const handleUsedFxCmd = () => {
     commandNumber: 0,
     extendedCommandNumber: 0,
     commandLowbyte: 0,
-    handleWaitProtrackerModuleLoadingCallback: null,
-    handleLoadProTrackerModuleCallback: null,
+    handleWaitFileLoadingCallback: null,
+    handleLoadFileCallback: null,
   };
 
   const handleSearchCommands = ({ constants, variables }) => {
@@ -95,7 +95,7 @@ const handleUsedFxCmd = () => {
       variables.highestPatternNumber++; // Count starts at 0
     };
 
-    const scanCommandsInProTrackerModule = (
+    const scanCommandsInFile = (
       { hasCommandArray, hasExtendedCommandArray },
       { constants, variables }
     ) => {
@@ -226,7 +226,7 @@ const handleUsedFxCmd = () => {
     const hasExtendedCommandArray = new Array(16).fill(false); // Extended command found boolean states
     if (variables.isFileLoaded) {
       getHighestSongPattern({ constants, variables });
-      scanCommandsInProTrackerModule(
+      scanCommandsInFile(
         { hasCommandArray, hasExtendedCommandArray },
         { constants, variables }
       );
@@ -237,8 +237,8 @@ const handleUsedFxCmd = () => {
     }
   };
 
-  const handleLoadProTrackerModule = ({ constants, variables }) => {
-    const handleWaitProtrackerModuleLoading = (
+  const handleLoadFile = ({ constants, variables }) => {
+    const handleWaitFileLoading = (
       reader,
       { constants, variables }
     ) => {
@@ -253,22 +253,22 @@ const handleUsedFxCmd = () => {
       handleSearchCommands({ constants, variables });
       reader.removeEventListener(
         "load",
-        variables.handleWaitProtrackerModuleLoadingCallback
+        variables.handleWaitFileLoadingCallback
       );
     };
 
-    const addWaitProtrackerModuleLoadingHandler = (
+    const addWaitFileLoadingHandler = (
       reader,
-      handleWaitProtrackerModuleLoading,
+      handleWaitFileLoading,
       { constants, variables }
     ) => {
-      variables.handleWaitProtrackerModuleLoadingCallback = () => {
-        handleWaitProtrackerModuleLoading(reader, { constants, variables });
+      variables.handleWaitFileLoadingCallback = () => {
+        handleWaitFileLoading(reader, { constants, variables });
       };
 
       reader.addEventListener(
         "load",
-        variables.handleWaitProtrackerModuleLoadingCallback
+        variables.handleWaitFileLoadingCallback
       );
     };
 
@@ -279,27 +279,27 @@ const handleUsedFxCmd = () => {
     const reader = new FileReader();
     reader.onload = (event) => (variables.fileContent = event.target.result);
     reader.readAsBinaryString(file);
-    addWaitProtrackerModuleLoadingHandler(reader, handleWaitProtrackerModuleLoading, {
+    addWaitFileLoadingHandler(reader, handleWaitFileLoading, {
       constants,
       variables,
     });
   };
 
-  const addLoadProTrackerModuleHandler = (
-    handleLoadProTrackerModule,
+  const addLoadFileHandler = (
+    handleLoadFile,
     { constants, variables }
   ) => {
-    variables.handleLoadProTrackerModuleCallback = () => {
-      handleLoadProTrackerModule({ constants, variables });
+    variables.handleLoadFileCallback = () => {
+      handleLoadFile({ constants, variables });
     };
 
     constants.htmlElements.inputGroupFile01.addEventListener(
       "change",
-      variables.handleLoadProTrackerModuleCallback
+      variables.handleLoadFileCallback
     );
   };
 
-  addLoadProTrackerModuleHandler(handleLoadProTrackerModule, {
+  addLoadFileHandler(handleLoadFile, {
     constants,
     variables,
   });
