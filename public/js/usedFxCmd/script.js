@@ -184,9 +184,9 @@ const handleUsedFxCmd = () => {
       { hasCommandArray, hasExtendedCommandArray },
       constants
     ) => {
-      const createListEntry = (tr, entryText) => {
+      const createListEntry = (tr, entry) => {
         const td = document.createElement("td");
-        td.innerHTML = entryText.toString();
+        td.innerHTML = entry;
         tr.append(td);
       };
 

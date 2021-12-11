@@ -109,9 +109,9 @@ const handleSearchFxCmd = () => {
     const scanCommandsInProTrackerModule = ({ constants, variables }) => {
       const searchForCommandByNumber = ({ constants, variables }) => {
         const createSongDataTable = ({ i, j, k }, { constants, variables }) => {
-          const createListEntry = (tr, entryText) => {
+          const createListEntry = (tr, entry) => {
             const td = document.createElement("td");
-            td.innerHTML = entryText.toString();
+            td.innerHTML = entry.toString();
             tr.append(td);
           };
 
