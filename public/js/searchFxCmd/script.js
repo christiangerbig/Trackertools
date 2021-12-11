@@ -67,8 +67,8 @@ const handleSearchFxCmd = () => {
     searchCommandNumber: 0,
     searchExtendedCommandNumber: 0,
     handleSearchCommandCallback: null,
-    handleWaitForModuleLoadCallback: null,
-    handleLoadTrackerModuleCallback: null,
+    handleWaitProtrackerModuleLoadCallback: null,
+    handleLoadProTrackerModuleCallback: null,
     handleCheckCommandCallback: null,
     handleCheckExtendedCommandCallback: null,
     handleGetCommandCallback: null,
@@ -106,22 +106,26 @@ const handleSearchFxCmd = () => {
       );
     };
 
-    const scanForCommandsInModFile = ({ constants, variables }) => {
+    const scanCommandsInProTrackerModule = ({ constants, variables }) => {
       const searchForCommandByNumber = ({ constants, variables }) => {
         const createSongDataTable = ({ i, j, k }, { constants, variables }) => {
-          const { noteDataLength, patternRowLength, htmlElements } = constants;
           const createListEntry = (tr, entryText) => {
             const td = document.createElement("td");
             td.innerHTML = entryText.toString();
             tr.append(td);
           };
 
+          const { noteDataLength, patternRowLength, htmlElements } = constants;
           const tr = document.createElement("tr");
           htmlElements.tableBody.append(tr);
-          createListEntry(tr, i); // Position number
-          createListEntry(tr, variables.patternNumber); // Pattern number
-          createListEntry(tr, j / patternRowLength); // Pattern row number
-          createListEntry(tr, k / noteDataLength); // Channel number
+          const positionNumber = i;
+          createListEntry(tr, positionNumber);
+          const { patternNumber } = variables;
+          createListEntry(tr, patternNumber);
+          const patternRowNumber = j / patternRowLength;
+          createListEntry(tr, patternRowNumber);
+          const channelNumber = k / noteDataLength;
+          createListEntry(tr, channelNumber);
         };
 
         const {
@@ -218,12 +222,15 @@ const handleSearchFxCmd = () => {
     if (variables.isFileLoaded) {
       getHighestSongPattern({ constants, variables });
       convertInputElementValues({ constants, variables });
-      scanForCommandsInModFile({ constants, variables });
+      scanCommandsInProTrackerModule({ constants, variables });
     }
   };
 
-  const handleLoadTrackerModule = ({ constants, variables }) => {
-    const handleWaitForModuleLoad = (reader, { constants, variables }) => {
+  const handleLoadProTrackerModule = ({ constants, variables }) => {
+    const handleWaitProtrackerModuleLoad = (
+      reader,
+      { constants, variables }
+    ) => {
       const resetValues = ({ constants, variables }) => {
         const { commandSelect, extendedCommandSelect, tableBody } =
           constants.htmlElements;
@@ -236,22 +243,22 @@ const handleSearchFxCmd = () => {
       clearSongDataTable(constants);
       reader.removeEventListener(
         "load",
-        variables.handleWaitForModuleLoadCallback
+        variables.handleWaitProtrackerModuleLoadCallback
       );
     };
 
-    const addWaitForModuleLoadHandler = (
+    const addWaitProtrackerModuleLoadHandler = (
       reader,
-      handleWaitForModuleLoad,
+      handleWaitProtrackerModuleLoad,
       { constants, variables }
     ) => {
-      variables.handleWaitForModuleLoadCallback = () => {
-        handleWaitForModuleLoad(reader, { constants, variables });
+      variables.handleWaitProtrackerModuleLoadCallback = () => {
+        handleWaitProtrackerModuleLoad(reader, { constants, variables });
       };
 
       reader.addEventListener(
         "load",
-        variables.handleWaitForModuleLoadCallback
+        variables.handleWaitProtrackerModuleLoadCallback
       );
     };
 
@@ -262,27 +269,27 @@ const handleSearchFxCmd = () => {
     const reader = new FileReader();
     reader.onload = (event) => (variables.fileContent = event.target.result);
     reader.readAsBinaryString(file);
-    addWaitForModuleLoadHandler(reader, handleWaitForModuleLoad, {
+    addWaitProtrackerModuleLoadHandler(reader, handleWaitProtrackerModuleLoad, {
       constants,
       variables,
     });
   };
 
-  const addLoadTrackerModuleHandler = (
-    handleLoadTrackerModule,
+  const addLoadProTrackerModuleHandler = (
+    handleLoadProTrackerModule,
     { constants, variables }
   ) => {
-    variables.handleLoadTrackerModuleCallback = () => {
-      handleLoadTrackerModule({ constants, variables });
+    variables.handleLoadProTrackerModuleCallback = () => {
+      handleLoadProTrackerModule({ constants, variables });
     };
 
     constants.htmlElements.inputGroupFile01.addEventListener(
       "change",
-      variables.handleLoadTrackerModuleCallback
+      variables.handleLoadProTrackerModuleCallback
     );
   };
 
-  addLoadTrackerModuleHandler(handleLoadTrackerModule, {
+  addLoadProTrackerModuleHandler(handleLoadProTrackerModule, {
     constants,
     variables,
   });
