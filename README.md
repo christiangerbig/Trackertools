@@ -69,13 +69,13 @@ Models: Request-Model
 
 ### Git
 
-[Repository Link](https://github.com/christiangerbig/Trackertools)
+[Repository](https://github.com/christiangerbig/Trackertools)
 
 ### Heroku
 
-[Deploy Link](https://trackertools.herokuapp.com/)
+[Deployment](https://trackertools.herokuapp.com/)
 
-### Tech page
+### External documentation
 
-[ProTracker documentation Link](https://en.wikipedia.org/wiki/ProTracker)
-[ProTracker module format Link](https://wiki.multimedia.cx/index.php/Protracker_Module)
+[ProTracker documentation](https://en.wikipedia.org/wiki/ProTracker)
+[ProTracker module format](https://wiki.multimedia.cx/index.php/Protracker_Module)
