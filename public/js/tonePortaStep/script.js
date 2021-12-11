@@ -7,7 +7,7 @@ const handleTonePortaStep = () => {
     octaves: 3,
     semiTones: 0, // Will be initialized later
     maxUnits: 255,
-    outputErrorText: "**",
+    errorText: "**",
     tooltipErrorText: "Calculated number of units is greater than hex FF",
     // HTML element objects
     htmlElements: {
@@ -160,10 +160,10 @@ const handleTonePortaStep = () => {
     tooltipText: definedTooltipText,
     handleSwitchDestinationToSourceFinetuneCallback: null,
     handleSwitchSourceToDestinationFinetuneCallback: null,
-    handleGetSourceNoteByPressedKeyCallback: null,
+    handleGetSourceNoteCallback: null,
     handleSetSourceNoteCallback: null,
     handleMouseLeaveSourceNoteCallback: null,
-    handleGetDestinationNoteByPressedKeyCallback: null,
+    handleGetDestinationNoteCallback: null,
     handleSetDestinationNoteCallback: null,
     handleMouseLeaveDestinationNoteCallback: null,
     handleCalculatePortamentoCallback: null,
@@ -225,13 +225,13 @@ const handleTonePortaStep = () => {
   );
 
   const handleSetSourceNote = (
-    { constants, variables },
-    { sourceNote, destinationNote }
+    { sourceNote, destinationNote },
+    { constants, variables }
   ) => {
-    const handleGetSourceNoteByPressedKey = (
+    const handleGetSourceNote = (
       { which, keyCode },
-      { constants, variables },
-      { sourceNote, destinationNote }
+      { sourceNote, destinationNote },
+      { constants, variables }
     ) => {
       const chararacter = which || keyCode;
       const { shortkeyTable, shortkeyIndexTable, htmlElements } = constants;
@@ -248,37 +248,31 @@ const handleTonePortaStep = () => {
         }
       }
       handleCalculatePortamento(
-        { constants, variables },
-        { sourceNote, destinationNote }
+        { sourceNote, destinationNote },
+        { constants, variables }
       );
     };
 
-    const addGetSourceNoteByPressedKeyHandler = (
-      handleGetSourceNoteByPressedKey,
+    const addGetSourceNoteHandler = (
+      handleGetSourceNote,
       { constants, variables }
     ) => {
-      variables.handleGetSourceNoteByPressedKeyCallback = (event) =>
-        handleGetSourceNoteByPressedKey(
+      variables.handleGetSourceNoteCallback = (event) =>
+        handleGetSourceNote(
           event,
-          { constants, variables },
-          {
-            sourceNote,
-            destinationNote,
-          }
+          { sourceNote, destinationNote },
+          { constants, variables }
         );
 
       sourceNoteContainer.addEventListener(
         "keypress",
-        variables.handleGetSourceNoteByPressedKeyCallback
+        variables.handleGetSourceNoteCallback
       );
     };
 
     const { sourceNoteContainer } = constants.htmlElements;
     sourceNoteContainer.focus();
-    addGetSourceNoteByPressedKeyHandler(handleGetSourceNoteByPressedKey, {
-      constants,
-      variables,
-    });
+    addGetSourceNoteHandler(handleGetSourceNote, { constants, variables });
   };
 
   const addSetSourceNoteHandler = (
@@ -287,8 +281,8 @@ const handleTonePortaStep = () => {
   ) => {
     variables.handleSetSourceNoteCallback = () => {
       handleSetSourceNote(
-        { constants, variables },
-        { sourceNote, destinationNote }
+        { sourceNote, destinationNote },
+        { constants, variables }
       );
     };
 
@@ -305,7 +299,7 @@ const handleTonePortaStep = () => {
     sourceNoteContainer.blur();
     sourceNoteContainer.removeEventListener(
       "keypress",
-      variables.handleGetSourceNoteByPressedKeyCallback
+      variables.handleGetSourceNoteCallback
     );
   };
 
@@ -329,13 +323,13 @@ const handleTonePortaStep = () => {
   });
 
   const handleSetDestinationNote = (
-    { constants, variables },
-    { sourceNote, destinationNote }
+    { sourceNote, destinationNote },
+    { constants, variables }
   ) => {
-    const handleGetDestinationNoteByPressedKey = (
+    const handleGetDestinationNote = (
       { which, keyCode },
-      { constants, variables },
-      { sourceNote, destinationNote }
+      { sourceNote, destinationNote },
+      { constants, variables }
     ) => {
       const character = which || keyCode;
       const { shortkeyTable, shortkeyIndexTable, htmlElements } = constants;
@@ -352,35 +346,31 @@ const handleTonePortaStep = () => {
         }
       }
       handleCalculatePortamento(
-        { constants, variables },
-        { sourceNote, destinationNote }
+        { sourceNote, destinationNote },
+        { constants, variables }
       );
     };
 
-    const addGetDestinationNoteByPressedKeyHandler = (
-      handleGetDestinationNoteByPressedKey,
+    const addGetDestinationNoteHandler = (
+      handleGetDestinationNote,
       { constants, variables }
     ) => {
-      variables.handleGetDestinationNoteByPressedKeyCallback = (event) => {
-        handleGetDestinationNoteByPressedKey(
-          event,
-          { constants, variables },
-          { sourceNote, destinationNote }
-        );
+      variables.handleGetDestinationNoteCallback = (event) => {
+        handleGetDestinationNote(event, { sourceNote, destinationNote });
       };
 
       destinationNoteContainer.addEventListener(
         "keypress",
-        variables.handleGetDestinationNoteByPressedKeyCallback
+        variables.handleGetDestinationNoteCallback
       );
     };
 
     const { destinationNoteContainer } = constants.htmlElements;
     destinationNoteContainer.focus();
-    addGetDestinationNoteByPressedKeyHandler(
-      handleGetDestinationNoteByPressedKey,
-      { constants, variables }
-    );
+    addGetDestinationNoteHandler(handleGetDestinationNote, {
+      constants,
+      variables,
+    });
   };
 
   const addSetDestinationNoteHandler = (
@@ -389,8 +379,8 @@ const handleTonePortaStep = () => {
   ) => {
     variables.handleSetDestinationNoteCallback = () => {
       handleSetDestinationNote(
-        { constants, variables },
-        { sourceNote, destinationNote }
+        { sourceNote, destinationNote },
+        { constants, variables }
       );
     };
 
@@ -410,7 +400,7 @@ const handleTonePortaStep = () => {
     destinationNoteContainer.blur();
     destinationNoteContainer.removeEventListener(
       "keypress",
-      variables.handleGetDestinationNoteByPressedKey
+      variables.handleGetDestinationNote
     );
   };
 
@@ -434,12 +424,12 @@ const handleTonePortaStep = () => {
   });
 
   const handleCalculatePortamento = (
-    { constants, variables },
-    { sourceNote, destinationNote }
+    { sourceNote, destinationNote },
+    { constants, variables }
   ) => {
     const convertInputElementsValues = (
-      { constants, variables },
-      { sourceNote, destinationNote }
+      { sourceNote, destinationNote },
+      { constants, variables }
     ) => {
       const {
         sourceNoteSelect,
@@ -499,8 +489,8 @@ const handleTonePortaStep = () => {
     };
 
     const calculateUnitsPerCommand = (
-      variables,
-      { sourceNote, destinationNote }
+      { sourceNote, destinationNote },
+      variables
     ) => {
       const { tics, commands } = variables;
       variables.periodDiff = Math.abs(
@@ -512,10 +502,10 @@ const handleTonePortaStep = () => {
       );
     };
 
-    const outputUnitsPerCommand = ({ constants, variables }) => {
+    const printUnitsPerCommand = ({ constants, variables }) => {
       const {
         definedTooltipText,
-        outputErrorText,
+        errorText,
         tooltipErrorText,
         maxUnits,
         htmlElements,
@@ -530,7 +520,7 @@ const handleTonePortaStep = () => {
           .toUpperCase();
         setDefaultTextColor(constants);
       } else {
-        variables.commandUnits = outputErrorText;
+        variables.commandUnits = errorText;
         variables.tooltipText = tooltipErrorText;
         if (unitsResult.classList.contains("textColored")) {
           unitsResult.classList.remove("textColored");
@@ -542,12 +532,12 @@ const handleTonePortaStep = () => {
     };
 
     convertInputElementsValues(
-      { constants, variables },
-      { sourceNote, destinationNote }
+      { sourceNote, destinationNote },
+      { constants, variables }
     );
     getPeriodValuesFromTable(constants, { sourceNote, destinationNote });
-    calculateUnitsPerCommand(variables, { sourceNote, destinationNote });
-    outputUnitsPerCommand({ constants, variables });
+    calculateUnitsPerCommand({ sourceNote, destinationNote }, variables);
+    printUnitsPerCommand({ constants, variables });
   };
 
   const addCalculatePortamentoHandler = (
@@ -557,8 +547,8 @@ const handleTonePortaStep = () => {
     constants.htmlElements.groupChange.forEach((element) => {
       variables.handleCalculatePortamentoCallback = () => {
         handleCalculatePortamento(
-          { constants, variables },
-          { sourceNote, destinationNote }
+          { sourceNote, destinationNote },
+          { constants, variables }
         );
       };
 

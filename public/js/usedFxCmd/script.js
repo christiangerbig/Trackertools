@@ -70,6 +70,7 @@ const handleUsedFxCmd = () => {
   constants.patternRowLength = noteDataLength * maxChannels;
 
   const variables = {
+    isFileLoaded: false,
     fileContent: "",
     patternNumber: 0,
     highestPatternNumber: 0,
@@ -77,7 +78,7 @@ const handleUsedFxCmd = () => {
     extendedCommandNumber: 0,
     commandLowbyte: 0,
     handleWaitForModuleLoadCallback: null,
-    handleLoadModuleCallback: null,
+    handleLoadTrackerModuleCallback: null,
   };
 
   const handleSearchCommands = ({ constants, variables }) => {
@@ -95,12 +96,12 @@ const handleUsedFxCmd = () => {
     };
 
     const scanForCommandsInModFile = (
-      { constants, variables },
-      { hasCommandArray, hasExtendedCommandArray }
+      { hasCommandArray, hasExtendedCommandArray },
+      { constants, variables }
     ) => {
       const searchForCommands = (
-        { constants, variables },
-        { hasCommandArray, hasExtendedCommandArray }
+        { hasCommandArray, hasExtendedCommandArray },
+        { constants, variables }
       ) => {
         const {
           songLengthOffset,
@@ -174,14 +175,14 @@ const handleUsedFxCmd = () => {
       };
 
       searchForCommands(
-        { constants, variables },
-        { hasCommandArray, hasExtendedCommandArray }
+        { hasCommandArray, hasExtendedCommandArray },
+        { constants, variables }
       );
     };
 
-    const outputSongDataToTable = (
-      constants,
-      { hasCommandArray, hasExtendedCommandArray }
+    const createUsedCommandsTable = (
+      { hasCommandArray, hasExtendedCommandArray },
+      constants
     ) => {
       const createListEntry = (tr, entryText) => {
         const td = document.createElement("td");
@@ -189,9 +190,9 @@ const handleUsedFxCmd = () => {
         tr.append(td);
       };
 
-      const outputUsedCommands = (
-        { maxCommands, htmlElements, commandNamesTable },
-        hasCommandArray
+      const printUsedCommands = (
+        hasCommandArray,
+        { maxCommands, htmlElements, commandNamesTable }
       ) => {
         for (let i = 0; i < maxCommands; i++) {
           if (hasCommandArray[i]) {
@@ -203,9 +204,9 @@ const handleUsedFxCmd = () => {
         }
       };
 
-      const outputUsedExtendedCommands = (
-        { maxExtendedCommands, htmlElements, extendedCommandNamesTable },
-        hasExtendedCommandArray
+      const printUsedExtendedCommands = (
+        hasExtendedCommandArray,
+        { maxExtendedCommands, htmlElements, extendedCommandNamesTable }
       ) => {
         for (let i = 0; i < maxExtendedCommands; i++) {
           if (hasExtendedCommandArray[i]) {
@@ -217,74 +218,88 @@ const handleUsedFxCmd = () => {
         }
       };
 
-      outputUsedCommands(constants, hasCommandArray);
-      outputUsedExtendedCommands(constants, hasExtendedCommandArray);
+      printUsedCommands(hasCommandArray, constants);
+      printUsedExtendedCommands(hasExtendedCommandArray, constants);
     };
 
     const hasCommandArray = new Array(16).fill(false); // Command found boolean states
     const hasExtendedCommandArray = new Array(16).fill(false); // Extended command found boolean states
-    getHighestSongPattern({ constants, variables });
-    scanForCommandsInModFile(
-      { constants, variables },
-      { hasCommandArray, hasExtendedCommandArray }
-    );
-    outputSongDataToTable(constants, {
-      hasCommandArray,
-      hasExtendedCommandArray,
-    });
+    if (variables.isFileLoaded) {
+      getHighestSongPattern({ constants, variables });
+      scanForCommandsInModFile(
+        { hasCommandArray, hasExtendedCommandArray },
+        { constants, variables }
+      );
+      createUsedCommandsTable(
+        { hasCommandArray, hasExtendedCommandArray },
+        constants
+      );
+    }
   };
 
-  const handleLoadModule = ({ constants, variables }) => {
-    const handleWaitForModuleLoad = ({ constants, variables }) => {
+  const handleLoadTrackerModule = ({ constants, variables }) => {
+    const handleWaitForModuleLoad = (reader, { constants, variables }) => {
       const resetValues = ({ htmlElements }) => {
         const { commandsTableBody, extendedCommandsTableBody } = htmlElements;
         commandsTableBody.innerHTML = "";
         extendedCommandsTableBody.innerHTML = "";
+        variables.isFileLoaded = true;
       };
 
       resetValues(constants);
       handleSearchCommands({ constants, variables });
-      reader.removeEventListener("load", handleWaitForModuleLoad);
+      reader.removeEventListener(
+        "load",
+        variables.handleWaitForModuleLoadCallback
+      );
     };
 
     const addWaitForModuleLoadHandler = (
+      reader,
       handleWaitForModuleLoad,
       { constants, variables }
     ) => {
       variables.handleWaitForModuleLoadCallback = () => {
-        handleWaitForModuleLoad({ constants, variables });
+        handleWaitForModuleLoad(reader, { constants, variables });
       };
 
-      const { inputGroupFile01 } = constants.htmlElements;
-      const input = inputGroupFile01.files;
-      const file = input[0];
-      const reader = new FileReader();
-      reader.onload = (event) => (variables.fileContent = event.target.result);
-      reader.readAsBinaryString(file);
       reader.addEventListener(
         "load",
         variables.handleWaitForModuleLoadCallback
       );
     };
 
-    addWaitForModuleLoadHandler(handleWaitForModuleLoad, {
+    variables.isFileLoaded = false;
+    const { inputGroupFile01 } = constants.htmlElements;
+    const input = inputGroupFile01.files;
+    const file = input[0];
+    const reader = new FileReader();
+    reader.onload = (event) => (variables.fileContent = event.target.result);
+    reader.readAsBinaryString(file);
+    addWaitForModuleLoadHandler(reader, handleWaitForModuleLoad, {
       constants,
       variables,
     });
   };
 
-  const addLoadModuleHandler = (handleLoadModule, { constants, variables }) => {
-    variables.handleLoadModuleCallback = () => {
-      handleLoadModule({ constants, variables });
+  const addLoadTrackerModuleHandler = (
+    handleLoadTrackerModule,
+    { constants, variables }
+  ) => {
+    variables.handleLoadTrackerModuleCallback = () => {
+      handleLoadTrackerModule({ constants, variables });
     };
 
     constants.htmlElements.inputGroupFile01.addEventListener(
       "change",
-      variables.handleLoadModuleCallback
+      variables.handleLoadTrackerModuleCallback
     );
   };
 
-  addLoadModuleHandler(handleLoadModule, { constants, variables });
+  addLoadTrackerModuleHandler(handleLoadTrackerModule, {
+    constants,
+    variables,
+  });
 };
 
 const addUsedFxCmdHandler = (handleUsedFxCmd) => {

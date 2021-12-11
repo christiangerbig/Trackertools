@@ -9,7 +9,7 @@ const handleVolSlideStep = () => {
     definedFinevolumeSlideTooltipText: "Number of units ranges from hex 1 to F",
     volumeSlideTooltipErrorText: "Number of commands is greater than 64",
     finevolumeSlideTooltipErrorText: "Number of units is greater than hex F",
-    outputErrorText: "**",
+    errorText: "**",
     // HTML element objects
     htmlElements: {
       ticsInput: document.querySelector("#ticsInput"),
@@ -42,7 +42,7 @@ const handleVolSlideStep = () => {
     handleResetButtonCallback: null,
   };
 
-  const showOrHideFinevolumeSlideContainer = ({ constants, variables }) => {
+  const setFinevolumeSlideVisibility = ({ constants, variables }) => {
     const { finevolumeSlideContainer, finevolumeSlideCheckbox } =
       constants.htmlElements;
     const { finevolumeSlideCommands, volumeSlideCommands } = variables;
@@ -63,11 +63,11 @@ const handleVolSlideStep = () => {
       definedFinevolumeSlideTooltipText,
       volumeSlideTooltipErrorText,
       finevolumeSlideTooltipErrorText,
-      outputErrorText,
+      errorText,
       htmlElements,
     } = constants;
     const { commandsResult, unitsResult } = htmlElements;
-    showOrHideFinevolumeSlideContainer({ constants, variables });
+    setFinevolumeSlideVisibility({ constants, variables });
     [commandsResult.title, unitsResult.title] = [
       definedVolumeslideTooltipText,
       definedFinevolumeSlideTooltipText,
@@ -77,8 +77,8 @@ const handleVolSlideStep = () => {
       variables.finevolumeSlideUnits > maxFinevolumeSlideUnits
     ) {
       [variables.commandsToggle, variables.finevolumeSlideUnits] = [
-        outputErrorText,
-        outputErrorText,
+        errorText,
+        errorText,
       ];
       [commandsResult.title, unitsResult.title] = [
         volumeSlideTooltipErrorText,
@@ -135,7 +135,7 @@ const handleVolSlideStep = () => {
     variables.finevolumeSlideUnits = instrumentVolume % tics;
   };
 
-  const outputAmountOfCommandsAndUnits = ({ constants, variables }) => {
+  const printAmountOfCommandsAndUnits = ({ constants, variables }) => {
     const setDefaultTextColor = ({ htmlElements }) => {
       const { commandsResult, unitsResult } = htmlElements;
       if (
@@ -156,7 +156,7 @@ const handleVolSlideStep = () => {
       definedFinevolumeSlideTooltipText,
       volumeSlideTooltipErrorText,
       finevolumeSlideTooltipErrorText,
-      outputErrorText,
+      errorText,
       htmlElements,
     } = constants;
     const { commandsResult, unitsResult } = htmlElements;
@@ -171,8 +171,8 @@ const handleVolSlideStep = () => {
       setDefaultTextColor(constants);
     } else {
       [variables.commandsToggle, variables.finevolumeSlideUnits] = [
-        outputErrorText,
-        outputErrorText,
+        errorText,
+        errorText,
       ];
       [commandsResult.title, unitsResult.title] = [
         volumeSlideTooltipErrorText,
@@ -198,8 +198,8 @@ const handleVolSlideStep = () => {
     getAndConvertInputElementsValues({ constants, variables });
     calculateVolumeUnits(variables);
     calculateFinevolumeUnits(variables);
-    showOrHideFinevolumeSlideContainer({ constants, variables });
-    outputAmountOfCommandsAndUnits({ constants, variables });
+    setFinevolumeSlideVisibility({ constants, variables });
+    printAmountOfCommandsAndUnits({ constants, variables });
   };
 
   const addCalculateVolumeHandler = (

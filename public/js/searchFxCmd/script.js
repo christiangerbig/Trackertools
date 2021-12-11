@@ -71,11 +71,11 @@ const handleSearchFxCmd = () => {
     handleLoadTrackerModuleCallback: null,
     handleCheckCommandCallback: null,
     handleCheckExtendedCommandCallback: null,
-    handleGetKeyCommandCallback: null,
-    handleSetCommandByPressedKeyCallback: null,
+    handleGetCommandCallback: null,
+    handleSetCommandCallback: null,
     handleMouseLeaveCommandCallback: null,
-    handleGetKeyExtendedCommandCallback: null,
-    handleSetExtendedCommandByPressedKeyCallback: null,
+    handleGetExtendedCommandCallback: null,
+    handleSetExtendedCommandCallback: null,
     handleMouseLeaveExtendedCommandCallback: null,
   };
 
@@ -103,10 +103,7 @@ const handleSearchFxCmd = () => {
 
     const scanForCommandsInModFile = ({ constants, variables }) => {
       const searchForCommandByNumber = ({ constants, variables }) => {
-        const outputSongDataToTable = (
-          { constants, variables },
-          { i, j, k }
-        ) => {
+        const createSongDataTable = ({ i, j, k }, { constants, variables }) => {
           const { noteDataLength, patternRowLength, htmlElements } = constants;
           const createListEntry = (tr, entryText) => {
             const td = document.createElement("td");
@@ -176,13 +173,10 @@ const handleSearchFxCmd = () => {
                   variables.commandLowbyte =
                     variables.fileContent[commandNumberIndex].charCodeAt(0);
                   if (variables.commandLowbyte > 0) {
-                    outputSongDataToTable(
-                      { constants, variables },
-                      { i, j, k }
-                    );
+                    createSongDataTable({ i, j, k }, { constants, variables });
                   }
                 } else {
-                  outputSongDataToTable({ constants, variables }, { i, j, k });
+                  createSongDataTable({ i, j, k }, { constants, variables });
                 }
               }
               if (variables.commandNumber === 14) {
@@ -200,7 +194,7 @@ const handleSearchFxCmd = () => {
                   variables.extendedCommandNumber ===
                   variables.searchExtendedCommandNumber
                 ) {
-                  outputSongDataToTable({ constants, variables }, { i, j, k });
+                  createSongDataTable({ i, j, k }, { constants, variables });
                 }
               }
             }
@@ -224,13 +218,13 @@ const handleSearchFxCmd = () => {
   };
 
   const handleLoadTrackerModule = ({ constants, variables }) => {
-    const handleWaitForModuleLoad = ({ constants, variables }) => {
+    const handleWaitForModuleLoad = (reader, { constants, variables }) => {
       const resetValues = ({ constants, variables }) => {
         const { commandSelect, extendedCommandSelect, tableBody } =
           constants.htmlElements;
         commandSelect.value = "-1";
         extendedCommandSelect.value = "-1";
-        tableBody.innerHTML = ""; // Remove tr/td tags from table
+        tableBody.innerHTML = "";
         variables.isFileLoaded = true;
       };
 
@@ -242,11 +236,12 @@ const handleSearchFxCmd = () => {
     };
 
     const addWaitForModuleLoadHandler = (
+      reader,
       handleWaitForModuleLoad,
       { constants, variables }
     ) => {
       variables.handleWaitForModuleLoadCallback = () => {
-        handleWaitForModuleLoad({ constants, variables });
+        handleWaitForModuleLoad(reader, { constants, variables });
       };
 
       reader.addEventListener(
@@ -262,7 +257,7 @@ const handleSearchFxCmd = () => {
     const reader = new FileReader();
     reader.onload = (event) => (variables.fileContent = event.target.result);
     reader.readAsBinaryString(file);
-    addWaitForModuleLoadHandler(handleWaitForModuleLoad, {
+    addWaitForModuleLoadHandler(reader, handleWaitForModuleLoad, {
       constants,
       variables,
     });
@@ -338,11 +333,8 @@ const handleSearchFxCmd = () => {
     variables,
   });
 
-  const handleSetCommandByPressedKey = ({ constants, variables }) => {
-    const handleGetKeyCommand = (
-      { which, keyCode },
-      { constants, variables }
-    ) => {
+  const handleSetCommand = ({ constants, variables }) => {
+    const handleGetCommand = ({ which, keyCode }, { constants, variables }) => {
       const { shortkeyHTMLCodes, shortkeyIndexTable, htmlElements } = constants;
       const { commandSelect, extendedCommandSelect } = htmlElements;
       const pressedKeyHTMLCode = which || keyCode;
@@ -357,40 +349,37 @@ const handleSearchFxCmd = () => {
       handleSearchCommand({ constants, variables });
     };
 
-    const addGetKeyCommandHandler = (
-      handleGetKeyCommand,
+    const addGetCommandHandler = (
+      handleGetCommand,
       { constants, variables }
     ) => {
-      variables.handleGetKeyCommandCallback = (event) => {
-        handleGetKeyCommand(event, { constants, variables });
+      variables.handleGetCommandCallback = (event) => {
+        handleGetCommand(event, { constants, variables });
       };
 
       commandSearchContainer.addEventListener(
         "keypress",
-        variables.handleGetKeyCommandCallback
+        variables.handleGetCommandCallback
       );
     };
 
     const { commandSearchContainer } = constants.htmlElements;
     commandSearchContainer.focus();
-    addGetKeyCommandHandler(handleGetKeyCommand, { constants, variables });
+    addGetCommandHandler(handleGetCommand, { constants, variables });
   };
 
-  const addCommandByPressedKeyHandler = (
-    handleSetCommandByPressedKey,
-    { constants, variables }
-  ) => {
-    variables.handleSetCommandByPressedKeyCallback = () => {
-      handleSetCommandByPressedKey({ constants, variables });
+  const addCommandHandler = (handleSetCommand, { constants, variables }) => {
+    variables.handleSetCommandCallback = () => {
+      handleSetCommand({ constants, variables });
     };
 
     constants.htmlElements.commandSearchContainer.addEventListener(
       "mouseenter",
-      variables.handleSetCommandByPressedKeyCallback
+      variables.handleSetCommandCallback
     );
   };
 
-  addCommandByPressedKeyHandler(handleSetCommandByPressedKey, {
+  addCommandHandler(handleSetCommand, {
     constants,
     variables,
   });
@@ -400,7 +389,7 @@ const handleSearchFxCmd = () => {
     commandSearchContainer.blur();
     commandSearchContainer.removeEventListener(
       "keypress",
-      variables.handleGetKeyCommandCallback
+      variables.handleGetCommandCallback
     );
   };
 
@@ -423,8 +412,8 @@ const handleSearchFxCmd = () => {
     variables,
   });
 
-  const handleSetExtendedCommandByPressedKey = ({ constants, variables }) => {
-    const handleGetKeyExtendedCommand = (
+  const handleSetExtendedCommand = ({ constants, variables }) => {
+    const handleGetExtendedCommand = (
       { which, keyCode },
       { constants, variables }
     ) => {
@@ -441,53 +430,53 @@ const handleSearchFxCmd = () => {
       handleSearchCommand({ constants, variables });
     };
 
-    const addGetKeyExtendedCommandHandler = (
-      handleGetKeyExtendedCommand,
+    const addGetExtendedCommandHandler = (
+      handleGetExtendedCommand,
       { constants, variables }
     ) => {
-      variables.handleGetKeyExtendedCommandCallback = (event) => {
-        handleGetKeyExtendedCommand(event, { constants, variables });
+      variables.handleGetExtendedCommandCallback = (event) => {
+        handleGetExtendedCommand(event, { constants, variables });
       };
 
       extendedCommandSearchContainer.addEventListener(
         "keypress",
-        variables.handleGetKeyExtendedCommandCallback
+        variables.handleGetExtendedCommandCallback
       );
     };
 
     const { extendedCommandSearchContainer } = constants.htmlElements;
     extendedCommandSearchContainer.focus();
-    addGetKeyExtendedCommandHandler(handleGetKeyExtendedCommand, {
+    addGetExtendedCommandHandler(handleGetExtendedCommand, {
       constants,
       variables,
     });
   };
 
-  const addSetExtendedCommandByPressedKeyHandler = (
-    handleSetExtendedCommandByPressedKey,
+  const addSetExtendedCommandHandler = (
+    handleSetExtendedCommand,
     { constants, variables }
   ) => {
-    variables.handleSetExtendedCommandByPressedKeyCallback = () => {
-      handleSetExtendedCommandByPressedKey({ constants, variables });
+    variables.handleSetExtendedCommandCallback = () => {
+      handleSetExtendedCommand({ constants, variables });
     };
 
     constants.htmlElements.extendedCommandSearchContainer.addEventListener(
       "mouseenter",
-      variables.handleSetExtendedCommandByPressedKeyCallback
+      variables.handleSetExtendedCommandCallback
     );
   };
 
-  addSetExtendedCommandByPressedKeyHandler(
-    handleSetExtendedCommandByPressedKey,
-    { constants, variables }
-  );
+  addSetExtendedCommandHandler(handleSetExtendedCommand, {
+    constants,
+    variables,
+  });
 
   const handleMouseLeaveExtendedCommand = ({ constants, variables }) => {
     const { extendedCommandSearchContainer } = constants.htmlElements;
     extendedCommandSearchContainer.blur();
     extendedCommandSearchContainer.removeEventListener(
       "keypress",
-      variables.handleGetKeyExtendedCommandCallback
+      variables.handleGetExtendedCommandCallback
     );
   };
 
