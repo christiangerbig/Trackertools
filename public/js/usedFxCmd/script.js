@@ -239,14 +239,14 @@ const handleUsedFxCmd = () => {
 
   const handleLoadTrackerModule = ({ constants, variables }) => {
     const handleWaitForModuleLoad = (reader, { constants, variables }) => {
-      const resetValues = ({ htmlElements }) => {
+      const clearUsedCommandsTables = ({ htmlElements }) => {
         const { commandsTableBody, extendedCommandsTableBody } = htmlElements;
         commandsTableBody.innerHTML = "";
         extendedCommandsTableBody.innerHTML = "";
-        variables.isFileLoaded = true;
       };
 
-      resetValues(constants);
+      variables.isFileLoaded = true;
+      clearUsedCommandsTables(constants);
       handleSearchCommands({ constants, variables });
       reader.removeEventListener(
         "load",

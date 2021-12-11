@@ -79,6 +79,11 @@ const handleSearchFxCmd = () => {
     handleMouseLeaveExtendedCommandCallback: null,
   };
 
+  const clearSongDataTable = ({ htmlElements }) => {
+    const { tableBody } = htmlElements;
+    tableBody.innerHTML = "";
+  };
+
   const handleSearchCommand = ({ constants, variables }) => {
     const getHighestSongPattern = ({ constants, variables }) => {
       const { songPositionOffset, positionTableLength } = constants;
@@ -205,7 +210,7 @@ const handleSearchFxCmd = () => {
       const { htmlElements } = constants;
       const { tableBody } = htmlElements;
       if (variables.searchCommandNumber !== -1) {
-        tableBody.innerHTML = ""; // Remove <tr>/<td> tags from table
+        clearSongDataTable(constants);
         searchForCommandByNumber({ constants, variables });
       }
     };
@@ -224,11 +229,11 @@ const handleSearchFxCmd = () => {
           constants.htmlElements;
         commandSelect.value = "-1";
         extendedCommandSelect.value = "-1";
-        tableBody.innerHTML = "";
         variables.isFileLoaded = true;
       };
 
       resetValues({ constants, variables });
+      clearSongDataTable(constants);
       reader.removeEventListener(
         "load",
         variables.handleWaitForModuleLoadCallback
