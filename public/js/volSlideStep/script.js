@@ -110,7 +110,7 @@ const handleVolSlideStep = () => {
     variables,
   });
 
-  const getAndConvertInputElementsValues = ({ constants, variables }) => {
+  const convertInputElementsValues = ({ constants, variables }) => {
     const { ticsInput, instrumentVolumeInput, unitsInput } =
       constants.htmlElements;
     variables.tics = parseInt(ticsInput.value);
@@ -195,7 +195,7 @@ const handleVolSlideStep = () => {
   };
 
   const handleCalculateVolume = ({ constants, variables }) => {
-    getAndConvertInputElementsValues({ constants, variables });
+    convertInputElementsValues({ constants, variables });
     calculateVolumeUnits(variables);
     calculateFinevolumeUnits(variables);
     setFinevolumeSlideVisibility({ constants, variables });

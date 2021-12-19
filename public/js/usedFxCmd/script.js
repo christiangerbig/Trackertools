@@ -82,7 +82,7 @@ const handleUsedFxCmd = () => {
   };
 
   const handleSearchCommands = ({ constants, variables }) => {
-    const getHighestSongPattern = ({ constants, variables }) => {
+    const highestSongPattern = ({ constants, variables }) => {
       const { songPositionOffset, positionTableLength } = constants;
       const { fileContent } = variables;
       for (let i = 0; i < positionTableLength; i++) {
@@ -225,7 +225,7 @@ const handleUsedFxCmd = () => {
     const hasCommandArray = new Array(16).fill(false); // Command found boolean states
     const hasExtendedCommandArray = new Array(16).fill(false); // Extended command found boolean states
     if (variables.isFileLoaded) {
-      getHighestSongPattern({ constants, variables });
+      highestSongPattern({ constants, variables });
       scanCommandsInFile(
         { hasCommandArray, hasExtendedCommandArray },
         { constants, variables }

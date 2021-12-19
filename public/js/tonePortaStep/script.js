@@ -452,11 +452,11 @@ const handleTonePortaStep = () => {
       variables.commands = parseInt(commandsInput.value);
     };
 
-    const getPeriodValuesFromTable = (
+    const fetchPeriodValuesFromTable = (
       { semiTones, semiToneOctaves, periodsTable },
       { sourceNote, destinationNote }
     ) => {
-      const getSourcePeriod = (
+      const fetchSourcePeriod = (
         { semiTones, semiToneOctaves, periodsTable },
         sourceNote
       ) => {
@@ -468,7 +468,7 @@ const handleTonePortaStep = () => {
         sourceNote.period = periodsTable[sourceNote.periodsTableIndex];
       };
 
-      const getDestinationPeriod = (
+      const fetchDestinationPeriod = (
         { semiTones, semiToneOctaves, periodsTable },
         destinationNote
       ) => {
@@ -481,8 +481,8 @@ const handleTonePortaStep = () => {
           periodsTable[destinationNote.periodsTableIndex];
       };
 
-      getSourcePeriod({ semiTones, semiToneOctaves, periodsTable }, sourceNote);
-      getDestinationPeriod(
+      fetchSourcePeriod({ semiTones, semiToneOctaves, periodsTable }, sourceNote);
+      fetchDestinationPeriod(
         { semiTones, semiToneOctaves, periodsTable },
         destinationNote
       );
@@ -535,7 +535,7 @@ const handleTonePortaStep = () => {
       { sourceNote, destinationNote },
       { constants, variables }
     );
-    getPeriodValuesFromTable(constants, { sourceNote, destinationNote });
+    fetchPeriodValuesFromTable(constants, { sourceNote, destinationNote });
     calculateUnitsPerCommand({ sourceNote, destinationNote }, variables);
     printUnitsPerCommand({ constants, variables });
   };

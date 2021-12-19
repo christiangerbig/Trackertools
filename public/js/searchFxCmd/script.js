@@ -85,7 +85,7 @@ const handleSearchFxCmd = () => {
   };
 
   const handleSearchCommand = ({ constants, variables }) => {
-    const getHighestSongPattern = ({ constants, variables }) => {
+    const highestSongPattern = ({ constants, variables }) => {
       const { songPositionOffset, positionTableLength } = constants;
       const { fileContent } = variables;
       for (let i = 0; i < positionTableLength; i++) {
@@ -220,7 +220,7 @@ const handleSearchFxCmd = () => {
     };
 
     if (variables.isFileLoaded) {
-      getHighestSongPattern({ constants, variables });
+      highestSongPattern({ constants, variables });
       convertInputElementValues({ constants, variables });
       scanCommandsInFile({ constants, variables });
     }
