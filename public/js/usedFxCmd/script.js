@@ -7,14 +7,12 @@ const handleUsedFxCmd = () => {
     commandOffset: 2,
     commandLowbyteOffset: 3,
     // Song constant values
-    positionTableLength: 128,
+    amountOfPositions: 128,
     maxPatternPosition: 64,
     maxChannels: 4,
     patternLength: 0, // will be initialized later
     noteDataLength: 4,
     patternRowLength: 0, // will be initialized later
-    maxCommands: 16,
-    maxExtendedCommands: 16,
     commandNumberMask: 0xf,
     // HTML element objects
     htmlElements: {
@@ -24,8 +22,7 @@ const handleUsedFxCmd = () => {
         "#extendedCommandsTableBody"
       ),
     },
-    // Command names
-    commandNamesTable: [
+    CommandNames: [
       "0 - Arpeggio",
       "1 - Portamento Up",
       "2 - Portamento Down",
@@ -43,8 +40,7 @@ const handleUsedFxCmd = () => {
       "E - Ext commands",
       "F - Set Speed",
     ],
-    // Extended command names
-    extendedCommandNamesTable: [
+    extendedCommandNames: [
       "E0 - Set Filter",
       "E1 - Fine Porta Up",
       "E2 - Fine Porta Down",
@@ -72,27 +68,23 @@ const handleUsedFxCmd = () => {
   const variables = {
     isFileLoaded: false,
     fileContent: "",
-    patternNumber: 0,
-    highestPatternNumber: 0,
-    commandNumber: 0,
-    extendedCommandNumber: 0,
-    commandLowbyte: 0,
     handleWaitFileLoadingCallback: null,
     handleLoadFileCallback: null,
   };
 
   const handleSearchCommands = ({ constants, variables }) => {
     const highestSongPattern = ({ constants, variables }) => {
-      const { songPositionOffset, positionTableLength } = constants;
+      const { songPositionOffset, amountOfPositions } = constants;
       const { fileContent } = variables;
-      for (let i = 0; i < positionTableLength; i++) {
-        variables.patternNumber =
-          fileContent[songPositionOffset + i].charCodeAt(0);
-        if (variables.patternNumber > variables.highestPatternNumber) {
-          variables.highestPatternNumber = variables.patternNumber;
+      let patternNumber = 0;
+      let highestPatternNumber = 0;
+      for (let i = 0; i < amountOfPositions; i++) {
+        patternNumber = fileContent[songPositionOffset + i].charCodeAt(0);
+        if (patternNumber > highestPatternNumber) {
+          highestPatternNumber = patternNumber;
         }
       }
-      variables.highestPatternNumber++; // Count starts at 0
+      return highestPatternNumber++; // Count starts at 0
     };
 
     const scanCommandsInFile = (
@@ -118,55 +110,70 @@ const handleUsedFxCmd = () => {
         } = constants;
         const { fileContent } = variables;
         const songLength = fileContent[songLengthOffset].charCodeAt(0);
-        for (let i = 0; i < songLength; i++) {
-          variables.patternNumber =
-            fileContent[songPositionOffset + i].charCodeAt(0);
-          const patternOffset =
-            variables.patternNumber * patternLength * noteDataLength; // Pattern offset in song structure
+        let patternNumber = 0;
+        // Fetch pattern numbers
+        for (
+          let songPositionIndexCounter = 0;
+          songPositionIndexCounter < songLength;
+          songPositionIndexCounter++
+        ) {
+          patternNumber =
+            fileContent[
+              songPositionOffset + songPositionIndexCounter
+            ].charCodeAt(0);
+          const patternOffset = patternNumber * patternLength * noteDataLength; // Pattern offset in song structure
+          // Fetch pattern rows
           for (
-            let j = 0;
-            j < maxPatternPosition * patternRowLength;
-            j += patternRowLength
+            let patternRowIndexCounter = 0;
+            patternRowIndexCounter < maxPatternPosition;
+            patternRowIndexCounter += 1
           ) {
-            // 16th steps per row
+            const patternRowOffset = patternRowIndexCounter * patternRowLength;
+            let commandNumber = 0;
+            let extendedCommandNumber = 0;
+            let commandLowbyte = 0;
+            // Fetch note data
             for (
-              let k = 0;
-              k < maxChannels * noteDataLength;
-              k += noteDataLength
+              let noteDataIndexCounter = 0;
+              noteDataIndexCounter < maxChannels;
+              noteDataIndexCounter += 1
             ) {
-              // 4th steps per channel
-              const commandNumberIndex =
-                patternStartOffset + patternOffset + j + k + commandOffset;
-              if (
-                (variables.commandNumber =
-                  fileContent[commandNumberIndex].charCodeAt(0) &
-                  commandNumberMask) !== 14
-              ) {
-                if (variables.commandNumber === 0) {
-                  const commandNumberIndex =
+              const noteDataOffset = noteDataIndexCounter * noteDataLength;
+              const commandNumberOffset =
+                patternStartOffset +
+                patternOffset +
+                patternRowOffset +
+                noteDataOffset +
+                commandOffset;
+              commandNumber =
+                fileContent[commandNumberOffset].charCodeAt(0) &
+                commandNumberMask; // Mask out upper nibble
+              if (commandNumber !== 14) {
+                if (commandNumber === 0) {
+                  const commandNumberOffset =
                     patternStartOffset +
                     patternOffset +
-                    j +
-                    k +
-                    commandLowbyteOffset;
-                  variables.commandLowbyte =
-                    fileContent[commandNumberIndex].charCodeAt(0);
-                  if (variables.commandLowbyte > 0) {
-                    hasCommandArray[variables.commandNumber] = true;
+                    patternRowOffset +
+                    noteDataOffset +
+                    commandOffset;
+                  commandLowbyte =
+                    fileContent[commandNumberOffset].charCodeAt(0);
+                  if (commandLowbyte > 0) {
+                    hasCommandArray[commandNumber] = true;
                   }
                 } else {
-                  hasCommandArray[variables.commandNumber] = true;
+                  hasCommandArray[commandNumber] = true;
                 }
               } else {
-                const extendedCommandNumberIndex =
+                const extendedCommandNumberOffset =
                   patternStartOffset +
                   patternOffset +
-                  j +
-                  k +
+                  patternRowOffset +
+                  noteDataOffset +
                   commandLowbyteOffset;
-                variables.extendedCommandNumber =
-                  fileContent[extendedCommandNumberIndex].charCodeAt(0) >> 4;
-                hasExtendedCommandArray[variables.extendedCommandNumber] = true;
+                extendedCommandNumber =
+                  fileContent[extendedCommandNumberOffset].charCodeAt(0) >> 4;
+                hasExtendedCommandArray[extendedCommandNumber] = true;
                 hasCommandArray[14] = true; // Also set extended command boolean state
               }
             }
@@ -192,28 +199,28 @@ const handleUsedFxCmd = () => {
 
       const printUsedCommands = (
         hasCommandArray,
-        { maxCommands, htmlElements, commandNamesTable }
+        { htmlElements, CommandNames }
       ) => {
-        for (let i = 0; i < maxCommands; i++) {
+        for (let i = 0; i < hasCommandArray.length; i++) {
           if (hasCommandArray[i]) {
             const tr = document.createElement("tr");
             tr.classList.add("text-left");
             htmlElements.commandsTableBody.append(tr);
-            createListEntry(tr, commandNamesTable[i]);
+            createListEntry(tr, CommandNames[i]);
           }
         }
       };
 
       const printUsedExtendedCommands = (
         hasExtendedCommandArray,
-        { maxExtendedCommands, htmlElements, extendedCommandNamesTable }
+        { htmlElements, extendedCommandNames }
       ) => {
-        for (let i = 0; i < maxExtendedCommands; i++) {
+        for (let i = 0; i < hasExtendedCommandArray.length; i++) {
           if (hasExtendedCommandArray[i]) {
             const tr = document.createElement("tr");
             tr.classList.add("text-left");
             htmlElements.extendedCommandsTableBody.append(tr);
-            createListEntry(tr, extendedCommandNamesTable[i]);
+            createListEntry(tr, extendedCommandNames[i]);
           }
         }
       };
@@ -224,8 +231,12 @@ const handleUsedFxCmd = () => {
 
     const hasCommandArray = new Array(16).fill(false); // Command found boolean states
     const hasExtendedCommandArray = new Array(16).fill(false); // Extended command found boolean states
-    if (variables.isFileLoaded) {
-      highestSongPattern({ constants, variables });
+    const { isFileLoaded } = variables;
+    if (isFileLoaded) {
+      variables.highestPatternNumber = highestSongPattern({
+        constants,
+        variables,
+      });
       scanCommandsInFile(
         { hasCommandArray, hasExtendedCommandArray },
         { constants, variables }
@@ -238,10 +249,7 @@ const handleUsedFxCmd = () => {
   };
 
   const handleLoadFile = ({ constants, variables }) => {
-    const handleWaitFileLoading = (
-      reader,
-      { constants, variables }
-    ) => {
+    const handleWaitFileLoading = (reader, { constants, variables }) => {
       const clearUsedCommandsTables = ({ htmlElements }) => {
         const { commandsTableBody, extendedCommandsTableBody } = htmlElements;
         commandsTableBody.innerHTML = "";
@@ -266,10 +274,7 @@ const handleUsedFxCmd = () => {
         handleWaitFileLoading(reader, { constants, variables });
       };
 
-      reader.addEventListener(
-        "load",
-        variables.handleWaitFileLoadingCallback
-      );
+      reader.addEventListener("load", variables.handleWaitFileLoadingCallback);
     };
 
     variables.isFileLoaded = false;
@@ -277,7 +282,7 @@ const handleUsedFxCmd = () => {
     const input = inputGroupFile01.files;
     const file = input[0];
     const reader = new FileReader();
-    reader.onload = (event) => (variables.fileContent = event.target.result);
+    reader.onload = ({ target }) => (variables.fileContent = target.result);
     reader.readAsBinaryString(file);
     addWaitFileLoadingHandler(reader, handleWaitFileLoading, {
       constants,
@@ -285,15 +290,13 @@ const handleUsedFxCmd = () => {
     });
   };
 
-  const addLoadFileHandler = (
-    handleLoadFile,
-    { constants, variables }
-  ) => {
+  const addLoadFileHandler = (handleLoadFile, { constants, variables }) => {
     variables.handleLoadFileCallback = () => {
       handleLoadFile({ constants, variables });
     };
 
-    constants.htmlElements.inputGroupFile01.addEventListener(
+    const { inputGroupFile01 } = constants.htmlElements;
+    inputGroupFile01.addEventListener(
       "change",
       variables.handleLoadFileCallback
     );

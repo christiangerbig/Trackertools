@@ -1,30 +1,30 @@
 const handleMainPart = () => {
-  const loadCatMeowSound = () => {
-    const handleLoadCatMeowSound = () => {
-      catMeowSound.removeEventListener("load", handleLoadCatMeowSound);
+  const loadSound = () => {
+    const handleLoadSound = () => {
+      catMeowSound.removeEventListener("load", handleSound);
     };
 
     const catMeowSound = new Audio("./sounds/cute-cat-meow.mp3");
-    catMeowSound.addEventListener("load", handleLoadCatMeowSound);
+    catMeowSound.addEventListener("load", handleLoadSound);
     return catMeowSound;
   };
 
-  const addPlayCatMeowSoundHandler = (catMeowSound) => {
-    const handlePlayCatMeowSound = () => {
-      catMeowSound.play();
+  const addPlaySoundHandler = (soundElement) => {
+    const handlePlaySound = () => {
+      soundElement.play();
     };
 
     const gitHubLinkElement = document.querySelector("#gitHubLink");
-    gitHubLinkElement.addEventListener("click", handlePlayCatMeowSound); // Desktop
-    gitHubLinkElement.addEventListener("touchstart", handlePlayCatMeowSound); // Tablet & Mobile phone
+    gitHubLinkElement.addEventListener("click", handlePlaySound); // Desktop
+    gitHubLinkElement.addEventListener("touchstart", handlePlaySound); // Tablet & Mobile phone
   };
 
-  const catMeowSound = loadCatMeowSound();
-  addPlayCatMeowSoundHandler(catMeowSound);
+  const catMeowSound = loadSound();
+  addPlaySoundHandler(catMeowSound);
 };
 
-const addMainPartHandler = (handleMainPart) => {
-  document.addEventListener("DOMContentLoaded", handleMainPart, false);
+const addMainPartHandler = (handler) => {
+  document.addEventListener("DOMContentLoaded", handler, false);
 };
 
 addMainPartHandler(handleMainPart);

@@ -7,7 +7,7 @@ const handleSearchFxCmd = () => {
     commandOffset: 2,
     commandLowbyteOffset: 3,
     // Song constant values
-    positionTableLength: 128,
+    amountOfPositions: 128,
     maxPatternPosition: 64,
     maxChannels: 4,
     patternLength: 0, // will be initialized later
@@ -31,7 +31,7 @@ const handleSearchFxCmd = () => {
       48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 97, 98, 99, 100, 101, 102,
     ],
     // Index for command and extended command hex numbers 0...f
-    shortkeyIndexTable: [
+    shortkeyIndexes: [
       "0",
       "1",
       "2",
@@ -59,15 +59,10 @@ const handleSearchFxCmd = () => {
   const variables = {
     isFileLoaded: false,
     fileContent: "",
-    patternNumber: 0,
-    highestPatternNumber: 0,
-    commandNumber: 0,
-    extendedCommandNumber: 0,
-    commandLowbyte: 0,
     searchCommandNumber: 0,
     searchExtendedCommandNumber: 0,
     handleSearchCommandCallback: null,
-    handleWaitFileLoadingCallback: null,
+    handleWaitFileLoadedCallback: null,
     handleLoadFileCallback: null,
     handleCheckCommandCallback: null,
     handleCheckExtendedCommandCallback: null,
@@ -86,16 +81,17 @@ const handleSearchFxCmd = () => {
 
   const handleSearchCommand = ({ constants, variables }) => {
     const highestSongPattern = ({ constants, variables }) => {
-      const { songPositionOffset, positionTableLength } = constants;
+      const { songPositionOffset, amountOfPositions } = constants;
       const { fileContent } = variables;
-      for (let i = 0; i < positionTableLength; i++) {
-        variables.patternNumber =
-          fileContent[songPositionOffset + i].charCodeAt(0);
-        if (variables.patternNumber > variables.highestPatternNumber) {
-          variables.highestPatternNumber = variables.patternNumber;
+      let patternNumber = 0;
+      let highestPatternNumber = 0;
+      for (let i = 0; i < amountOfPositions; i++) {
+        patternNumber = fileContent[songPositionOffset + i].charCodeAt(0);
+        if (patternNumber > highestPatternNumber) {
+          highestPatternNumber = patternNumber;
         }
       }
-      variables.highestPatternNumber++; // Count starts at 0
+      return highestPatternNumber++; // Count starts at 0
     };
 
     const convertInputElementValues = ({ constants, variables }) => {
@@ -108,24 +104,28 @@ const handleSearchFxCmd = () => {
 
     const scanCommandsInFile = ({ constants, variables }) => {
       const searchForCommandByNumber = ({ constants, variables }) => {
-        const createSongDataTable = ({ i, j, k }, { constants, variables }) => {
+        const createSongDataTable = (
+          {
+            songPositionIndexCounter,
+            patternRowIndexCounter,
+            noteDataIndexCounter,
+            patternNumber,
+          },
+          constants
+        ) => {
           const createListEntry = (tr, entry) => {
             const td = document.createElement("td");
             td.innerHTML = entry.toString();
             tr.append(td);
           };
 
-          const { noteDataLength, patternRowLength, htmlElements } = constants;
+          const { tableBody } = constants.htmlElements;
           const tr = document.createElement("tr");
-          htmlElements.tableBody.append(tr);
-          const positionNumber = i;
-          createListEntry(tr, positionNumber);
-          const { patternNumber } = variables;
+          tableBody.append(tr);
+          createListEntry(tr, songPositionIndexCounter);
           createListEntry(tr, patternNumber);
-          const patternRowNumber = j / patternRowLength;
-          createListEntry(tr, patternRowNumber);
-          const channelNumber = k / noteDataLength;
-          createListEntry(tr, channelNumber);
+          createListEntry(tr, patternRowIndexCounter);
+          createListEntry(tr, noteDataIndexCounter);
         };
 
         const {
@@ -141,69 +141,105 @@ const handleSearchFxCmd = () => {
           patternRowLength,
           commandNumberMask,
         } = constants;
-        const { fileContent } = variables;
+        const {
+          fileContent,
+          searchCommandNumber,
+          searchExtendedCommandNumber,
+        } = variables;
         const songLength = fileContent[songLengthOffset].charCodeAt(0);
-        for (let i = 0; i < songLength; i++) {
-          variables.patternNumber =
-            fileContent[songPositionOffset + i].charCodeAt(0);
-          const patternOffset =
-            variables.patternNumber * patternLength * noteDataLength; // Pattern offset in song structure
+        let patternNumber = 0;
+        // Fetch pattern numbers
+        for (
+          let songPositionIndexCounter = 0;
+          songPositionIndexCounter < songLength;
+          songPositionIndexCounter++
+        ) {
+          patternNumber =
+            fileContent[
+              songPositionOffset + songPositionIndexCounter
+            ].charCodeAt(0);
+          const patternOffset = patternNumber * patternLength * noteDataLength; // Pattern offset in song structure
+          // Fetch pattern rows
           for (
-            let j = 0;
-            j < maxPatternPosition * patternRowLength;
-            j += patternRowLength
+            let patternRowIndexCounter = 0;
+            patternRowIndexCounter < maxPatternPosition;
+            patternRowIndexCounter += 1
           ) {
-            // 16th steps per row
+            const patternRowOffset = patternRowIndexCounter * patternRowLength;
+            let commandNumber = 0;
+            let extendedCommandNumber = 0;
+            let commandLowbyte = 0;
+            // Fetch note data
             for (
-              let k = 0;
-              k < maxChannels * noteDataLength;
-              k += noteDataLength
+              let noteDataIndexCounter = 0;
+              noteDataIndexCounter < maxChannels;
+              noteDataIndexCounter += 1
             ) {
-              // 4th steps per channel
-              const commandNumberIndex =
-                patternStartOffset + patternOffset + j + k + commandOffset;
-              variables.commandNumber =
-                fileContent[commandNumberIndex].charCodeAt(0) &
+              const noteDataOffset = noteDataIndexCounter * noteDataLength;
+              const commandNumberOffset =
+                patternStartOffset +
+                patternOffset +
+                patternRowOffset +
+                noteDataOffset +
+                commandOffset;
+              commandNumber =
+                fileContent[commandNumberOffset].charCodeAt(0) &
                 commandNumberMask; // Mask out upper nibble
               if (
-                variables.commandNumber === variables.searchCommandNumber &&
-                variables.commandNumber !== 14
+                commandNumber === searchCommandNumber &&
+                commandNumber !== 14
               ) {
-                if (
-                  variables.commandNumber === 0 &&
-                  variables.searchCommandNumber === 0
-                ) {
-                  const commandNumberIndex =
+                if (commandNumber === 0 && searchCommandNumber === 0) {
+                  const commandNumberOffset =
                     patternStartOffset +
                     patternOffset +
-                    j +
-                    k +
+                    patternRowOffset +
+                    noteDataOffset +
                     commandLowbyteOffset;
-                  variables.commandLowbyte =
-                    variables.fileContent[commandNumberIndex].charCodeAt(0);
-                  if (variables.commandLowbyte > 0) {
-                    createSongDataTable({ i, j, k }, { constants, variables });
+                  commandLowbyte =
+                    fileContent[commandNumberOffset].charCodeAt(0);
+                  if (commandLowbyte > 0) {
+                    createSongDataTable(
+                      {
+                        songPositionIndexCounter,
+                        patternRowIndexCounter,
+                        noteDataIndexCounter,
+                        patternNumber,
+                      },
+                      constants
+                    );
                   }
                 } else {
-                  createSongDataTable({ i, j, k }, { constants, variables });
+                  createSongDataTable(
+                    {
+                      songPositionIndexCounter,
+                      patternRowIndexCounter,
+                      noteDataIndexCounter,
+                      patternNumber,
+                    },
+                    constants
+                  );
                 }
               }
-              if (variables.commandNumber === 14) {
-                const extendedCommandNumberIndex =
+              if (commandNumber === 14) {
+                const extendedcommandNumberOffset =
                   patternStartOffset +
                   patternOffset +
-                  j +
-                  k +
+                  patternRowOffset +
+                  noteDataOffset +
                   commandLowbyteOffset;
-                variables.extendedCommandNumber =
-                  variables.fileContent[extendedCommandNumberIndex].charCodeAt(
-                    0
-                  ) >> 4;
-                if (
-                  variables.extendedCommandNumber ===
-                  variables.searchExtendedCommandNumber
-                ) {
-                  createSongDataTable({ i, j, k }, { constants, variables });
+                extendedCommandNumber =
+                  fileContent[extendedcommandNumberOffset].charCodeAt(0) >> 4;
+                if (extendedCommandNumber === searchExtendedCommandNumber) {
+                  createSongDataTable(
+                    {
+                      songPositionIndexCounter,
+                      patternRowIndexCounter,
+                      noteDataIndexCounter,
+                      patternNumber,
+                    },
+                    constants
+                  );
                 }
               }
             }
@@ -211,29 +247,28 @@ const handleSearchFxCmd = () => {
         }
       };
 
-      const { htmlElements } = constants;
-      const { tableBody } = htmlElements;
-      if (variables.searchCommandNumber !== -1) {
+      const { searchCommandNumber } = variables;
+      if (searchCommandNumber !== -1) {
         clearSongDataTable(constants);
         searchForCommandByNumber({ constants, variables });
       }
     };
 
-    if (variables.isFileLoaded) {
-      highestSongPattern({ constants, variables });
+    const { isFileLoaded } = variables;
+    if (isFileLoaded) {
+      variables.highestPatternNumber = highestSongPattern({
+        constants,
+        variables,
+      });
       convertInputElementValues({ constants, variables });
       scanCommandsInFile({ constants, variables });
     }
   };
 
   const handleLoadFile = ({ constants, variables }) => {
-    const handleWaitFileLoading = (
-      reader,
-      { constants, variables }
-    ) => {
+    const handleWaitFileLoaded = (reader, { constants, variables }) => {
       const resetValues = ({ constants, variables }) => {
-        const { commandSelect, extendedCommandSelect, tableBody } =
-          constants.htmlElements;
+        const { commandSelect, extendedCommandSelect } = constants.htmlElements;
         commandSelect.value = "-1";
         extendedCommandSelect.value = "-1";
         variables.isFileLoaded = true;
@@ -243,23 +278,20 @@ const handleSearchFxCmd = () => {
       clearSongDataTable(constants);
       reader.removeEventListener(
         "load",
-        variables.handleWaitFileLoadingCallback
+        variables.handleWaitFileLoadedCallback
       );
     };
 
-    const addWaitFileLoadingHandler = (
+    const addWaitFileLoadedHandler = (
       reader,
-      handleWaitFileLoading,
+      handleWaitFileLoaded,
       { constants, variables }
     ) => {
-      variables.handleWaitFileLoadingCallback = () => {
-        handleWaitFileLoading(reader, { constants, variables });
+      variables.handleWaitFileLoadedCallback = () => {
+        handleWaitFileLoaded(reader, { constants, variables });
       };
 
-      reader.addEventListener(
-        "load",
-        variables.handleWaitFileLoadingCallback
-      );
+      reader.addEventListener("load", variables.handleWaitFileLoadedCallback);
     };
 
     variables.isFileLoaded = false;
@@ -267,23 +299,21 @@ const handleSearchFxCmd = () => {
     const input = inputGroupFile01.files;
     const file = input[0];
     const reader = new FileReader();
-    reader.onload = (event) => (variables.fileContent = event.target.result);
+    reader.onload = ({ target }) => (variables.fileContent = target.result);
     reader.readAsBinaryString(file);
-    addWaitFileLoadingHandler(reader, handleWaitFileLoading, {
+    addWaitFileLoadedHandler(reader, handleWaitFileLoaded, {
       constants,
       variables,
     });
   };
 
-  const addLoadFileHandler = (
-    handleLoadFile,
-    { constants, variables }
-  ) => {
+  const addLoadFileHandler = (handleLoadFile, { constants, variables }) => {
     variables.handleLoadFileCallback = () => {
       handleLoadFile({ constants, variables });
     };
 
-    constants.htmlElements.inputGroupFile01.addEventListener(
+    const { inputGroupFile01 } = constants.htmlElements;
+    inputGroupFile01.addEventListener(
       "change",
       variables.handleLoadFileCallback
     );
@@ -310,7 +340,8 @@ const handleSearchFxCmd = () => {
       handleCheckCommand({ constants, variables });
     };
 
-    constants.htmlElements.commandSelect.addEventListener(
+    const { commandSelect } = constants.htmlElements;
+    commandSelect.addEventListener(
       "change",
       variables.handleCheckCommandCallback
     );
@@ -334,7 +365,8 @@ const handleSearchFxCmd = () => {
       handleCheckExtendedCommand({ constants, variables });
     };
 
-    constants.htmlElements.extendedCommandSelect.addEventListener(
+    const { extendedCommandSelect } = constants.htmlElements;
+    extendedCommandSelect.addEventListener(
       "change",
       variables.handleCheckExtendedCommandCallback
     );
@@ -347,12 +379,12 @@ const handleSearchFxCmd = () => {
 
   const handleSetCommand = ({ constants, variables }) => {
     const handleGetCommand = ({ which, keyCode }, { constants, variables }) => {
-      const { shortkeyHTMLCodes, shortkeyIndexTable, htmlElements } = constants;
+      const { shortkeyHTMLCodes, shortkeyIndexes, htmlElements } = constants;
       const { commandSelect, extendedCommandSelect } = htmlElements;
       const pressedKeyHTMLCode = which || keyCode;
       for (let i = 0; i < shortkeyHTMLCodes.length; i++) {
         if (shortkeyHTMLCodes[i] === pressedKeyHTMLCode) {
-          (commandSelect.value = shortkeyIndexTable[i]) === "14"
+          (commandSelect.value = shortkeyIndexes[i]) === "14"
             ? (extendedCommandSelect.value = "0")
             : (extendedCommandSelect.value = "-1");
           break;
@@ -369,6 +401,7 @@ const handleSearchFxCmd = () => {
         handleGetCommand(event, { constants, variables });
       };
 
+      const { commandSearchContainer } = constants.htmlElements;
       commandSearchContainer.addEventListener(
         "keypress",
         variables.handleGetCommandCallback
@@ -385,7 +418,8 @@ const handleSearchFxCmd = () => {
       handleSetCommand({ constants, variables });
     };
 
-    constants.htmlElements.commandSearchContainer.addEventListener(
+    const { commandSearchContainer } = constants.htmlElements;
+    commandSearchContainer.addEventListener(
       "mouseenter",
       variables.handleSetCommandCallback
     );
@@ -413,7 +447,8 @@ const handleSearchFxCmd = () => {
       handleMouseLeaveCommand({ constants, variables });
     };
 
-    constants.htmlElements.commandSearchContainer.addEventListener(
+    const { commandSearchContainer } = constants.htmlElements;
+    commandSearchContainer.addEventListener(
       "mouseleave",
       variables.handleMouseLeaveCommandCallback
     );
@@ -429,12 +464,12 @@ const handleSearchFxCmd = () => {
       { which, keyCode },
       { constants, variables }
     ) => {
-      const { shortkeyHTMLCodes, shortkeyIndexTable, htmlElements } = constants;
+      const { shortkeyHTMLCodes, shortkeyIndexes, htmlElements } = constants;
       const { commandSelect, extendedCommandSelect } = htmlElements;
       const pressedKeyHTMLCode = which || keyCode;
       for (let i = 0; i < shortkeyHTMLCodes.length; i++) {
         if (shortkeyHTMLCodes[i] === pressedKeyHTMLCode) {
-          extendedCommandSelect.value = shortkeyIndexTable[i];
+          extendedCommandSelect.value = shortkeyIndexes[i];
           commandSelect.value = "14";
           break;
         }
@@ -450,6 +485,7 @@ const handleSearchFxCmd = () => {
         handleGetExtendedCommand(event, { constants, variables });
       };
 
+      const { extendedCommandSearchContainer } = constants.htmlElements;
       extendedCommandSearchContainer.addEventListener(
         "keypress",
         variables.handleGetExtendedCommandCallback
@@ -472,7 +508,8 @@ const handleSearchFxCmd = () => {
       handleSetExtendedCommand({ constants, variables });
     };
 
-    constants.htmlElements.extendedCommandSearchContainer.addEventListener(
+    const { extendedCommandSearchContainer } = constants.htmlElements;
+    extendedCommandSearchContainer.addEventListener(
       "mouseenter",
       variables.handleSetExtendedCommandCallback
     );
@@ -500,7 +537,8 @@ const handleSearchFxCmd = () => {
       handleMouseLeaveExtendedCommand({ constants, variables });
     };
 
-    constants.htmlElements.extendedCommandSearchContainer.addEventListener(
+    const { extendedCommandSearchContainer } = constants.htmlElements;
+    extendedCommandSearchContainer.addEventListener(
       "mouseleave",
       variables.handleMouseLeaveExtendedCommandCallback
     );

@@ -32,11 +32,11 @@ const handleTonePortaStep = () => {
       groupChange: document.querySelectorAll(".groupChange"),
     },
     // Key codes for note periods C  C#  D  D#  E  F  F#  G  G#  A  A#  B and three octaves
-    shortkeyTable: [
+    shortkeyHTMLCodes: [
       99, 67, 100, 68, 101, 102, 70, 103, 71, 97, 65, 98, 49, 50, 51,
     ],
     // Index for note periods C  C# D  D# E  F  F# G  G# A  A#  B and three octaves
-    shortkeyIndexTable: [
+    shortkeyIndexes: [
       "0",
       "1",
       "2",
@@ -54,7 +54,7 @@ const handleTonePortaStep = () => {
       "2",
     ],
     // Period values for three octaves and different tunings
-    periodsTable: [
+    notePeriods: [
       // Tuning 0, normal
       856, 808, 762, 720, 678, 640, 604, 570, 538, 508, 480, 453, 428, 404, 381,
       360, 339, 320, 302, 285, 269, 254, 240, 226, 214, 202, 190, 180, 170, 160,
@@ -136,13 +136,13 @@ const handleTonePortaStep = () => {
       periodIndex,
       octaveIndex,
       finetuneIndex,
-      periodsTableIndex,
+      notePeriodsIndex,
       period
     ) {
       this.periodIndex = periodIndex;
       this.octaveIndex = octaveIndex;
       this.finetuneIndex = finetuneIndex;
-      this.periodsTableIndex = periodsTableIndex;
+      this.notePeriodsIndex = notePeriodsIndex;
       this.period = period;
     }
   }
@@ -158,8 +158,8 @@ const handleTonePortaStep = () => {
     commandsPeriodDiff: 0,
     commandUnits: 0,
     tooltipText: definedTooltipText,
-    handleSwitchDestinationToSourceFinetuneCallback: null,
-    handleSwitchSourceToDestinationFinetuneCallback: null,
+    handleSwitchDestinationFinetuneCallback: null,
+    handleSwitchSourceFinetuneCallback: null,
     handleGetSourceNoteCallback: null,
     handleSetSourceNoteCallback: null,
     handleMouseLeaveSourceNoteCallback: null,
@@ -177,52 +177,54 @@ const handleTonePortaStep = () => {
     }
   };
 
-  const handleSwitchDestinationToSourceFinetune = ({ htmlElements }) => {
+  const handleSwitchDestinationFinetune = ({ htmlElements }) => {
     const { sourceFinetuneSelect, destinationFinetuneSelect } = htmlElements;
     destinationFinetuneSelect.value = sourceFinetuneSelect.value;
   };
 
-  const addSwitchDestinationToSourceFinetuneHandler = (
-    handleSwitchDestinationToSourceFinetune,
+  const addSwitchDestinationFinetuneHandler = (
+    handleSwitchDestinationFinetune,
     { constants, variables }
   ) => {
-    variables.handleSwitchDestinationToSourceFinetuneCallback = () => {
-      handleSwitchDestinationToSourceFinetune(constants);
+    variables.handleSwitchDestinationFinetuneCallback = () => {
+      handleSwitchDestinationFinetune(constants);
     };
 
-    constants.htmlElements.sourceFinetuneSelect.addEventListener(
+    const { sourceFinetuneSelect } = constants.htmlElements;
+    sourceFinetuneSelect.addEventListener(
       "click",
-      variables.handleSwitchDestinationToSourceFinetuneCallback
+      variables.handleSwitchDestinationFinetuneCallback
     );
   };
 
-  addSwitchDestinationToSourceFinetuneHandler(
-    handleSwitchDestinationToSourceFinetune,
-    { constants, variables }
-  );
+  addSwitchDestinationFinetuneHandler(handleSwitchDestinationFinetune, {
+    constants,
+    variables,
+  });
 
-  const handleSwitchSourceToDestinationFinetune = ({ htmlElements }) => {
+  const handleSwitchSourceFinetune = ({ htmlElements }) => {
     const { sourceFinetuneSelect, destinationFinetuneSelect } = htmlElements;
     sourceFinetuneSelect.value = destinationFinetuneSelect.value;
   };
 
-  const addSwitchSourceToDestinationFinetuneHandler = (
-    handleSwitchSourceToDestinationFinetune,
+  const addSwitchSourceFinetuneHandler = (
+    handleSwitchSourceFinetune,
     { constants, variables }
   ) => {
-    variables.handleSwitchSourceToDestinationFinetuneCallback = () => {
-      handleSwitchSourceToDestinationFinetune(constants);
+    variables.handleSwitchSourceFinetuneCallback = () => {
+      handleSwitchSourceFinetune(constants);
     };
 
-    constants.htmlElements.destinationFinetuneSelect.addEventListener(
+    const { destinationFinetuneSelect } = constants.htmlElements;
+    destinationFinetuneSelect.addEventListener(
       "click",
-      variables.handleSwitchSourceToDestinationFinetuneCallback
+      variables.handleSwitchSourceFinetuneCallback
     );
   };
-  addSwitchSourceToDestinationFinetuneHandler(
-    handleSwitchSourceToDestinationFinetune,
-    { constants, variables }
-  );
+  addSwitchSourceFinetuneHandler(handleSwitchSourceFinetune, {
+    constants,
+    variables,
+  });
 
   const handleSetSourceNote = (
     { sourceNote, destinationNote },
@@ -234,15 +236,15 @@ const handleTonePortaStep = () => {
       { constants, variables }
     ) => {
       const chararacter = which || keyCode;
-      const { shortkeyTable, shortkeyIndexTable, htmlElements } = constants;
+      const { shortkeyHTMLCodes, shortkeyIndexes, htmlElements } = constants;
       const { sourceNoteSelect, sourceOctaveSelect } = htmlElements;
-      for (let i = 0; i < shortkeyTable.length; i++) {
-        if (shortkeyTable[i] === chararacter) {
+      for (let i = 0; i < shortkeyHTMLCodes.length; i++) {
+        if (shortkeyHTMLCodes[i] === chararacter) {
           if (chararacter >= 65) {
-            sourceNoteSelect.value = shortkeyIndexTable[i];
+            sourceNoteSelect.value = shortkeyIndexes[i];
             break;
           } else {
-            sourceOctaveSelect.value = shortkeyIndexTable[i];
+            sourceOctaveSelect.value = shortkeyIndexes[i];
             break;
           }
         }
@@ -264,6 +266,7 @@ const handleTonePortaStep = () => {
           { constants, variables }
         );
 
+      const { sourceNoteContainer } = constants.htmlElements;
       sourceNoteContainer.addEventListener(
         "keypress",
         variables.handleGetSourceNoteCallback
@@ -286,7 +289,8 @@ const handleTonePortaStep = () => {
       );
     };
 
-    constants.htmlElements.sourceNoteContainer.addEventListener(
+    const { sourceNoteContainer } = constants.htmlElements;
+    sourceNoteContainer.addEventListener(
       "mouseenter",
       variables.handleSetSourceNoteCallback
     );
@@ -311,7 +315,8 @@ const handleTonePortaStep = () => {
       handleMouseLeaveSourceNote({ constants, variables });
     };
 
-    constants.htmlElements.sourceNoteContainer.addEventListener(
+    const { sourceNoteContainer } = constants.htmlElements;
+    sourceNoteContainer.addEventListener(
       "mouseleave",
       variables.handleMouseLeaveSourceNoteCallback
     );
@@ -332,15 +337,15 @@ const handleTonePortaStep = () => {
       { constants, variables }
     ) => {
       const character = which || keyCode;
-      const { shortkeyTable, shortkeyIndexTable, htmlElements } = constants;
+      const { shortkeyHTMLCodes, shortkeyIndexes, htmlElements } = constants;
       const { destinationNoteSelect, destinationOctaveSelect } = htmlElements;
-      for (let i = 0; i < shortkeyTable.length; i++) {
-        if (shortkeyTable[i] === character) {
+      for (let i = 0; i < shortkeyHTMLCodes.length; i++) {
+        if (shortkeyHTMLCodes[i] === character) {
           if (character >= 65) {
-            destinationNoteSelect.value = shortkeyIndexTable[i];
+            destinationNoteSelect.value = shortkeyIndexes[i];
             break;
           } else {
-            destinationOctaveSelect.value = shortkeyIndexTable[i];
+            destinationOctaveSelect.value = shortkeyIndexes[i];
             break;
           }
         }
@@ -359,6 +364,7 @@ const handleTonePortaStep = () => {
         handleGetDestinationNote(event, { sourceNote, destinationNote });
       };
 
+      const { destinationNoteContainer } = constants.htmlElements;
       destinationNoteContainer.addEventListener(
         "keypress",
         variables.handleGetDestinationNoteCallback
@@ -384,7 +390,8 @@ const handleTonePortaStep = () => {
       );
     };
 
-    constants.htmlElements.destinationNoteContainer.addEventListener(
+    const { destinationNoteContainer } = constants.htmlElements;
+    destinationNoteContainer.addEventListener(
       "mouseenter",
       variables.handleSetDestinationNoteCallback
     );
@@ -412,7 +419,8 @@ const handleTonePortaStep = () => {
       handleMouseLeaveDestinationNote({ constants, variables });
     };
 
-    constants.htmlElements.destinationNoteContainer.addEventListener(
+    const { destinationNoteContainer } = constants.htmlElements;
+    destinationNoteContainer.addEventListener(
       "mouseleave",
       variables.handleMouseLeaveDestinationNoteCallback
     );
@@ -452,38 +460,40 @@ const handleTonePortaStep = () => {
       variables.commands = parseInt(commandsInput.value);
     };
 
-    const fetchPeriodValuesFromTable = (
-      { semiTones, semiToneOctaves, periodsTable },
+    const fetchNotePeriods = (
+      { semiTones, semiToneOctaves, notePeriods },
       { sourceNote, destinationNote }
     ) => {
-      const fetchSourcePeriod = (
-        { semiTones, semiToneOctaves, periodsTable },
+      const fetchSourceNotePeriod = (
+        { semiTones, semiToneOctaves, notePeriods },
         sourceNote
       ) => {
         const { periodIndex, octaveIndex, finetuneIndex } = sourceNote;
-        sourceNote.periodsTableIndex =
+        sourceNote.notePeriodsIndex =
           periodIndex +
           octaveIndex * semiToneOctaves +
           finetuneIndex * semiTones;
-        sourceNote.period = periodsTable[sourceNote.periodsTableIndex];
+        sourceNote.period = notePeriods[sourceNote.notePeriodsIndex];
       };
 
-      const fetchDestinationPeriod = (
-        { semiTones, semiToneOctaves, periodsTable },
+      const fetchDestinationNotePeriod = (
+        { semiTones, semiToneOctaves, notePeriods },
         destinationNote
       ) => {
         const { periodIndex, octaveIndex, finetuneIndex } = destinationNote;
-        destinationNote.periodsTableIndex =
+        destinationNote.notePeriodsIndex =
           periodIndex +
           octaveIndex * semiToneOctaves +
           finetuneIndex * semiTones;
-        destinationNote.period =
-          periodsTable[destinationNote.periodsTableIndex];
+        destinationNote.period = notePeriods[destinationNote.notePeriodsIndex];
       };
 
-      fetchSourcePeriod({ semiTones, semiToneOctaves, periodsTable }, sourceNote);
-      fetchDestinationPeriod(
-        { semiTones, semiToneOctaves, periodsTable },
+      fetchSourceNotePeriod(
+        { semiTones, semiToneOctaves, notePeriods },
+        sourceNote
+      );
+      fetchDestinationNotePeriod(
+        { semiTones, semiToneOctaves, notePeriods },
         destinationNote
       );
     };
@@ -535,7 +545,7 @@ const handleTonePortaStep = () => {
       { sourceNote, destinationNote },
       { constants, variables }
     );
-    fetchPeriodValuesFromTable(constants, { sourceNote, destinationNote });
+    fetchNotePeriods(constants, { sourceNote, destinationNote });
     calculateUnitsPerCommand({ sourceNote, destinationNote }, variables);
     printUnitsPerCommand({ constants, variables });
   };
@@ -596,10 +606,8 @@ const handleTonePortaStep = () => {
       handleResetButton(constants);
     };
 
-    constants.htmlElements.resetButton.addEventListener(
-      "click",
-      handleResetButtonCallback
-    );
+    const { resetButton } = constants.htmlElements;
+    resetButton.addEventListener("click", handleResetButtonCallback);
   };
 
   addResetButtonHandler(handleResetButton, constants);

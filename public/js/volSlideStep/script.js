@@ -4,23 +4,19 @@ const handleVolSlideStep = () => {
     definedInstrumentVolume: 64,
     definedUnits: 1,
     maxVolumeSlideCommands: 64,
-    maxFinevolumeSlideUnits: 15, // hex F
-    definedVolumeslideTooltipText: "Number of commands ranges from 1 to 64",
-    definedFinevolumeSlideTooltipText: "Number of units ranges from hex 1 to F",
+    maxfineslideUnits: 15, // hex F
+    definedVolumeSlideTooltipText: "Number of commands ranges from 1 to 64",
+    definedFineslideTooltipText: "Number of units ranges from hex 1 to F",
     volumeSlideTooltipErrorText: "Number of commands is greater than 64",
-    finevolumeSlideTooltipErrorText: "Number of units is greater than hex F",
+    fineslideTooltipErrorText: "Number of units is greater than hex F",
     errorText: "**",
     // HTML element objects
     htmlElements: {
       ticsInput: document.querySelector("#ticsInput"),
       instrumentVolumeInput: document.querySelector("#instrumentVolumeInput"),
       unitsInput: document.querySelector("#unitsInput"),
-      finevolumeSlideContainer: document.querySelector(
-        "#finevolumeSlideContainer"
-      ),
-      finevolumeSlideCheckbox: document.querySelector(
-        "#finevolumeSlideCheckbox"
-      ),
+      fineslideContainer: document.querySelector("#fineslideContainer"),
+      fineslideCheckbox: document.querySelector("#fineslideCheckbox"),
       commandsResult: document.querySelector("#commandsResult"),
       unitsResult: document.querySelector("#unitsResult"),
       resetButton: document.querySelector("#resetButton"),
@@ -31,81 +27,79 @@ const handleVolSlideStep = () => {
   const { definedTics, definedInstrumentVolume, definedUnits } = constants;
   const variables = {
     volumeSlideCommands: 0,
-    finevolumeSlideCommands: 0,
-    finevolumeSlideUnits: 0,
+    fineslideCommands: 0,
+    fineslideUnits: 0,
     commandsToggle: 0,
     tics: definedTics,
     instrumentVolume: definedInstrumentVolume,
     units: definedUnits,
-    handleFinevolumeCheckboxStateCallback: null,
+    handlefineslideCheckboxStateCallback: null,
     handleCalculateVolumeCallback: null,
     handleResetButtonCallback: null,
   };
 
-  const setFinevolumeSlideVisibility = ({ constants, variables }) => {
-    const { finevolumeSlideContainer, finevolumeSlideCheckbox } =
-      constants.htmlElements;
-    const { finevolumeSlideCommands, volumeSlideCommands } = variables;
-    if (finevolumeSlideCheckbox.checked) {
-      variables.commandsToggle = finevolumeSlideCommands;
-      finevolumeSlideContainer.classList.remove("d-none");
+  const setFineslideVisibility = ({ constants, variables }) => {
+    const { fineslideContainer, fineslideCheckbox } = constants.htmlElements;
+    const { fineslideCommands, volumeSlideCommands } = variables;
+    if (fineslideCheckbox.checked) {
+      variables.commandsToggle = fineslideCommands;
+      fineslideContainer.classList.remove("d-none");
     } else {
       variables.commandsToggle = volumeSlideCommands;
-      finevolumeSlideContainer.classList.add("d-none");
+      fineslideContainer.classList.add("d-none");
     }
   };
 
-  const handleFinevolumeCheckboxState = ({ constants, variables }) => {
+  const handlefineslideCheckboxState = ({ constants, variables }) => {
     const {
       maxVolumeSlideCommands,
-      maxFinevolumeSlideUnits,
-      definedVolumeslideTooltipText,
-      definedFinevolumeSlideTooltipText,
+      maxfineslideUnits,
+      definedVolumeSlideTooltipText,
+      definedFineslideTooltipText,
       volumeSlideTooltipErrorText,
-      finevolumeSlideTooltipErrorText,
+      fineslideTooltipErrorText,
       errorText,
       htmlElements,
     } = constants;
     const { commandsResult, unitsResult } = htmlElements;
-    setFinevolumeSlideVisibility({ constants, variables });
+    setFineslideVisibility({ constants, variables });
     [commandsResult.title, unitsResult.title] = [
-      definedVolumeslideTooltipText,
-      definedFinevolumeSlideTooltipText,
+      definedVolumeSlideTooltipText,
+      definedFineslideTooltipText,
     ];
     if (
       variables.commandsToggle > maxVolumeSlideCommands &&
-      variables.finevolumeSlideUnits > maxFinevolumeSlideUnits
+      variables.fineslideUnits > maxfineslideUnits
     ) {
-      [variables.commandsToggle, variables.finevolumeSlideUnits] = [
+      [variables.commandsToggle, variables.fineslideUnits] = [
         errorText,
         errorText,
       ];
       [commandsResult.title, unitsResult.title] = [
         volumeSlideTooltipErrorText,
-        finevolumeSlideTooltipErrorText,
+        fineslideTooltipErrorText,
       ];
     }
     commandsResult.innerHTML = variables.commandsToggle.toString();
-    unitsResult.innerHTML = variables.finevolumeSlideUnits
-      .toString(16)
-      .toUpperCase();
+    unitsResult.innerHTML = variables.fineslideUnits.toString(16).toUpperCase();
   };
 
   const addCheckboxStateHandler = (
-    handleFinevolumeCheckboxState,
+    handlefineslideCheckboxState,
     { constants, variables }
   ) => {
-    variables.handleFinevolumeCheckboxStateCallback = () => {
-      handleFinevolumeCheckboxState({ constants, variables });
+    variables.handlefineslideCheckboxStateCallback = () => {
+      handlefineslideCheckboxState({ constants, variables });
     };
 
-    constants.htmlElements.finevolumeSlideCheckbox.addEventListener(
+    const { fineslideCheckbox } = constants.htmlElements;
+    fineslideCheckbox.addEventListener(
       "change",
-      variables.handleFinevolumeCheckboxStateCallback
+      variables.handlefineslideCheckboxStateCallback
     );
   };
 
-  addCheckboxStateHandler(handleFinevolumeCheckboxState, {
+  addCheckboxStateHandler(handlefineslideCheckboxState, {
     constants,
     variables,
   });
@@ -127,12 +121,10 @@ const handleVolSlideStep = () => {
     );
   };
 
-  const calculateFinevolumeUnits = (variables) => {
+  const calculatefineslideUnits = (variables) => {
     const { tics, instrumentVolume, units } = variables;
-    variables.finevolumeSlideCommands = Math.floor(
-      instrumentVolume / tics / units
-    );
-    variables.finevolumeSlideUnits = instrumentVolume % tics;
+    variables.fineslideCommands = Math.floor(instrumentVolume / tics / units);
+    variables.fineslideUnits = instrumentVolume % tics;
   };
 
   const printAmountOfCommandsAndUnits = ({ constants, variables }) => {
@@ -151,32 +143,32 @@ const handleVolSlideStep = () => {
 
     const {
       maxVolumeSlideCommands,
-      maxFinevolumeSlideUnits,
-      definedVolumeslideTooltipText,
-      definedFinevolumeSlideTooltipText,
+      maxfineslideUnits,
+      definedVolumeSlideTooltipText,
+      definedFineslideTooltipText,
       volumeSlideTooltipErrorText,
-      finevolumeSlideTooltipErrorText,
+      fineslideTooltipErrorText,
       errorText,
       htmlElements,
     } = constants;
     const { commandsResult, unitsResult } = htmlElements;
     [commandsResult.title, unitsResult.title] = [
-      definedVolumeslideTooltipText,
-      definedFinevolumeSlideTooltipText,
+      definedVolumeSlideTooltipText,
+      definedFineslideTooltipText,
     ];
     if (
       variables.volumeSlideCommands <= maxVolumeSlideCommands &&
-      variables.finevolumeSlideUnits <= maxFinevolumeSlideUnits
+      variables.fineslideUnits <= maxfineslideUnits
     ) {
       setDefaultTextColor(constants);
     } else {
-      [variables.commandsToggle, variables.finevolumeSlideUnits] = [
+      [variables.commandsToggle, variables.fineslideUnits] = [
         errorText,
         errorText,
       ];
       [commandsResult.title, unitsResult.title] = [
         volumeSlideTooltipErrorText,
-        finevolumeSlideTooltipErrorText,
+        fineslideTooltipErrorText,
       ];
       if (
         commandsResult.classList.contains("textColored") ||
@@ -189,16 +181,14 @@ const handleVolSlideStep = () => {
       }
     }
     commandsResult.innerHTML = variables.commandsToggle.toString();
-    unitsResult.innerHTML = variables.finevolumeSlideUnits
-      .toString(16)
-      .toUpperCase();
+    unitsResult.innerHTML = variables.fineslideUnits.toString(16).toUpperCase();
   };
 
   const handleCalculateVolume = ({ constants, variables }) => {
     convertInputElementsValues({ constants, variables });
     calculateVolumeUnits(variables);
-    calculateFinevolumeUnits(variables);
-    setFinevolumeSlideVisibility({ constants, variables });
+    calculatefineslideUnits(variables);
+    setFineslideVisibility({ constants, variables });
     printAmountOfCommandsAndUnits({ constants, variables });
   };
 
@@ -226,28 +216,28 @@ const handleVolSlideStep = () => {
         definedTics,
         definedInstrumentVolume,
         definedUnits,
-        definedVolumeslideTooltipText,
-        definedFinevolumeSlideTooltipText,
+        definedVolumeSlideTooltipText,
+        definedFineslideTooltipText,
         htmlElements,
       } = constants;
       const { ticsInput, instrumentVolumeInput, unitsInput } = htmlElements;
       variables.volumeslideCommands = 0;
-      variables.finevolumeSlideCommands = 0;
+      variables.fineslideCommands = 0;
       variables.commandsToggle = 0;
-      variables.finevolumeSlideUnits = 0;
+      variables.fineslideUnits = 0;
       ticsInput.value = definedTics;
       instrumentVolumeInput.value = definedInstrumentVolume;
       unitsInput.value = definedUnits;
       commandsResult.innerHTML = "0";
-      commandsResult.title = definedVolumeslideTooltipText;
+      commandsResult.title = definedVolumeSlideTooltipText;
       unitsResult.innerHTML = "0";
-      unitsResult.title = definedFinevolumeSlideTooltipText;
-      finevolumeSlideCheckbox.checked = false;
-      finevolumeSlideContainer.classList.add("d-none");
-      handleCalculateVolume({ constants, variables });
+      unitsResult.title = definedFineslideTooltipText;
+      fineslideCheckbox.checked = false;
+      fineslideContainer.classList.add("d-none");
     };
 
     clearVariables({ constants, variables });
+    handleCalculateVolume({ constants, variables });
   };
 
   const addResetButtonHandler = (
@@ -258,6 +248,7 @@ const handleVolSlideStep = () => {
       handleResetButton({ constants, variables });
     };
 
+    const { resetButton } = constants.htmlElements;
     resetButton.addEventListener("click", variables.handleResetButtonCallback);
   };
 
