@@ -14,6 +14,9 @@ const capitalized = (string) =>
 
 app.locals.title = `${capitalized(projectName)}- Generated with IronGenerator`;
 
+const currentTime = new Date();
+app.locals.year = currentTime.getFullYear();
+
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const mongoose = require("mongoose");
