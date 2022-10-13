@@ -14,7 +14,7 @@ const handleMainPart = () => {
       soundElement.play();
     };
 
-    const gitHubLinkElement = document.querySelector("#gitHubLink");
+    const gitHubLinkElement = document.querySelector("#github-link");
     gitHubLinkElement.addEventListener("click", handlePlaySound); // Desktop
     gitHubLinkElement.addEventListener("touchstart", handlePlaySound); // Tablet & Mobile phone
   };
