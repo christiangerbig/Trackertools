@@ -157,7 +157,7 @@ const handleUsedFxCmd = () => {
                     noteDataOffset +
                     commandOffset;
                   commandLowbyte =
-                    fileContent[commandNumberOffset].charCodeAt(0);
+                    fileContent[commandNumberOffset].charCodeAt(1);
                   if (commandLowbyte > 0) {
                     hasCommandArray[commandNumber] = true;
                   }
