@@ -16,7 +16,7 @@ const handleUsedFxCmd = () => {
     commandNumberMask: 0xf,
     // HTML element objects
     htmlElements: {
-      inputGroupFile01: document.querySelector("#input-group-file01"),
+      inputFile: document.querySelector("#input-file"),
       commandsTableBody: document.querySelector("#commands-table-body"),
       extendedCommandsTableBody: document.querySelector(
         "#extended-commands-table-body"
@@ -278,8 +278,8 @@ const handleUsedFxCmd = () => {
     };
 
     variables.isFileLoaded = false;
-    const { inputGroupFile01 } = constants.htmlElements;
-    const input = inputGroupFile01.files;
+    const { inputFile } = constants.htmlElements;
+    const input = inputFile.files;
     const file = input[0];
     const reader = new FileReader();
     reader.onload = ({ target }) => (variables.fileContent = target.result);
@@ -295,8 +295,8 @@ const handleUsedFxCmd = () => {
       handleLoadFile({ constants, variables });
     };
 
-    const { inputGroupFile01 } = constants.htmlElements;
-    inputGroupFile01.addEventListener(
+    const { inputFile } = constants.htmlElements;
+    inputFile.addEventListener(
       "change",
       variables.handleLoadFileCallback
     );
