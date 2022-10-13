@@ -11,25 +11,25 @@ const handleTonePortaStep = () => {
     tooltipErrorText: "Calculated number of units is greater than hex FF",
     // HTML element objects
     htmlElements: {
-      sourceNoteSelect: document.querySelector("#sourceNoteSelect"),
-      sourceOctaveSelect: document.querySelector("#sourceOctaveSelect"),
-      sourceFinetuneSelect: document.querySelector("#sourceFinetuneSelect"),
-      sourceNoteContainer: document.querySelector("#sourceNoteContainer"),
-      destinationNoteSelect: document.querySelector("#destinationNoteSelect"),
+      sourceNoteSelect: document.querySelector("#source-note-select"),
+      sourceOctaveSelect: document.querySelector("#source-octave-select"),
+      sourceFinetuneSelect: document.querySelector("#source-finetune-select"),
+      sourceNoteContainer: document.querySelector("#source-note-container"),
+      destinationNoteSelect: document.querySelector("#destination-note-select"),
       destinationOctaveSelect: document.querySelector(
-        "#destinationOctaveSelect"
+        "#destination-octave-select"
       ),
       destinationFinetuneSelect: document.querySelector(
-        "#destinationFinetuneSelect"
+        "#destination-finetune-select"
       ),
       destinationNoteContainer: document.querySelector(
-        "#destinationNoteContainer"
+        "#destination-note-container"
       ),
-      ticsInput: document.querySelector("#ticsInput"),
-      commandsInput: document.querySelector("#commandsInput"),
-      unitsResult: document.querySelector("#unitsResult"),
-      resetButton: document.querySelector("#resetButton"),
-      groupChange: document.querySelectorAll(".groupChange"),
+      ticsInput: document.querySelector("#tics-Input"),
+      commandsInput: document.querySelector("#commands-input"),
+      unitsResult: document.querySelector("#units-result"),
+      resetButton: document.querySelector("#reset-button"),
+      groupChange: document.querySelectorAll(".group-change"),
     },
     // Key codes for note periods C  C#  D  D#  E  F  F#  G  G#  A  A#  B and three octaves
     shortkeyHTMLCodes: [
