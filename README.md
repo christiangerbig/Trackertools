@@ -4,7 +4,7 @@
 
 This collection includes four tools for the music editor ProTracker, which make the work with standard ProTracker sound modules more comfortable:
  - TonePortaStep (calculate the tone portamento slide for the portamento effect command)
- - VolSlideStep (calculate thr volume slide up or down for the volume effect command)
+ - VolSlideStep (calculate the volume slide up or down for the volume effect command)
  - SearchFxCmd (find effect commands with their pattern positions in a loaded ProTracker module)
  - UsedFxCmd (get an overview which effect commands are used in the patterns of a loaded ProTracker module)
  
