@@ -6,26 +6,57 @@ $blue1: rgb(63, 63, 129)
 $blue2: rgb(81, 57, 189)
 $blue3: rgb(131,107,239)
 
-
-/* Elements */
-
 body 
   font-family: Roboto
 
 
-a 
+/* own classes */
+
+.is-link 
   text-decoration: none
   &:hover 
     color: $grey2
 
-
-textarea 
+.is-width-full
   width: 100%
 
+.is-container-opacity 
+  background: rgba(0, 0, 0, 0.8)
 
-/* own classes */
+.is-without-shadow 
+  text-shadow: none
 
-.backgroundPicture 
+.is-height-md
+  height: 12rem
+
+.is-height-lg
+  height: 22rem
+
+.is-table-wrap
+  overflow-y: scroll
+  th
+    position: sticky
+    top: 0px
+
+.is-dark-grey
+  color: $grey1
+
+.is-grey
+  color: $grey2
+
+.is-light-grey
+  color: $grey3
+
+.is-red 
+  color: red
+
+.is-bg-color-light
+  background-color: $grey1
+
+.is-bg-color-dark 
+  background-color: $blue1
+
+.has-background-image 
   text-shadow: 0px 0px 1px black
   background:
     image: url("../images/mixer-821537_640x423.jpg")
@@ -34,61 +65,8 @@ textarea
     repeat: no-repeat
     attachment: fixed
 
-
-.containerOpacity 
-  background: rgba(0, 0, 0, 0.8)
-
-
-.disableTextShadow 
-  text-shadow: none
-
-
-.noListMarkers 
+.has-no-list-markers 
   list-style: none
-
-
-.sfcTableWrap 
-  overflow-y: scroll
-  height: 12rem
-  th 
-    position: sticky
-    top: 0px
-
-
-.ufcTableWrap 
-  overflow-y: scroll
-  height: 22rem
-  th 
-    position: sticky
-    top: 0px
-
-
-.textColored 
-  color: $grey1
-
-
-.textLightGrey 
-  color: $grey3
-
-
-.textDarkGrey 
-  color: $grey2
-
-
-.textRed 
-  color: red
-
-
-.bgColorLight 
-  background-color: $grey1
-
-
-.bgColorDark 
-  background-color: $blue1
-
-
-#finevolumeSlideCheckbox:checked 
-  background-color: $blue2
 
 
 /* Bootstrap classes */
@@ -106,12 +84,10 @@ textarea
       background-color: $blue2
       border-color: $blue2
 
-
 .navbar .navbar-brand 
   color: $grey1
   &:hover 
     color: $blue2
-
 
 .link-primary
   color: $blue3

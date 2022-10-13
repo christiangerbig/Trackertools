@@ -173,7 +173,7 @@ const handleTonePortaStep = () => {
     const { unitsResult } = htmlElements;
     if (unitsResult.classList.contains("text-danger")) {
       unitsResult.classList.remove("text-danger");
-      unitsResult.classList.add("textColored");
+      unitsResult.classList.add("is-dark-grey");
     }
   };
 
@@ -532,8 +532,8 @@ const handleTonePortaStep = () => {
       } else {
         variables.commandUnits = errorText;
         variables.tooltipText = tooltipErrorText;
-        if (unitsResult.classList.contains("textColored")) {
-          unitsResult.classList.remove("textColored");
+        if (unitsResult.classList.contains("is-dark-grey")) {
+          unitsResult.classList.remove("is-dark-grey");
           unitsResult.classList.add("text-danger");
         }
       }

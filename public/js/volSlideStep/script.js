@@ -135,9 +135,9 @@ const handleVolSlideStep = () => {
         unitsResult.classList.contains("text-danger")
       ) {
         commandsResult.classList.remove("text-danger");
-        commandsResult.classList.add("textColored");
+        commandsResult.classList.add("is-dark-grey");
         unitsResult.classList.remove("text-danger");
-        unitsResult.classList.add("textColored");
+        unitsResult.classList.add("is-dark-grey");
       }
     };
 
@@ -171,12 +171,12 @@ const handleVolSlideStep = () => {
         fineslideTooltipErrorText,
       ];
       if (
-        commandsResult.classList.contains("textColored") ||
-        unitsResult.classList.contains("textColored")
+        commandsResult.classList.contains("is-dark-grey") ||
+        unitsResult.classList.contains("is-dark-grey")
       ) {
-        commandsResult.classList.remove("textColored");
+        commandsResult.classList.remove("is-dark-grey");
         commandsResult.classList.add("text-danger");
-        unitsResult.classList.remove("textColored");
+        unitsResult.classList.remove("is-dark-grey");
         unitsResult.classList.add("text-danger");
       }
     }
