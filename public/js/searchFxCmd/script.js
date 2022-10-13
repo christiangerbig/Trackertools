@@ -16,15 +16,15 @@ const handleSearchFxCmd = () => {
     commandNumberMask: 0xf,
     // HTML element objects
     htmlElements: {
-      inputGroupFile01: document.querySelector("#inputGroupFile01"),
-      commandSelect: document.querySelector("#commandSelect"),
-      extendedCommandSelect: document.querySelector("#extendedCommandSelect"),
-      commandSearchContainer: document.querySelector("#commandSearchContainer"),
+      inputGroupFile01: document.querySelector("#input-group-file01"),
+      commandSelect: document.querySelector("#command-select"),
+      extendedCommandSelect: document.querySelector("#extended-command-select"),
+      commandSearchContainer: document.querySelector("#command-search-container"),
       extendedCommandSearchContainer: document.querySelector(
-        "#extendedCommandSearchContainer"
+        "#extended-command-search-container"
       ),
-      tableBody: document.querySelector("#tableBody"),
-      groupChange: document.querySelectorAll(".groupChange"),
+      tableBody: document.querySelector("#table-body"),
+      groupChange: document.querySelectorAll(".group-change"),
     },
     // Key codes 0...f for command hex numbers 0...f
     shortkeyHTMLCodes: [
