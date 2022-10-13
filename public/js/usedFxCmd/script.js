@@ -16,10 +16,10 @@ const handleUsedFxCmd = () => {
     commandNumberMask: 0xf,
     // HTML element objects
     htmlElements: {
-      inputGroupFile01: document.querySelector("#inputGroupFile01"),
-      commandsTableBody: document.querySelector("#commandsTableBody"),
+      inputGroupFile01: document.querySelector("#input-group-file01"),
+      commandsTableBody: document.querySelector("#commands-table-body"),
       extendedCommandsTableBody: document.querySelector(
-        "#extendedCommandsTableBody"
+        "#extended-commands-table-body"
       ),
     },
     CommandNames: [
