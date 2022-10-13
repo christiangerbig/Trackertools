@@ -12,15 +12,15 @@ const handleVolSlideStep = () => {
     errorText: "**",
     // HTML element objects
     htmlElements: {
-      ticsInput: document.querySelector("#ticsInput"),
-      instrumentVolumeInput: document.querySelector("#instrumentVolumeInput"),
-      unitsInput: document.querySelector("#unitsInput"),
-      fineslideContainer: document.querySelector("#fineslideContainer"),
-      fineslideCheckbox: document.querySelector("#fineslideCheckbox"),
-      commandsResult: document.querySelector("#commandsResult"),
-      unitsResult: document.querySelector("#unitsResult"),
-      resetButton: document.querySelector("#resetButton"),
-      groupChange: document.querySelectorAll(".groupChange"),
+      ticsInput: document.querySelector("#tics-input"),
+      instrumentVolumeInput: document.querySelector("#instrument-volume-input"),
+      unitsInput: document.querySelector("#units-input"),
+      fineslideContainer: document.querySelector("#fineslide-container"),
+      fineslideCheckbox: document.querySelector("#fineslide-checkbox"),
+      commandsResult: document.querySelector("#commands-result"),
+      unitsResult: document.querySelector("#units-result"),
+      resetButton: document.querySelector("#reset-button"),
+      groupChange: document.querySelectorAll(".group-change"),
     },
   };
 
@@ -220,7 +220,15 @@ const handleVolSlideStep = () => {
         definedFineslideTooltipText,
         htmlElements,
       } = constants;
-      const { ticsInput, instrumentVolumeInput, unitsInput } = htmlElements;
+      const {
+        ticsInput,
+        instrumentVolumeInput,
+        unitsInput,
+        commandsResult,
+        unitsResult,
+        fineslideCheckbox,
+        fineslideContainer,
+      } = htmlElements;
       variables.volumeslideCommands = 0;
       variables.fineslideCommands = 0;
       variables.commandsToggle = 0;
