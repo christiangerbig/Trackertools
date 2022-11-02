@@ -33,7 +33,9 @@ router.get("/contact", (req, res) => {
 
 // POST Contact
 router.post("/contact", (req, res) => {
-  const { email, message } = req.body;
+  const {
+    body: { email, message },
+  } = req;
   if (!email || !message) {
     res.render("contact.hbs", {
       errorMessage: "Please enter all fields",

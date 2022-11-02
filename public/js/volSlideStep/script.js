@@ -93,7 +93,9 @@ const handleVolSlideStep = () => {
       handlefineslideCheckboxState({ constants, variables });
     };
 
-    const { fineslideCheckbox } = constants.htmlElements;
+    const {
+      htmlElements: { fineslideCheckbox },
+    } = constants;
     fineslideCheckbox.addEventListener(
       "change",
       variables.handlefineslideCheckboxStateCallback
@@ -106,8 +108,9 @@ const handleVolSlideStep = () => {
   });
 
   const convertInputElementsValues = ({ constants, variables }) => {
-    const { ticsInput, instrumentVolumeInput, unitsInput } =
-      constants.htmlElements;
+    const {
+      htmlElements: { ticsInput, instrumentVolumeInput, unitsInput },
+    } = constants;
     variables.tics = parseInt(ticsInput.value);
     variables.tics--; // Without first tick
     variables.instrumentVolume = parseInt(instrumentVolumeInput.value);
@@ -129,8 +132,9 @@ const handleVolSlideStep = () => {
   };
 
   const printAmountOfCommandsAndUnits = ({ constants, variables }) => {
-    const setDefaultTextColor = ({ htmlElements }) => {
-      const { commandsResult, unitsResult } = htmlElements;
+    const setDefaultTextColor = ({
+      htmlElements: { commandsResult, unitsResult },
+    }) => {
       if (
         commandsResult.classList.contains("text-danger") ||
         unitsResult.classList.contains("text-danger")
@@ -258,7 +262,9 @@ const handleVolSlideStep = () => {
       handleResetButton({ constants, variables });
     };
 
-    const { resetButton } = constants.htmlElements;
+    const {
+      htmlElements: { resetButton },
+    } = constants;
     resetButton.addEventListener("click", variables.handleResetButtonCallback);
   };
 

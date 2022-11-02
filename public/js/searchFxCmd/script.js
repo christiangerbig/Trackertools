@@ -19,7 +19,9 @@ const handleSearchFxCmd = () => {
       inputFile: document.querySelector("#input-file"),
       commandSelect: document.querySelector("#command-select"),
       extendedCommandSelect: document.querySelector("#extended-command-select"),
-      commandSearchContainer: document.querySelector("#command-search-container"),
+      commandSearchContainer: document.querySelector(
+        "#command-search-container"
+      ),
       extendedCommandSearchContainer: document.querySelector(
         "#extended-command-search-container"
       ),
@@ -74,8 +76,7 @@ const handleSearchFxCmd = () => {
     handleMouseLeaveExtendedCommandCallback: null,
   };
 
-  const clearSongDataTable = ({ htmlElements }) => {
-    const { tableBody } = htmlElements;
+  const clearSongDataTable = ({ htmlElements: { tableBody } }) => {
     tableBody.innerHTML = "";
   };
 
@@ -95,7 +96,9 @@ const handleSearchFxCmd = () => {
     };
 
     const convertInputElementValues = ({ constants, variables }) => {
-      const { commandSelect, extendedCommandSelect } = constants.htmlElements;
+      const {
+        htmlElements: { commandSelect, extendedCommandSelect },
+      } = constants;
       variables.searchCommandNumber = parseInt(commandSelect.value);
       variables.searchExtendedCommandNumber = parseInt(
         extendedCommandSelect.value
@@ -268,7 +271,9 @@ const handleSearchFxCmd = () => {
   const handleLoadFile = ({ constants, variables }) => {
     const handleWaitFileLoaded = (reader, { constants, variables }) => {
       const resetValues = ({ constants, variables }) => {
-        const { commandSelect, extendedCommandSelect } = constants.htmlElements;
+        const {
+          htmlElements: { commandSelect, extendedCommandSelect },
+        } = constants;
         commandSelect.value = "-1";
         extendedCommandSelect.value = "-1";
         variables.isFileLoaded = true;
@@ -295,7 +300,9 @@ const handleSearchFxCmd = () => {
     };
 
     variables.isFileLoaded = false;
-    const { inputFile } = constants.htmlElements;
+    const {
+      htmlElements: { inputFile },
+    } = constants;
     const input = inputFile.files;
     const file = input[0];
     const reader = new FileReader();
@@ -312,11 +319,10 @@ const handleSearchFxCmd = () => {
       handleLoadFile({ constants, variables });
     };
 
-    const { inputFile } = constants.htmlElements;
-    inputFile.addEventListener(
-      "change",
-      variables.handleLoadFileCallback
-    );
+    const {
+      htmlElements: { inputFile },
+    } = constants;
+    inputFile.addEventListener("change", variables.handleLoadFileCallback);
   };
 
   addLoadFileHandler(handleLoadFile, {
@@ -325,7 +331,9 @@ const handleSearchFxCmd = () => {
   });
 
   const handleCheckCommand = ({ constants, variables }) => {
-    const { commandSelect, extendedCommandSelect } = constants.htmlElements;
+    const {
+      htmlElements: { commandSelect, extendedCommandSelect },
+    } = constants;
     commandSelect.value === "14"
       ? (extendedCommandSelect.value = "0")
       : (extendedCommandSelect.value = "-1");
@@ -340,7 +348,9 @@ const handleSearchFxCmd = () => {
       handleCheckCommand({ constants, variables });
     };
 
-    const { commandSelect } = constants.htmlElements;
+    const {
+      htmlElements: { commandSelect },
+    } = constants;
     commandSelect.addEventListener(
       "change",
       variables.handleCheckCommandCallback
@@ -350,7 +360,9 @@ const handleSearchFxCmd = () => {
   addCheckCommandHandler(handleCheckCommand, { constants, variables });
 
   const handleCheckExtendedCommand = ({ constants, variables }) => {
-    const { commandSelect, extendedCommandSelect } = constants.htmlElements;
+    const {
+      htmlElements: { commandSelect, extendedCommandSelect },
+    } = constants;
     extendedCommandSelect.value === "-1"
       ? (commandSelect.value = "-1")
       : (commandSelect.value = "14");
@@ -365,7 +377,9 @@ const handleSearchFxCmd = () => {
       handleCheckExtendedCommand({ constants, variables });
     };
 
-    const { extendedCommandSelect } = constants.htmlElements;
+    const {
+      htmlElements: { extendedCommandSelect },
+    } = constants;
     extendedCommandSelect.addEventListener(
       "change",
       variables.handleCheckExtendedCommandCallback
@@ -379,8 +393,11 @@ const handleSearchFxCmd = () => {
 
   const handleSetCommand = ({ constants, variables }) => {
     const handleGetCommand = ({ which, keyCode }, { constants, variables }) => {
-      const { shortkeyHTMLCodes, shortkeyIndexes, htmlElements } = constants;
-      const { commandSelect, extendedCommandSelect } = htmlElements;
+      const {
+        shortkeyHTMLCodes,
+        shortkeyIndexes,
+        htmlElements: { commandSelect, extendedCommandSelect },
+      } = constants;
       const pressedKeyHTMLCode = which || keyCode;
       for (let i = 0; i < shortkeyHTMLCodes.length; i++) {
         if (shortkeyHTMLCodes[i] === pressedKeyHTMLCode) {
@@ -401,14 +418,18 @@ const handleSearchFxCmd = () => {
         handleGetCommand(event, { constants, variables });
       };
 
-      const { commandSearchContainer } = constants.htmlElements;
+      const {
+        htmlElements: { commandSearchContainer },
+      } = constants;
       commandSearchContainer.addEventListener(
         "keypress",
         variables.handleGetCommandCallback
       );
     };
 
-    const { commandSearchContainer } = constants.htmlElements;
+    const {
+      htmlElements: { commandSearchContainer },
+    } = constants;
     commandSearchContainer.focus();
     addGetCommandHandler(handleGetCommand, { constants, variables });
   };
@@ -418,7 +439,9 @@ const handleSearchFxCmd = () => {
       handleSetCommand({ constants, variables });
     };
 
-    const { commandSearchContainer } = constants.htmlElements;
+    const {
+      htmlElements: { commandSearchContainer },
+    } = constants;
     commandSearchContainer.addEventListener(
       "mouseenter",
       variables.handleSetCommandCallback
@@ -431,7 +454,9 @@ const handleSearchFxCmd = () => {
   });
 
   const handleMouseLeaveCommand = ({ constants, variables }) => {
-    const { commandSearchContainer } = constants.htmlElements;
+    const {
+      htmlElements: { commandSearchContainer },
+    } = constants;
     commandSearchContainer.blur();
     commandSearchContainer.removeEventListener(
       "keypress",
@@ -447,7 +472,9 @@ const handleSearchFxCmd = () => {
       handleMouseLeaveCommand({ constants, variables });
     };
 
-    const { commandSearchContainer } = constants.htmlElements;
+    const {
+      htmlElements: { commandSearchContainer },
+    } = constants;
     commandSearchContainer.addEventListener(
       "mouseleave",
       variables.handleMouseLeaveCommandCallback
@@ -464,8 +491,11 @@ const handleSearchFxCmd = () => {
       { which, keyCode },
       { constants, variables }
     ) => {
-      const { shortkeyHTMLCodes, shortkeyIndexes, htmlElements } = constants;
-      const { commandSelect, extendedCommandSelect } = htmlElements;
+      const {
+        shortkeyHTMLCodes,
+        shortkeyIndexes,
+        htmlElements: { commandSelect, extendedCommandSelect },
+      } = constants;
       const pressedKeyHTMLCode = which || keyCode;
       for (let i = 0; i < shortkeyHTMLCodes.length; i++) {
         if (shortkeyHTMLCodes[i] === pressedKeyHTMLCode) {
@@ -485,14 +515,18 @@ const handleSearchFxCmd = () => {
         handleGetExtendedCommand(event, { constants, variables });
       };
 
-      const { extendedCommandSearchContainer } = constants.htmlElements;
+      const {
+        htmlElements: { extendedCommandSearchContainer },
+      } = constant;
       extendedCommandSearchContainer.addEventListener(
         "keypress",
         variables.handleGetExtendedCommandCallback
       );
     };
 
-    const { extendedCommandSearchContainer } = constants.htmlElements;
+    const {
+      htmlElements: { extendedCommandSearchContainer },
+    } = constants;
     extendedCommandSearchContainer.focus();
     addGetExtendedCommandHandler(handleGetExtendedCommand, {
       constants,
@@ -508,7 +542,9 @@ const handleSearchFxCmd = () => {
       handleSetExtendedCommand({ constants, variables });
     };
 
-    const { extendedCommandSearchContainer } = constants.htmlElements;
+    const {
+      htmlElements: { extendedCommandSearchContainer },
+    } = constants;
     extendedCommandSearchContainer.addEventListener(
       "mouseenter",
       variables.handleSetExtendedCommandCallback
@@ -521,7 +557,9 @@ const handleSearchFxCmd = () => {
   });
 
   const handleMouseLeaveExtendedCommand = ({ constants, variables }) => {
-    const { extendedCommandSearchContainer } = constants.htmlElements;
+    const {
+      htmlElements: { extendedCommandSearchContainer },
+    } = constants;
     extendedCommandSearchContainer.blur();
     extendedCommandSearchContainer.removeEventListener(
       "keypress",
@@ -537,7 +575,9 @@ const handleSearchFxCmd = () => {
       handleMouseLeaveExtendedCommand({ constants, variables });
     };
 
-    const { extendedCommandSearchContainer } = constants.htmlElements;
+    const {
+      htmlElements: { extendedCommandSearchContainer },
+    } = constants;
     extendedCommandSearchContainer.addEventListener(
       "mouseleave",
       variables.handleMouseLeaveExtendedCommandCallback

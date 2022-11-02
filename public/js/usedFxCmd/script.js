@@ -250,8 +250,9 @@ const handleUsedFxCmd = () => {
 
   const handleLoadFile = ({ constants, variables }) => {
     const handleWaitFileLoading = (reader, { constants, variables }) => {
-      const clearUsedCommandsTables = ({ htmlElements }) => {
-        const { commandsTableBody, extendedCommandsTableBody } = htmlElements;
+      const clearUsedCommandsTables = ({
+        htmlElements: { commandsTableBody, extendedCommandsTableBody },
+      }) => {
         commandsTableBody.innerHTML = "";
         extendedCommandsTableBody.innerHTML = "";
       };
@@ -278,7 +279,9 @@ const handleUsedFxCmd = () => {
     };
 
     variables.isFileLoaded = false;
-    const { inputFile } = constants.htmlElements;
+    const {
+      htmlElements: { inputFile },
+    } = constants;
     const input = inputFile.files;
     const file = input[0];
     const reader = new FileReader();
@@ -295,11 +298,10 @@ const handleUsedFxCmd = () => {
       handleLoadFile({ constants, variables });
     };
 
-    const { inputFile } = constants.htmlElements;
-    inputFile.addEventListener(
-      "change",
-      variables.handleLoadFileCallback
-    );
+    const {
+      htmlElements: { inputFile },
+    } = constants;
+    inputFile.addEventListener("change", variables.handleLoadFileCallback);
   };
 
   addLoadFileHandler(handleLoadFile, {
