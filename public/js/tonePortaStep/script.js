@@ -337,8 +337,11 @@ const handleTonePortaStep = () => {
       { constants, variables }
     ) => {
       const character = which || keyCode;
-      const { shortkeyHTMLCodes, shortkeyIndexes, htmlElements } = constants;
-      const { destinationNoteSelect, destinationOctaveSelect } = htmlElements;
+      const {
+        shortkeyHTMLCodes,
+        shortkeyIndexes,
+        htmlElements: { destinationNoteSelect, destinationOctaveSelect },
+      } = constants;
       for (let i = 0; i < shortkeyHTMLCodes.length; i++) {
         if (shortkeyHTMLCodes[i] === character) {
           if (character >= 65) {
@@ -440,15 +443,17 @@ const handleTonePortaStep = () => {
       { constants, variables }
     ) => {
       const {
-        sourceNoteSelect,
-        sourceOctaveSelect,
-        sourceFinetuneSelect,
-        destinationNoteSelect,
-        destinationOctaveSelect,
-        destinationFinetuneSelect,
-        ticsInput,
-        commandsInput,
-      } = constants.htmlElements;
+        htmlElements: {
+          sourceNoteSelect,
+          sourceOctaveSelect,
+          sourceFinetuneSelect,
+          destinationNoteSelect,
+          destinationOctaveSelect,
+          destinationFinetuneSelect,
+          ticsInput,
+          commandsInput,
+        },
+      } = constants;
       sourceNote.periodIndex = parseInt(sourceNoteSelect.value);
       sourceNote.octaveIndex = parseInt(sourceOctaveSelect.value);
       sourceNote.finetuneIndex = parseInt(sourceFinetuneSelect.value);
@@ -554,7 +559,10 @@ const handleTonePortaStep = () => {
     handleCalculatePortamento,
     { constants, variables }
   ) => {
-    constants.htmlElements.groupChange.forEach((element) => {
+    const {
+      htmlElements: { groupChange },
+    } = constants;
+    groupChange.forEach((element) => {
       variables.handleCalculatePortamentoCallback = () => {
         handleCalculatePortamento(
           { sourceNote, destinationNote },
@@ -575,19 +583,22 @@ const handleTonePortaStep = () => {
   });
 
   const handleResetButton = (constants) => {
-    const { definedTics, definedCommands, definedTooltipText, htmlElements } =
-      constants;
     const {
-      sourceNoteSelect,
-      sourceOctaveSelect,
-      sourceFinetuneSelect,
-      destinationNoteSelect,
-      destinationOctaveSelect,
-      destinationFinetuneSelect,
-      ticsInput,
-      commandsInput,
-      unitsResult,
-    } = htmlElements;
+      definedTics,
+      definedCommands,
+      definedTooltipText,
+      htmlElements: {
+        sourceNoteSelect,
+        sourceOctaveSelect,
+        sourceFinetuneSelect,
+        destinationNoteSelect,
+        destinationOctaveSelect,
+        destinationFinetuneSelect,
+        ticsInput,
+        commandsInput,
+        unitsResult,
+      },
+    } = constants;
     sourceNoteSelect.value = "0";
     sourceOctaveSelect.value = "0";
     sourceFinetuneSelect.value = "0";

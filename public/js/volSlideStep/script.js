@@ -39,7 +39,9 @@ const handleVolSlideStep = () => {
   };
 
   const setFineslideVisibility = ({ constants, variables }) => {
-    const { fineslideContainer, fineslideCheckbox } = constants.htmlElements;
+    const {
+      htmlElements: { fineslideContainer, fineslideCheckbox },
+    } = constants;
     const { fineslideCommands, volumeSlideCommands } = variables;
     if (fineslideCheckbox.checked) {
       variables.commandsToggle = fineslideCommands;
@@ -59,9 +61,8 @@ const handleVolSlideStep = () => {
       volumeSlideTooltipErrorText,
       fineslideTooltipErrorText,
       errorText,
-      htmlElements,
+      htmlElements: { commandsResult, unitsResult },
     } = constants;
-    const { commandsResult, unitsResult } = htmlElements;
     setFineslideVisibility({ constants, variables });
     [commandsResult.title, unitsResult.title] = [
       definedVolumeSlideTooltipText,
@@ -149,9 +150,8 @@ const handleVolSlideStep = () => {
       volumeSlideTooltipErrorText,
       fineslideTooltipErrorText,
       errorText,
-      htmlElements,
+      htmlElements: { commandsResult, unitsResult },
     } = constants;
-    const { commandsResult, unitsResult } = htmlElements;
     [commandsResult.title, unitsResult.title] = [
       definedVolumeSlideTooltipText,
       definedFineslideTooltipText,
@@ -200,7 +200,10 @@ const handleVolSlideStep = () => {
       handleCalculateVolume({ constants, variables });
     };
 
-    constants.htmlElements.groupChange.forEach((element) => {
+    const {
+      htmlElements: { groupChange },
+    } = constants;
+    groupChange.forEach((element) => {
       element.addEventListener(
         "change",
         variables.handleCalculateVolumeCallback
@@ -218,17 +221,16 @@ const handleVolSlideStep = () => {
         definedUnits,
         definedVolumeSlideTooltipText,
         definedFineslideTooltipText,
-        htmlElements,
+        htmlElements: {
+          ticsInput,
+          instrumentVolumeInput,
+          unitsInput,
+          commandsResult,
+          unitsResult,
+          fineslideCheckbox,
+          fineslideContainer,
+        },
       } = constants;
-      const {
-        ticsInput,
-        instrumentVolumeInput,
-        unitsInput,
-        commandsResult,
-        unitsResult,
-        fineslideCheckbox,
-        fineslideContainer,
-      } = htmlElements;
       variables.volumeslideCommands = 0;
       variables.fineslideCommands = 0;
       variables.commandsToggle = 0;
