@@ -27,7 +27,7 @@ const handleVolSlideStep = () => {
   const { definedTics, definedInstrumentVolume, definedUnits } = constants;
   const variables = {
     volumeSlideCommands: 0,
-    fineslideCommands: 0,
+    volumeslideCommandsWithFineslide: 0,
     fineslideUnits: 0,
     commandsToggle: 0,
     tics: definedTics,
@@ -42,9 +42,9 @@ const handleVolSlideStep = () => {
     const {
       htmlElements: { fineslideContainer, fineslideCheckbox },
     } = constants;
-    const { fineslideCommands, volumeSlideCommands } = variables;
+    const { volumeslideCommandsWithFineslide, volumeSlideCommands } = variables;
     if (fineslideCheckbox.checked) {
-      variables.commandsToggle = fineslideCommands;
+      variables.commandsToggle = volumeslideCommandsWithFineslide;
       fineslideContainer.classList.remove("d-none");
     } else {
       variables.commandsToggle = volumeSlideCommands;
@@ -127,7 +127,9 @@ const handleVolSlideStep = () => {
 
   const calculatefineslideUnits = (variables) => {
     const { tics, instrumentVolume, units } = variables;
-    variables.fineslideCommands = Math.floor(instrumentVolume / tics / units);
+    variables.volumeslideCommandsWithFineslide = Math.floor(
+      instrumentVolume / tics / units
+    );
     variables.fineslideUnits = instrumentVolume % tics;
   };
 
@@ -236,7 +238,7 @@ const handleVolSlideStep = () => {
         },
       } = constants;
       variables.volumeslideCommands = 0;
-      variables.fineslideCommands = 0;
+      variables.volumeslideCommandsWithFineslide = 0;
       variables.commandsToggle = 0;
       variables.fineslideUnits = 0;
       ticsInput.value = definedTics;

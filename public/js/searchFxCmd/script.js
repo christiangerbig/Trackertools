@@ -122,7 +122,9 @@ const handleSearchFxCmd = () => {
             tr.append(td);
           };
 
-          const { tableBody } = constants.htmlElements;
+          const {
+            htmlElements: { tableBody },
+          } = constants;
           const tr = document.createElement("tr");
           tableBody.append(tr);
           createListEntry(tr, songPositionIndexCounter);
