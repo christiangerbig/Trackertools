@@ -73,9 +73,10 @@ const handleUsedFxCmd = () => {
   };
 
   const handleSearchCommands = ({ constants, variables }) => {
-    const highestSongPattern = ({ constants, variables }) => {
-      const { songPositionOffset, amountOfPositions } = constants;
-      const { fileContent } = variables;
+    const highestSongPattern = ({
+      constants: { songPositionOffset, amountOfPositions },
+      variables: { fileContent },
+    }) => {
       let patternNumber = 0;
       let highestPatternNumber = 0;
       for (let i = 0; i < amountOfPositions; i++) {
@@ -93,22 +94,23 @@ const handleUsedFxCmd = () => {
     ) => {
       const searchForCommands = (
         { hasCommandArray, hasExtendedCommandArray },
-        { constants, variables }
+        {
+          constants: {
+            songLengthOffset,
+            songPositionOffset,
+            patternStartOffset,
+            commandOffset,
+            commandLowbyteOffset,
+            maxPatternPosition,
+            maxChannels,
+            patternLength,
+            noteDataLength,
+            patternRowLength,
+            commandNumberMask,
+          },
+          variables: { fileContent },
+        }
       ) => {
-        const {
-          songLengthOffset,
-          songPositionOffset,
-          patternStartOffset,
-          commandOffset,
-          commandLowbyteOffset,
-          maxPatternPosition,
-          maxChannels,
-          patternLength,
-          noteDataLength,
-          patternRowLength,
-          commandNumberMask,
-        } = constants;
-        const { fileContent } = variables;
         const songLength = fileContent[songLengthOffset].charCodeAt(0);
         let patternNumber = 0;
         // Fetch pattern numbers
@@ -199,13 +201,13 @@ const handleUsedFxCmd = () => {
 
       const printUsedCommands = (
         hasCommandArray,
-        { htmlElements, CommandNames }
+        { htmlElements: { commandsTableBody }, CommandNames }
       ) => {
         for (let i = 0; i < hasCommandArray.length; i++) {
           if (hasCommandArray[i]) {
             const tr = document.createElement("tr");
             tr.classList.add("text-left");
-            htmlElements.commandsTableBody.append(tr);
+            commandsTableBody.append(tr);
             createListEntry(tr, CommandNames[i]);
           }
         }
@@ -213,13 +215,13 @@ const handleUsedFxCmd = () => {
 
       const printUsedExtendedCommands = (
         hasExtendedCommandArray,
-        { htmlElements, extendedCommandNames }
+        { htmlElements: { extendedCommandsTableBody }, extendedCommandNames }
       ) => {
         for (let i = 0; i < hasExtendedCommandArray.length; i++) {
           if (hasExtendedCommandArray[i]) {
             const tr = document.createElement("tr");
             tr.classList.add("text-left");
-            htmlElements.extendedCommandsTableBody.append(tr);
+            extendedCommandsTableBody.append(tr);
             createListEntry(tr, extendedCommandNames[i]);
           }
         }

@@ -81,9 +81,10 @@ const handleSearchFxCmd = () => {
   };
 
   const handleSearchCommand = ({ constants, variables }) => {
-    const highestSongPattern = ({ constants, variables }) => {
-      const { songPositionOffset, amountOfPositions } = constants;
-      const { fileContent } = variables;
+    const highestSongPattern = ({
+      constants: { songPositionOffset, amountOfPositions },
+      variables: { fileContent },
+    }) => {
       let patternNumber = 0;
       let highestPatternNumber = 0;
       for (let i = 0; i < amountOfPositions; i++) {
@@ -95,10 +96,12 @@ const handleSearchFxCmd = () => {
       return highestPatternNumber++; // Count starts at 0
     };
 
-    const convertInputElementValues = ({ constants, variables }) => {
-      const {
+    const convertInputElementValues = ({
+      constants: {
         htmlElements: { commandSelect, extendedCommandSelect },
-      } = constants;
+      },
+      variables,
+    }) => {
       variables.searchCommandNumber = parseInt(commandSelect.value);
       variables.searchExtendedCommandNumber = parseInt(
         extendedCommandSelect.value
