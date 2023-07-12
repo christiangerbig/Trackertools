@@ -21,10 +21,10 @@ body {
 }
 
 .navbar .navbar-brand {
-  color: rgb(81, 57, 189);
+  color: rgb(116, 116, 218);
 }
 .navbar .navbar-brand:hover {
-  color: rgb(116, 116, 218);
+  color: rgb(131, 107, 239);
 }
 
 .link-primary {
@@ -67,7 +67,7 @@ body {
   list-style: none;
 }
 
-.tone-porta-step {
+.tone-portamento-step {
   text-shadow: 0px 0px 1px black;
   background-image: url("../../../images/mixer-821537_640x423.jpg");
   background-color: grey;
@@ -76,33 +76,44 @@ body {
   background-attachment: fixed;
   color: rgb(202, 200, 200);
 }
-.tone-porta-step__source-note {
+.tone-portamento-step__navigation {
   background: rgba(0, 0, 0, 0.8);
 }
-.tone-porta-step__destination-note {
+.tone-portamento-step__source-note {
   background: rgba(0, 0, 0, 0.8);
 }
-.tone-porta-step__song-speed {
+.tone-portamento-step__destination-note {
   background: rgba(0, 0, 0, 0.8);
 }
-.tone-porta-step__tone-Portamento {
+.tone-portamento-step__song-speed {
   background: rgba(0, 0, 0, 0.8);
 }
-.tone-porta-step__result {
+.tone-portamento-step__tone-portamento {
   background: rgba(0, 0, 0, 0.8);
 }
-.tone-porta-step__result__units-per-command {
+.tone-portamento-step__result {
+  background: rgba(0, 0, 0, 0.8);
+}
+.tone-portamento-step__result__units-per-command {
   color: rgb(116, 116, 218);
 }
-.tone-porta-step__about__header {
-  color: rgb(122, 122, 122);
+.tone-portamento-step__about__header {
+  color: rgb(116, 116, 218);
 }
-.tone-porta-step__about__link {
+.tone-portamento-step__about__link {
+  color: rgb(81, 57, 189);
   text-decoration: none;
 }
-.tone-porta-step__help {
+.tone-portamento-step__about__link:hover {
+  color: rgb(116, 116, 218);
+}
+.tone-portamento-step__help {
   background-color: rgb(116, 116, 218);
 }
+.tone-portamento-step__help__header {
+  color: rgb(248, 249, 250);
+}
+
 .vol-slide-step {
   text-shadow: 0px 0px 1px black;
   background-image: url("../../../images/mixer-821537_640x423.jpg");

@@ -6,24 +6,24 @@ router.get("/", (req, res) => {
   res.render("index.hbs", { title: "Trackertools" });
 });
 
-// GET TonePortaStep
+// GET Tone Portamento Step
 router.get("/toneportastep", (req, res) => {
-  res.render("toneportastep.hbs", { title: "TonePortaStep" });
+  res.render("tone-portamento-step.hbs", { title: "TonePortaStep" });
 });
 
-// GET VolSlideStep
+// GET Volume Slide Step
 router.get("/volslidestep", (req, res) => {
-  res.render("volslidestep.hbs", { title: "VolSlideStep" });
+  res.render("voume-slide-step.hbs", { title: "VolSlideStep" });
 });
 
-// GET SearchFxCmd
+// GET Search Fx Commands
 router.get("/searchfxcmd", (req, res) => {
-  res.render("searchfxcmd.hbs", { title: "SearchFxCmd" });
+  res.render("search-fx-commands.hbs", { title: "SearchFxCmd" });
 });
 
-// GET UsedFxCmd
+// GET Used Fx Commands
 router.get("/usedfxcmd", (req, res) => {
-  res.render("usedfxcmd.hbs", { title: "UsedFxCmd" });
+  res.render("used-fx-commands.hbs", { title: "UsedFxCmd" });
 });
 
 // GET Contact

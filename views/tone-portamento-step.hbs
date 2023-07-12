@@ -1,9 +1,9 @@
 <section
   id="content-home"
-  class="tone-porta-step"
+  class="tone-portamento-step"
 >
   <div class="container text-center pt-5 pb-5">
-    <nav class="navbar navbar-expand-sm navbar-dark">
+    <nav class="[ tone-portamento-step__navigation ] [ navbar navbar-expand-sm navbar-dark px-4 ]">
       <span class="navbar-brand mb-0"> TonePortaStep </span>
       <div class="navbar-nav">
         <a 
@@ -20,11 +20,12 @@
         </a>
       </div>
     </nav>
-    <div class="row py-5 justify-content-around">
+
+    <div class="row justify-content-around py-5">
       <div 
         tabindex=0
         id="source-note-container" 
-        class="[ tone-porta-step__source-note ] [ col-10 col-md-5 pt-3 pb-4 mb-5 rounded ]" 
+        class="[ tone-portamento-step__source-note ] [ col-10 col-md-5 pt-3 pb-4 rounded mb-5 ]" 
       >
         <h4 class="mb-2"> Source Note </h4>
         <select
@@ -80,7 +81,7 @@
       <div
         tabindex=0 
         id="destination-note-container" 
-        class="[ tone-porta-step__destination-note ] [col-10 col-md-5 pt-3 pb-4 mb-5 rounded ]"
+        class="[ tone-portamento-step__destination-note ] [ col-10 col-md-5 pt-3 pb-4 rounded mb-5 ]"
       >
         <h4 class="mb-2"> Destination Note </h4>
         <select
@@ -133,7 +134,7 @@
           <option value="15"> Finetune -1 </option>
         </select>
       </div>
-      <div class="[ tone-porta-step__song-speed ] [ col-10 col-md-5 pt-3 pb-4 mb-5 rounded ]">
+      <div class="[ tone-portamento-step__song-speed ] [ col-10 col-md-5 pt-3 pb-4 rounded mb-5 ]">
         <h4 class="mb-2"> Song Speed </h4>
         <div>
           <input 
@@ -143,12 +144,12 @@
             min="1" 
             max="31" 
             title="Song speed ranges from 1 to 31"
-            class="rounded text-center group-change"
+            class="text-center rounded group-change"
           >
           <span> tic(s) per row </span>
         </div>
       </div>
-      <div class="[ tone-porta-step__tone-portamento ] [col-10 col-md-5 pt-3 pb-4 mb-5 rounded ]">
+      <div class="[ tone-portamento-step__tone-portamento ] [ col-10 col-md-5 pt-3 pb-4 rounded mb-5 ]">
         <h4 class="mb-2"> Tone Portamento </h4>
         <div>
           <input 
@@ -158,18 +159,18 @@
             min="1" 
             max="63" 
             title="Number of Tone Portamento commands ranges from 1 to 64"
-            class="rounded text-center group-change" 
+            class="text-center rounded group-change" 
             >
           <span> command(s) per row </span>
         </div>
       </div>
-      <div class="[ tone-porta-step__result ] [col-10 col-md-5 pt-3 pb-4 mb-5 rounded ]">
+      <div class="[ tone-portamento-step__result ] [ col-10 col-md-5 pt-3 pb-4 rounded mb-5 ]">
         <h4 class="mb-2"> Tone Portamento </h4>
         <div>
           <span 
             id="units-result" 
             title="Number of units ranges from hex 01 to ff"
-            class="tone-porta-step__result__units-per-command h5"
+            class="tone-portamento-step__result__units-per-command h5"
           >
             00 
           </span>
@@ -177,13 +178,13 @@
         </div>
       </div>
       <div class="w-100"></div>
-      <div class="col-10 col-md-5 py-2 mb-5 rounded justify-content-center">
+      <div class="col-10 col-md-5 py-2 justify-content-center rounded mb-5">
         <div class="row justify-content-around">
           <button 
             type="button" 
             id="reset-button" 
             title="Reset to default values"
-            class="btn btn-secondary w-25" 
+            class="btn btn-primary w-25" 
           > 
             Reset 
           </button>
@@ -193,10 +194,10 @@
   </div>
 </section>
 
-<section id="content-about" class="tone-porta-step__about">
+<section id="content-about" class="tone-portamento-step__about">
   <article class="container pt-5 pb-4">
-      <header>
-        <h2 class="text-center pt-5"> About...TonePortaStep </h2>
+    <header class="tone-portamento-step__about__header">
+        <h2 class="pt-5"> About... Tone Portamento Step </h2>
       </header>
       <div class="py-3 justify-content-center">
           <p class="text-justify">
@@ -208,7 +209,7 @@
             <span class="fw-bold"> 
               <a 
                 href="https://en.wikipedia.org/wiki/ProTracker" 
-                class="tone-porta-step__about__link"
+                class="tone-portamento-step__about__link"
               > 
                 ProTracker.
               </a>
@@ -235,15 +236,16 @@
 
 <section 
   id="content-help"
-  class="tone-porta-step__help text-white"
+  class="tone-portamento-step__help text-white"
 >
-  <div class="container pt-5 pb-4">
-    <h2 class="text-center pt-5"> TonePortaStep Help </h2>
-    <div class="row py-3 justify-content-center">
-      <div class="col-10 col-md-9 pt-3 pb-4 mb-0">
+  <article class="container pt-5 pb-4">
+    <header class="tone-portamento-step__help__header">
+      <h2 class="pt-5"> Help </h2>
+    </header>
+      <div class="pt-3 pb-4 mb-0">
         <p class="text-justify">
           The 
-          <span class="font-weight-bold"> 
+          <span class="fw-bold"> 
             key quickmode: 
           </span> 
           If your mouse pointer on the desktop is within the
@@ -252,7 +254,7 @@
           </span>
           field, you can select a note by these keys:
         </p>
-        <table class="table table-sm table-borderless text-white">
+        <table class="w-25 table table-sm table-borderless text-white mb-5">
           <thead>
             <tr>
               <th scope="col"> Note </th>
@@ -318,12 +320,11 @@
           </tbody>
         </table>
         <p class="text-justify">
-          For example if you want to select the note "D#" of the second octave you press these keys: "Shift-d" and then
+          Example: If you want to select the note "D#" of the second octave you press these keys: "Shift-d" and then
           "2"
         </p>
       </div>
-    </div>
-  </div>
+  </article>
 </section>
 
-<script src="/js/tonePortaStep/script.js"></script>
+<script src="/js/tonePortamentoStep/script.js"></script>
