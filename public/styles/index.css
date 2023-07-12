@@ -4,34 +4,34 @@ body {
 }
 
 .btn-primary {
-  background-color: rgb(116, 116, 218);
-  border-color: rgb(116, 116, 218);
+  background-color: rgb(81, 57, 189);
+  border-color: rgb(81, 57, 189);
 }
 .btn-primary:hover {
-  background-color: rgb(81, 57, 189);
-  border-color: rgb(81, 57, 189);
-}
-.btn-primary:focus {
   background-color: rgb(116, 116, 218);
   border-color: rgb(116, 116, 218);
 }
-.btn-primary:focus:hover {
+.btn-primary:focus {
   background-color: rgb(81, 57, 189);
   border-color: rgb(81, 57, 189);
+}
+.btn-primary:focus:hover {
+  background-color: rgb(116, 116, 218);
+  border-color: rgb(116, 116, 218);
 }
 
 .navbar .navbar-brand {
-  color: rgb(116, 116, 218);
+  color: rgb(81, 57, 189);
 }
 .navbar .navbar-brand:hover {
-  color: rgb(81, 57, 189);
+  color: rgb(116, 116, 218);
 }
 
 .link-primary {
-  color: rgb(131, 107, 239);
+  color: rgb(81, 57, 189);
 }
 .link-primary:hover {
-  color: rgb(81, 57, 189);
+  color: rgb(131, 107, 239);
 }
 
 .layout__footer {
@@ -42,13 +42,13 @@ body {
   color: rgb(202, 200, 200);
 }
 .layout__footer__link:hover {
-  color: rgb(122, 122, 122);
+  color: rgb(248, 249, 250);
 }
 
 .home {
   text-shadow: 0px 0px 1px black;
   background-image: url("../../../images/mixer-821537_640x423.jpg");
-  background-color: grey;
+  background-color: rgb(81, 57, 189);
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -58,7 +58,7 @@ body {
   background: rgba(0, 0, 0, 0.8);
 }
 .home__about__header {
-  color: rgb(116, 116, 218);
+  color: rgb(81, 57, 189);
 }
 .home__about__link {
   text-decoration: none;
