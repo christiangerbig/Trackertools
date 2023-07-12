@@ -8,22 +8,22 @@ router.get("/", (req, res) => {
 
 // GET Tone Portamento Step
 router.get("/toneportastep", (req, res) => {
-  res.render("tone-portamento-step.hbs", { title: "TonePortaStep" });
+  res.render("tone-portamento-step.hbs", { title: "Tone Portamento Step" });
 });
 
 // GET Volume Slide Step
 router.get("/volslidestep", (req, res) => {
-  res.render("voume-slide-step.hbs", { title: "VolSlideStep" });
+  res.render("volume-slide-step.hbs", { title: "Volume Slide Step" });
 });
 
 // GET Search Fx Commands
 router.get("/searchfxcmd", (req, res) => {
-  res.render("search-fx-commands.hbs", { title: "SearchFxCmd" });
+  res.render("search-fx-commands.hbs", { title: "Search Fx Commands" });
 });
 
 // GET Used Fx Commands
 router.get("/usedfxcmd", (req, res) => {
-  res.render("used-fx-commands.hbs", { title: "UsedFxCmd" });
+  res.render("used-fx-commands.hbs", { title: "Used Fx Commands" });
 });
 
 // GET Contact
