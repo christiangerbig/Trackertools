@@ -6,19 +6,16 @@ body {
 .is-link {
   text-decoration: none;
 }
-
 .is-link:hover {
-  color: #7a7a7a;
+  color: rgb(122, 122, 122);
 }
 
 .is-width-full {
   width: 100%;
 }
 
-.is-container-opacity {
-  background: rgba(0, 0, 0, 0.8);
-}
-
+/*.is-container-opacity 
+ * background: rgba(0, 0, 0, 0.8)*/
 .is-without-shadow {
   text-shadow: none;
 }
@@ -34,22 +31,21 @@ body {
 .is-table-wrap {
   overflow-y: scroll;
 }
-
 .is-table-wrap th {
   position: sticky;
   top: 0px;
 }
 
 .is-dark-grey {
-  color: #7474da;
+  color: rgb(116, 116, 218);
 }
 
 .is-grey {
-  color: #7a7a7a;
+  color: rgb(122, 122, 122);
 }
 
 .is-light-grey {
-  color: #cac8c8;
+  color: rgb(202, 200, 200);
 }
 
 .is-red {
@@ -57,11 +53,11 @@ body {
 }
 
 .is-bg-color-light {
-  background-color: #7474da;
+  background-color: rgb(116, 116, 218);
 }
 
 .is-bg-color-dark {
-  background-color: #3f3f81;
+  background-color: rgb(63, 63, 129);
 }
 
 .has-background-image {
@@ -79,38 +75,32 @@ body {
 
 /* Bootstrap classes */
 .btn-primary {
-  background-color: #7474da;
-  border-color: #7474da;
+  background-color: rgb(116, 116, 218);
+  border-color: rgb(116, 116, 218);
 }
-
 .btn-primary:hover {
-  background-color: #5139bd;
-  border-color: #5139bd;
+  background-color: rgb(81, 57, 189);
+  border-color: rgb(81, 57, 189);
 }
-
 .btn-primary:focus {
-  background-color: #7474da;
-  border-color: #7474da;
+  background-color: rgb(116, 116, 218);
+  border-color: rgb(116, 116, 218);
 }
-
 .btn-primary:focus:hover {
-  background-color: #5139bd;
-  border-color: #5139bd;
+  background-color: rgb(81, 57, 189);
+  border-color: rgb(81, 57, 189);
 }
 
 .navbar .navbar-brand {
-  color: #7474da;
+  color: rgb(116, 116, 218);
 }
-
 .navbar .navbar-brand:hover {
-  color: #5139bd;
+  color: rgb(81, 57, 189);
 }
 
 .link-primary {
-  color: #836bef;
+  color: rgb(131, 107, 239);
 }
-
 .link-primary:hover {
-  color: #5139bd;
+  color: rgb(81, 57, 189);
 }
-/*# sourceMappingURL=style.css.map */

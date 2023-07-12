@@ -1,63 +1,60 @@
-<section 
-  id="content-home"
-  class="has-background-image"
->
-  <div class="container text-center is-light-grey py-5">
+<section id="content-home" class="used-fx-cmd">
+  <div class="container text-center py-5">
     <nav class="navbar navbar-expand-sm navbar-dark">
       <span class="navbar-brand mb-0"> UsedFxCmd </span>
       <div class="navbar-nav">
-        <a 
-          href="#content-about"
-          class="nav-link is-link"
-        > 
-          About 
+        <a href="#content-about" class="nav-link">
+          About
         </a>
       </div>
     </nav>
     <div class="row py-5 justify-content-around">
-      <div class="col-10 col-md-4 pt-4 pb-2 mb-5 rounded is-container-opacity">
+      <div
+        class="[ used-fx-cmd__file-loader ] [ col-10 col-md-4 pt-4 pb-2 mb-5 rounded ]"
+      >
         <div class="container input-group mb-3 disable-text-shadow">
-          <input 
-            type="file" 
-            id="input-file"
-            class="w-75 rounded" class="w-75 rounded"
-          >
+          <input type="file" id="input-file" class="w-100 rounded" />
         </div>
       </div>
       <div class="w-100"></div>
-      <div class="col-10 col-md-5 py-4 mb-5 rounded is-container-opacity">
-        <div class="container is-table-wrap is-height-lg">
+      <div
+        class="[ used-fx-cmd__result-container ] [ col-10 col-md-5 py-4 mb-5 rounded ]"
+      >
+        <div class="[ used-fx-cmd__result-container__commands ] [ container ]">
           <table class="table table-borderless">
             <thead>
-              <tr class="is-without-shadow">
-                <th 
-                  scope="col" 
-                  class="is-dark-grey bg-light rounded p-1 text-center"
-                > 
-                  Used commands 
+              <tr class="disable-text-shadow">
+                <th
+                  scope="col"
+                  class="[ used-fx-cmd__result-container__commands__table-header ] [ bg-light rounded p-1 text-center ]"
+                >
+                  Used commands
                 </th>
+              </tr>
             </thead>
-            <tbody 
-              id="commands-table-body"
-              class="text-light text-center"
-            >
+            <tbody id="commands-table-body" class="text-light text-center">
             </tbody>
           </table>
         </div>
       </div>
-      <div class="col-10 col-md-5 py-4 rounded mb-5 is-container-opacity">
-        <div class="container is-table-wrap-lg">
+      <div
+        class="[ used-fx-cmd__result-container ] [ col-10 col-md-5 py-4 rounded mb-5 ]"
+      >
+        <div
+          class="[ used-fx-cmd__result-container__extended-commands ] [ container ]"
+        >
           <table class="table table-borderless">
             <thead>
-              <tr class="is-without-shadow">
-                <th 
-                  scope="col" 
-                  class="is-grey bg-light rounded p-1  text-center"
-                > 
-                  Used extended commands 
+              <tr class="disable-text-shadow">
+                <th
+                  scope="col"
+                  class="[ used-fx-cmd__result-container__extended-commands__table-header ] [ bg-light rounded p-1 text-center ]"
+                >
+                  Used extended commands
                 </th>
+              </tr>
             </thead>
-            <tbody 
+            <tbody
               id="extended-commands-table-body"
               class="text-light text-center"
             >
@@ -66,42 +63,39 @@
         </div>
       </div>
     </div>
+  </div>
 </section>
 
 <section id="content-about">
-  <article>
-    <div class="container pt-5 pb-0">
-      <header>
-        <h2 class="text-center is-dark-grey pt-4"> About... UsedFxCmd </h2>
-      </header>
-      <div class="row py-3 justify-content-center">
-        <div class="col-10 col-md-9 pt-3 pb-4 mb-0">
-          <p class="text-justify">
-            The tool 
-            <span class="fw-bold"> 
-              SearchFxCmd 
-            </span> 
-            is used in conjunction with the music editor
-            <span class="fw-bold"> 
-              <a 
-                href="https://en.wikipedia.org/wiki/ProTracker" 
-                class="link-primary is-link"
-              > 
-                ProTracker.
-              </a>
-            </span>
-            This tracker uses different effect commands.
-          </p>
-          <p>
-            You can scan all used commands in a loaded standard ProTracker module. 
-            To get an overview, which effect commands are used in the patterns of a module, 
-            this tool is a very comfortable aid.
-          </p>
-          <p>
-            Have fun with it...
-          </p>
-        </div>
-      </div>
+  <article class="container pt-5 pb-0">
+    <header class="used-fx-cmd__about__header">
+      <h2 class="text-center pt-4"> About... UsedFxCmd </h2>
+    </header>
+    <div class="container py-3">
+      <p class="text-justify">
+        The tool
+        <span class="fw-bold">
+          SearchFxCmd
+        </span>
+        is used in conjunction with the music editor
+        <span class="fw-bold">
+          <a
+            href="https://en.wikipedia.org/wiki/ProTracker"
+            class="used-fx-cmd__about__link"
+          >
+            ProTracker.
+          </a>
+        </span>
+        This tracker uses different effect commands.
+      </p>
+      <p>
+        You can scan all used commands in a loaded standard ProTracker module.
+        To get an overview, which effect commands are used in the patterns of a
+        module, this tool is a very comfortable aid.
+      </p>
+      <p>
+        Have fun with it...
+      </p>
     </div>
   </article>
 </section>

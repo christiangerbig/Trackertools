@@ -1,0 +1,233 @@
+body {
+  background-color: rgb(248, 249, 250);
+  font-family: Roboto;
+}
+
+.btn-primary {
+  background-color: rgb(116, 116, 218);
+  border-color: rgb(116, 116, 218);
+}
+.btn-primary:hover {
+  background-color: rgb(81, 57, 189);
+  border-color: rgb(81, 57, 189);
+}
+.btn-primary:focus {
+  background-color: rgb(116, 116, 218);
+  border-color: rgb(116, 116, 218);
+}
+.btn-primary:focus:hover {
+  background-color: rgb(81, 57, 189);
+  border-color: rgb(81, 57, 189);
+}
+
+.navbar .navbar-brand {
+  color: rgb(116, 116, 218);
+}
+.navbar .navbar-brand:hover {
+  color: rgb(81, 57, 189);
+}
+
+.link-primary {
+  color: rgb(131, 107, 239);
+}
+.link-primary:hover {
+  color: rgb(81, 57, 189);
+}
+
+.layout__footer {
+  background-color: rgb(116, 116, 218);
+}
+.layout__footer__link {
+  color: rgb(202, 200, 200);
+}
+
+.home {
+  text-shadow: 0px 0px 1px black;
+  background-image: url("../../../images/mixer-821537_640x423.jpg");
+  background-color: grey;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: rgb(202, 200, 200);
+}
+.home__title {
+  background: rgba(0, 0, 0, 0.8);
+}
+.home__about__header {
+  color: rgb(116, 116, 218);
+}
+.home__about__link {
+  text-decoration: none;
+}
+.home__about__list {
+  list-style: none;
+}
+
+.tone-porta-step {
+  text-shadow: 0px 0px 1px black;
+  background-image: url("../../../images/mixer-821537_640x423.jpg");
+  background-color: grey;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: rgb(202, 200, 200);
+}
+.tone-porta-step__source-note {
+  background: rgba(0, 0, 0, 0.8);
+}
+.tone-porta-step__destination-note {
+  background: rgba(0, 0, 0, 0.8);
+}
+.tone-porta-step__song-speed {
+  background: rgba(0, 0, 0, 0.8);
+}
+.tone-porta-step__tone-Portamento {
+  background: rgba(0, 0, 0, 0.8);
+}
+.tone-porta-step__result {
+  background: rgba(0, 0, 0, 0.8);
+}
+.tone-porta-step__result__units-per-command {
+  color: rgb(116, 116, 218);
+}
+.tone-porta-step__about__header {
+  color: rgb(122, 122, 122);
+}
+.tone-porta-step__about__link {
+  text-decoration: none;
+}
+.tone-porta-step__help {
+  background-color: rgb(116, 116, 218);
+}
+.vol-slide-step {
+  text-shadow: 0px 0px 1px black;
+  background-image: url("../../../images/mixer-821537_640x423.jpg");
+  background-color: grey;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: rgb(202, 200, 200);
+}
+.vol-slide-step__song-speed {
+  background: rgba(0, 0, 0, 0.8);
+}
+.vol-slide-step__instrument-volume {
+  background: rgba(0, 0, 0, 0.8);
+}
+.vol-slide-step__volume-slide {
+  background: rgba(0, 0, 0, 0.8);
+}
+.vol-slide-step__result {
+  background: rgba(0, 0, 0, 0.8);
+}
+.vol-slide-step__result__number-of-commands {
+  color: rgb(116, 116, 218);
+}
+.vol-slide-step__result__units-per-command {
+  color: rgb(116, 116, 218);
+}
+.vol-slide-step__about__header {
+  color: rgb(122, 122, 122);
+}
+.vol-slide-step__about__link {
+  text-decoration: none;
+}
+.vol-slide-step__help {
+  background-color: rgb(116, 116, 218);
+}
+.search-fx-cmd {
+  text-shadow: 0px 0px 1px black;
+  background-image: url("../../../images/mixer-821537_640x423.jpg");
+  background-color: grey;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: rgb(202, 200, 200);
+}
+.search-fx-cmd__file-loader {
+  background: rgba(0, 0, 0, 0.8);
+}
+.search-fx-cmd__search-command {
+  background: rgba(0, 0, 0, 0.8);
+}
+.search-fx-cmd__search-extended-command {
+  background: rgba(0, 0, 0, 0.8);
+}
+.search-fx-cmd__results {
+  background: rgba(0, 0, 0, 0.8);
+}
+.search-fx-cmd__results__details {
+  height: 22rem;
+  overflow-y: scroll;
+}
+.search-fx-cmd__results__details__table-header {
+  position: sticky;
+  top: 0px;
+  color: rgb(116, 116, 218);
+}
+.search-fx-cmd__about__header {
+  color: rgb(122, 122, 122);
+}
+.search-fx-cmd__about__link {
+  text-decoration: none;
+}
+.search-fx-cmd__help {
+  background-color: rgb(116, 116, 218);
+}
+.used-fx-cmd {
+  text-shadow: 0px 0px 1px black;
+  background-image: url("../../../images/mixer-821537_640x423.jpg");
+  background-color: grey;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: rgb(202, 200, 200);
+}
+.used-fx-cmd__file-loader {
+  background: rgba(0, 0, 0, 0.8);
+}
+.used-fx-cmd__result-container {
+  background: rgba(0, 0, 0, 0.8);
+}
+.used-fx-cmd__result-container__commands {
+  height: 22rem;
+  overflow-y: scroll;
+}
+.used-fx-cmd__result-container__commands__table-header {
+  position: sticky;
+  top: 0px;
+  color: rgb(116, 116, 218);
+}
+.used-fx-cmd__result-container__extended-commands {
+  height: 22rem;
+  overflow-y: scroll;
+}
+.used-fx-cmd__result-container__extended-commands__table-header {
+  position: sticky;
+  top: 0px;
+  color: rgb(122, 122, 122);
+}
+.used-fx-cmd__about__header {
+  color: rgb(122, 122, 122);
+}
+.used-fx-cmd__about__link {
+  text-decoration: none;
+}
+
+.contact {
+  text-shadow: 0px 0px 1px black;
+  background-image: url("../images/mixer-821537_640x423.jpg");
+  background-color: grey;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+.contact__title {
+  color: rgb(202, 200, 200);
+}
+.contact__error-message {
+  color: red;
+}
+.contact__form {
+  background: rgba(0, 0, 0, 0.8);
+}

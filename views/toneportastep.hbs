@@ -1,20 +1,20 @@
 <section
   id="content-home"
-  class="has-background-image"
+  class="tone-porta-step"
 >
-  <div class="container text-center is-light-grey pt-5 pb-5">
+  <div class="container text-center pt-5 pb-5">
     <nav class="navbar navbar-expand-sm navbar-dark">
       <span class="navbar-brand mb-0"> TonePortaStep </span>
       <div class="navbar-nav">
         <a 
           href="#content-about"
-          class="nav-link is-link"
+          class="nav-link"
         > 
           About 
         </a>
         <a 
           href="#content-help"
-          class="nav-link is-link"
+          class="nav-link"
         > 
           Help 
         </a>
@@ -24,7 +24,7 @@
       <div 
         tabindex=0
         id="source-note-container" 
-        class="col-10 col-md-5 pt-3 pb-4 mb-5 rounded is-container-opacity" 
+        class="[ tone-porta-step__source-note ] [ col-10 col-md-5 pt-3 pb-4 mb-5 rounded ]" 
       >
         <h4 class="mb-2"> Source Note </h4>
         <select
@@ -80,7 +80,7 @@
       <div
         tabindex=0 
         id="destination-note-container" 
-        class="col-10 col-md-5 pt-3 pb-4 mb-5 rounded is-container-opacity"
+        class="[ tone-porta-step__destination-note ] [col-10 col-md-5 pt-3 pb-4 mb-5 rounded ]"
       >
         <h4 class="mb-2"> Destination Note </h4>
         <select
@@ -133,7 +133,7 @@
           <option value="15"> Finetune -1 </option>
         </select>
       </div>
-      <div class="col-10 col-md-5 pt-3 pb-4 mb-5 rounded is-container-opacity">
+      <div class="[ tone-porta-step__song-speed ] [ col-10 col-md-5 pt-3 pb-4 mb-5 rounded ]">
         <h4 class="mb-2"> Song Speed </h4>
         <div>
           <input 
@@ -148,7 +148,7 @@
           <span> tic(s) per row </span>
         </div>
       </div>
-      <div class="col-10 col-md-5 pt-3 pb-4 mb-5 rounded is-container-opacity">
+      <div class="[ tone-porta-step__tone-portamento ] [col-10 col-md-5 pt-3 pb-4 mb-5 rounded ]">
         <h4 class="mb-2"> Tone Portamento </h4>
         <div>
           <input 
@@ -163,13 +163,13 @@
           <span> command(s) per row </span>
         </div>
       </div>
-      <div class="col-10 col-md-5 pt-3 pb-4 mb-5 rounded is-container-opacity">
+      <div class="[ tone-porta-step__result ] [col-10 col-md-5 pt-3 pb-4 mb-5 rounded ]">
         <h4 class="mb-2"> Tone Portamento </h4>
         <div>
           <span 
             id="units-result" 
             title="Number of units ranges from hex 01 to ff"
-            class="h5 is-dark-grey"
+            class="tone-porta-step__result__units-per-command h5"
           >
             00 
           </span>
@@ -193,14 +193,12 @@
   </div>
 </section>
 
-<section id="content-about">
-  <article>
-    <div class="container pt-5 pb-4">
+<section id="content-about" class="tone-porta-step__about">
+  <article class="container pt-5 pb-4">
       <header>
-        <h2 class="text-center is-dark-grey pt-5"> About...TonePortaStep </h2>
+        <h2 class="text-center pt-5"> About...TonePortaStep </h2>
       </header>
-      <div class="row py-3 justify-content-center">
-        <div class="col-10 col-md-9 pt-3 pb-4 mb-0">
+      <div class="py-3 justify-content-center">
           <p class="text-justify">
             The tool 
             <span class="fw-bold"> 
@@ -210,7 +208,7 @@
             <span class="fw-bold"> 
               <a 
                 href="https://en.wikipedia.org/wiki/ProTracker" 
-                class="link-primary is-link"
+                class="tone-porta-step__about__link"
               > 
                 ProTracker.
               </a>
@@ -231,18 +229,16 @@
           <p>
             Have fun with it...
           </p>
-        </div>
       </div>
-    </div>
   </article>
 </section>
 
 <section 
   id="content-help"
-  class="is-bg-color-light text-white"
+  class="tone-porta-step__help text-white"
 >
   <div class="container pt-5 pb-4">
-    <h2 class="text-center is-light-grey pt-5"> TonePortaStep Help </h2>
+    <h2 class="text-center pt-5"> TonePortaStep Help </h2>
     <div class="row py-3 justify-content-center">
       <div class="col-10 col-md-9 pt-3 pb-4 mb-0">
         <p class="text-justify">

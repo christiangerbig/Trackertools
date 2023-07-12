@@ -1,18 +1,20 @@
-<section id="volmeslide-content-home" class="has-background-image">
+<section id="volmeslide-content-home" class="vol-slide-step">
   <div class="container text-center is-light-grey py-5">
     <nav class="navbar navbar-expand-sm navbar-dark">
       <span class="navbar-brand mb-0"> VolSlideStep </span>
       <div class="navbar-nav">
-        <a href="#content-about" class="nav-link is-link">
+        <a href="#content-about" class="nav-link">
           About
         </a>
-        <a href="#content-help" class="nav-link is-link">
+        <a href="#content-help" class="nav-link">
           Help
         </a>
       </div>
     </nav>
     <div class="row py-5 justify-content-around">
-      <div class="col-10 col-md-5 pt-3 pb-4 mb-5 rounded is-container-opacity">
+      <div
+        class="[ vol-slide-step__song-speed ] [ col-10 col-md-5 pt-3 pb-4 mb-5 rounded ]"
+      >
         <h4 class="mb-2"> Song speed </h4>
         <div>
           <input
@@ -27,7 +29,9 @@
           <span> tic(s) per row </span>
         </div>
       </div>
-      <div class="col-10 col-md-5 pt-3 pb-4 mb-5 rounded is-container-opacity">
+      <div
+        class="[ vol-slide-step__instrument-volume ] [ col-10 col-md-5 pt-3 pb-4 mb-5 rounded ]"
+      >
         <h4 class="mb-2"> Instrument Volume </h4>
         <div>
           <input
@@ -42,7 +46,9 @@
           <span> volume level </span>
         </div>
       </div>
-      <div class="col-10 col-md-5 pt-3 pb-4 mb-5 rounded is-container-opacity">
+      <div
+        class="[ vol-slide-step__volume-slide ] [ col-10 col-md-5 pt-3 pb-4 mb-5 rounded ]"
+      >
         <h4 class="mb-2"> Volume Slide </h4>
         <div>
           <input
@@ -58,13 +64,15 @@
         </div>
       </div>
       <div class="w-100"></div>
-      <div class="col-10 col-md-5 pt-3 pb-4 mb-5 rounded is-container-opacity">
+      <div
+        class="[ vol-slide-step__result ] [ col-10 col-md-5 pt-3 pb-4 mb-5 rounded ]"
+      >
         <h4 class="mb-2"> Volume Slide </h4>
         <div id="commands-result-container">
           <span
             id="commands-result"
             title="Number of commands ranges from 1 to 64"
-            class="is-dark-grey h5"
+            class="vol-slide-step__result__number-of-commands h5"
           >
             0
           </span>
@@ -77,14 +85,14 @@
       </div>
       <div
         id="fineslide-container"
-        class="col-10 col-md-5 pt-3 pb-4 mb-5 d-none rounded is-container-opacity"
+        class="[ vol-slide-step__result ] [col-10 col-md-5 pt-3 pb-4 mb-5 d-none rounded ]"
       >
         <h4 class="mb-2"> Fine Volume Slide </h4>
         <div id="units-result-container">
           <span
             id="units-result"
             title="Number of units ranges from hex 1 to f"
-            class="is-dark-grey h5"
+            class="vol-slide-step__result__units-per-command h5"
           >
             0
           </span>
@@ -109,127 +117,119 @@
 </section>
 
 <section id="content-about">
-  <article>
-    <div class="container pt-5 pb-4">
-      <header>
-        <h2 class="text-center is-dark-grey pt-5"> About... VolSlideStep </h2>
-      </header>
-      <div class="row py-3 justify-content-center">
-        <div class="col-10 col-md-9 pt-3 pb-4 mb-0">
-          <p class="text-justify">
-            The tool
-            <span class="font-weight-bold">
-              VolSlideStep
-            </span>
-            is used in conjunction with the music editor
-            <span class="fw-bold">
-              <a
-                href="https://en.wikipedia.org/wiki/ProTracker"
-                class="link-primary"
-              >
-                ProTracker.
-              </a>
-            </span>
-            This tracker uses the effect commands
-            <span class="fw-bold">
-              Volume Slide / Fine Volume Slide
-            </span>
-            which do a linear slide up or down.
-          </p>
-          <p>
-            The only difference between them is at which ticks they are
-            executed.
-            <span class="fw-bold">
-              Fine Volume Slide
-            </span>
-            is executed every first tic whereas
-            <span class="fw-bold">
-              Volume Slide
-            </span>
-            the rest of the tics, song_speed-1 times.
-          </p>
-          <p>
-            The arguments for these commands are called
-            <span class="fw-bold">
-              number of units
-            </span>
-            and are given as hex numbers. This value is added to or substracted
-            of the current instrument volume value.
-          </p>
-          <p>
-            To get the right number of commands for
-            <span class="fw-bold">
-              Volume Slide
-            </span>
-            and the units for
-            <span class="fw-bold">
-              Fine Volume Slide
-            </span>
-            for a complete slide up or down, this tool is a very comfortable
-            aid.
-          </p>
-          <p>
-            Have fun with it...
-          </p>
-        </div>
-      </div>
+  <article class="container pt-5 pb-4">
+    <header class="vol-slide-step__about__header">
+      <h2 class="text-center pt-5">
+        About... VolSlideStep
+      </h2>
+    </header>
+    <div class="col-md-9 pt-3 pb-4 mb-0">
+      <p class="text-justify">
+        The tool
+        <span class="font-weight-bold">
+          VolSlideStep
+        </span>
+        is used in conjunction with the music editor
+        <span class="fw-bold">
+          <a
+            href="https://en.wikipedia.org/wiki/ProTracker"
+            class="vol-slide-step__about__link"
+          >
+            ProTracker.
+          </a>
+        </span>
+        This tracker uses the effect commands
+        <span class="fw-bold">
+          Volume Slide / Fine Volume Slide
+        </span>
+        which do a linear slide up or down.
+      </p>
+      <p>
+        The only difference between them is at which ticks they are executed.
+        <span class="fw-bold">
+          Fine Volume Slide
+        </span>
+        is executed every first tic whereas
+        <span class="fw-bold">
+          Volume Slide
+        </span>
+        the rest of the tics, song_speed-1 times.
+      </p>
+      <p>
+        The arguments for these commands are called
+        <span class="fw-bold">
+          number of units
+        </span>
+        and are given as hex numbers. This value is added to or substracted of
+        the current instrument volume value.
+      </p>
+      <p>
+        To get the right number of commands for
+        <span class="fw-bold">
+          Volume Slide
+        </span>
+        and the units for
+        <span class="fw-bold">
+          Fine Volume Slide
+        </span>
+        for a complete slide up or down, this tool is a very comfortable aid.
+      </p>
+      <p>
+        Have fun with it...
+      </p>
     </div>
   </article>
 </section>
 
-<section class="is-bg-color-light" id="content-help">
-  <article>
-    <div class="container pt-5 pb-4">
-      <header>
-        <h2 class="text-center is-light-grey pt-5"> VolSlideStep Help </h2>
-      </header>
-      <div class="row py-3 text-white justify-content-center">
-        <div class="col-10 col-md-9 pt-3 pb-4 mb-0">
-          <p class="text-justify">
-            This tool works with two output results:
-          </p>
-          <p>
-            1. One output for the case that only the command
-            <span class="fw-bold">
-              Volume Slide
-            </span>
-            is used.
-          </p>
-          <p>
-            2. If the volume slide should be more precise, then
-            <span class="fw-bold">
-              Fine Volume Slide
-            </span>
-            can be enabled by the checkbox.
-          </p>
-          <p>
-            You can toggle between these two modes by setting or unsetting the
-            checkbox.
-          </p>
-          <p>
-            The units of the command
-            <span class="fw-bold">
-              Fine Volume Slide
-            </span>
-            are used for the remainder of the division to calculate the
-            <span class="fw-bold">
-              Volume Slide
-            </span>
-            commands per row.
-          </p>
-          <p>
-            The fine slide units are only for one
-            <span class="fw-bold">
-              Fine Volume Slide
-            </span>
-            command. If fine slide values are disabled, then the number of
-            <span class="fw-bold">
-              Volume Slide
-            </span>
-            commands is rounded upwards to the nearest integer.
-          </p>
-        </div>
-      </div>
+<section class="vol-slide-step__help" id="content-help">
+  <article class="container pt-5 pb-4">
+    <header>
+      <h2 class="text-center is-light-grey pt-5"> VolSlideStep Help </h2>
+    </header>
+    <div class="py-3 text-white justify-content-center">
+      <p class="text-justify">
+        This tool works with two output results:
+      </p>
+      <p>
+        1. One output for the case that only the command
+        <span class="fw-bold">
+          Volume Slide
+        </span>
+        is used.
+      </p>
+      <p>
+        2. If the volume slide should be more precise, then
+        <span class="fw-bold">
+          Fine Volume Slide
+        </span>
+        can be enabled by the checkbox.
+      </p>
+      <p>
+        You can toggle between these two modes by setting or unsetting the
+        checkbox.
+      </p>
+      <p>
+        The units of the command
+        <span class="fw-bold">
+          Fine Volume Slide
+        </span>
+        are used for the remainder of the division to calculate the
+        <span class="fw-bold">
+          Volume Slide
+        </span>
+        commands per row.
+      </p>
+      <p>
+        The fine slide units are only for one
+        <span class="fw-bold">
+          Fine Volume Slide
+        </span>
+        command. If fine slide values are disabled, then the number of
+        <span class="fw-bold">
+          Volume Slide
+        </span>
+        commands is rounded upwards to the nearest integer.
+      </p>
     </div>
   </article>
 </section>
