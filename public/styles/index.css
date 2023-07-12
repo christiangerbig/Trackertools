@@ -35,10 +35,14 @@ body {
 }
 
 .layout__footer {
-  background-color: rgb(116, 116, 218);
+  background-color: rgb(81, 57, 189);
 }
 .layout__footer__link {
+  text-decoration: none;
   color: rgb(202, 200, 200);
+}
+.layout__footer__link:hover {
+  color: rgb(122, 122, 122);
 }
 
 .home {

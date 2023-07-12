@@ -25,7 +25,7 @@
       integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
       crossorigin="anonymous"
     />
-    <!-- My own CSS -->
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="/styles/index.css" />
     <!-- Font Awesome -->
     <link
@@ -61,19 +61,19 @@
           </button>
           <div id="navbar-nav-alt-markup" class="collapse navbar-collapse">
             <div class="navbar-nav">
-              <a href="toneportastep" class="nav-link">
-                TonePortaStep
+              <a href="toneportastep" class="nav-link px-3">
+                Tone Portamento Step
               </a>
-              <a href="volslidestep" class="nav-link">
-                VolSlideStep
+              <a href="volslidestep" class="nav-link px-3">
+                Volume Slide Step
               </a>
-              <a href="searchfxcmd" class="nav-link">
-                SearchFxCmd
+              <a href="searchfxcmd" class="nav-link px-3">
+                Search Fx Commands
               </a>
-              <a href="usedfxcmd" class="nav-link">
-                UsedFxCmd
+              <a href="usedfxcmd" class="nav-link px-3">
+                Used FX Commands
               </a>
-              <a href="contact" class="nav-link">
+              <a href="contact" class="nav-link px-3">
                 Contact
               </a>
             </div>
@@ -88,32 +88,34 @@
       </div>
     </section>
 
-    <section>
-      <footer class="layout__footer text-white">
-        <div class="container py-4">
+    <footer class="layout__footer">
+      <div class="container d-flex flex-row text-white py-4">
+        <span>
           ©
           {{year}}
           Christian Gerbig
+        </span>
+        <div class="mx-4">
           <a
             href="https://github.com/christiangerbig/Trackertools"
             target="_blank"
             rel="noreferrer noopener"
             id="github-link"
-            class="layout__footer__link"
+            class="layout__footer__link px-2"
           >
-            <i class="fab fa-github px-2"></i>
+            <i class="fab fa-github"></i>
           </a>
           <a
             href="https://www.linkedin.com/in/christian-gerbig/"
             target="_blank"
             rel="noreferrer noopener"
-            class="layout__footer__link"
+            class="layout__footer__link px-2"
           >
-            <i class="fab fa-linkedin px-2"></i>
+            <i class="fab fa-linkedin"></i>
           </a>
         </div>
-      </footer>
-    </section>
+      </div>
+    </footer>
 
     <script src="/js/main/script.js"></script>
     <script
