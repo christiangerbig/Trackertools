@@ -1,16 +1,15 @@
 <section id="page-content-contact" class="contact">
   <div class="container pt-5 pb-0">
     <h2 class="[ contact__title ] [ text-center pt-5 ]"> Contact </h2>
-    <div class="row pt-1 pb-3 text-white text-center justify-content-center">
+    <div class="row pt-1 pb-3 text-center justify-content-center">
       <div class="col-10 col-md-6 pt-4 pb-2 mb-0">
         <h5> Feel free to contact me </h5>
         <h3 class="text-center">
           <i class="far fa-envelope"></i>
         </h3>
       </div>
-      {{! Conditionally render the msg }}
       {{#if errorMessage}}
-        <div class="[ error__message ] [ mt-0 mb-3 ]">
+        <div class="[ contact__error-message ] [ mt-0 mb-3 ]">
           <h5> {{errorMessage}} </h5>
         </div>
       {{/if}}
@@ -20,7 +19,7 @@
       >
         <form action="/contact" method="POST">
           <div
-            class="[ contact__form ] [ form-group px-5 pt-3 pb-4 mb-5 rounded ]"
+            class="[ contact__form ] [ form-group px-5 pt-3 pb-4 rounded mb-5 ]"
           >
             <label for="email"> <h4> Your email address </h4> </label>
             <input
@@ -31,7 +30,7 @@
             />
           </div>
           <div
-            class="[ contact__form ] [ form-group px-5 pt-3 pb-4 mb-5 rounded ]"
+            class="[ contact__form ] [ form-group px-5 pt-3 pb-4 rounded mb-5 ]"
           >
             <label for="message"> <h4> Your message </h4></label>
             <textarea
@@ -45,7 +44,7 @@
             type="submit"
             value="Send"
             formnovalidate="formnovalidate"
-            class="btn btn-secondary mb-0"
+            class="btn btn-secondary w-25"
           />
         </form>
       </div>

@@ -1,6 +1,8 @@
-<section id="content-home" class="used-fx-cmd">
+<section id="content-home" class="used-fx-commands">
   <div class="container text-center py-5">
-    <nav class="navbar navbar-expand-sm navbar-dark">
+    <nav
+      class="[ used-fx-commands__navigation ] [ navbar navbar-expand-sm navbar-dark ps-4 ]"
+    >
       <span class="navbar-brand mb-0"> UsedFxCmd </span>
       <div class="navbar-nav">
         <a href="#content-about" class="nav-link">
@@ -10,7 +12,7 @@
     </nav>
     <div class="row py-5 justify-content-around">
       <div
-        class="[ used-fx-cmd__file-loader ] [ col-10 col-md-4 pt-4 pb-2 mb-5 rounded ]"
+        class="[ used-fx-commands__file-loader ] [ col-10 col-md-4 pt-4 pb-2 rounded mb-5 ]"
       >
         <div class="container input-group mb-3 disable-text-shadow">
           <input type="file" id="input-file" class="w-100 rounded" />
@@ -18,37 +20,40 @@
       </div>
       <div class="w-100"></div>
       <div
-        class="[ used-fx-cmd__result-container ] [ col-10 col-md-5 py-4 mb-5 rounded ]"
+        class="[ used-fx-commands__results ] [ col-10 col-md-5 py-4 mb-5 rounded ]"
       >
-        <div class="[ used-fx-cmd__result-container__commands ] [ container ]">
+        <div class="[ used-fx-commands__results__commands ] [ container ]">
           <table class="table table-borderless">
             <thead>
               <tr class="disable-text-shadow">
                 <th
                   scope="col"
-                  class="[ used-fx-cmd__result-container__commands__table-header ] [ bg-light rounded p-1 text-center ]"
+                  class="[ used-fx-commands__results__commands__table-header ] [ text-center text-dark-grey bg-light rounded p-1 ]"
                 >
                   Used commands
                 </th>
               </tr>
             </thead>
-            <tbody id="commands-table-body" class="text-light text-center">
+            <tbody
+              id="commands-table-body"
+              class="text-light bg-secondary text-center"
+            >
             </tbody>
           </table>
         </div>
       </div>
       <div
-        class="[ used-fx-cmd__result-container ] [ col-10 col-md-5 py-4 rounded mb-5 ]"
+        class="[ used-fx-commands__results ] [ col-10 col-md-5 py-4 rounded mb-5 ]"
       >
         <div
-          class="[ used-fx-cmd__result-container__extended-commands ] [ container ]"
+          class="[ used-fx-commands__results__extended-commands ] [ container ]"
         >
           <table class="table table-borderless">
             <thead>
-              <tr class="disable-text-shadow">
+              <tr>
                 <th
                   scope="col"
-                  class="[ used-fx-cmd__result-container__extended-commands__table-header ] [ bg-light rounded p-1 text-center ]"
+                  class="[ used-fx-commands__results__extended-commands__table-header ] [ text-center text-light bg-secondary rounded p-1 ]"
                 >
                   Used extended commands
                 </th>
@@ -67,11 +72,11 @@
 </section>
 
 <section id="content-about">
-  <article class="container pt-5 pb-0">
-    <header class="used-fx-cmd__about__header">
-      <h2 class="text-center pt-4"> About... UsedFxCmd </h2>
+  <article class="container pt-5 pb-5">
+    <header class="used-fx-commands__about__header">
+      <h2 class="pt-4"> About... Used Fx Commands </h2>
     </header>
-    <div class="container py-3">
+    <div class="w-75 py-3">
       <p class="text-justify">
         The tool
         <span class="fw-bold">
@@ -81,7 +86,7 @@
         <span class="fw-bold">
           <a
             href="https://en.wikipedia.org/wiki/ProTracker"
-            class="used-fx-cmd__about__link"
+            class="used-fx-commands__about__link"
           >
             ProTracker.
           </a>
@@ -93,11 +98,8 @@
         To get an overview, which effect commands are used in the patterns of a
         module, this tool is a very comfortable aid.
       </p>
-      <p>
-        Have fun with it...
-      </p>
     </div>
   </article>
 </section>
 
-<script src="/js/usedFxCmd/script.js"></script>
+<script src="/js/usedFxCommands/script.js"></script>

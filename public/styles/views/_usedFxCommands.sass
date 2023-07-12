@@ -1,16 +1,19 @@
 @import "../base/variables"
 
-.used-fx-cmd
+.used-fx-commands
   text-shadow: 0px 0px 1px black
-  background-image: url("../../../images/mixer-821537_640x423.jpg")
-  background-color: grey
-  background-size: cover
-  background-repeat: no-repeat
-  background-attachment: fixed
+  background:
+    image: url($background-image)
+    color: $blue-purple
+    size: cover
+    repeat: no-repeat
+    attachment: fixed
   color: $silver
+  &__navigation
+    background: rgba(0, 0, 0, 0.8)
   &__file-loader
     background: rgba(0, 0, 0, 0.8)
-  &__result-container
+  &__results
     background: rgba(0, 0, 0, 0.8)
     &__commands
       height: 22rem
@@ -18,19 +21,24 @@
       &__table-header
         position: sticky
         top: 0px
-        color: $medium-purple
+        color: $dove-grey
     &__extended-commands
       height: 22rem
       overflow-y: scroll
       &__table-header
         position: sticky
         top: 0px
-        color: $dove-grey
+        color: $seashell
   &__about
+    background-color: seashell
+    color: black
     &__header
-      color: $dove-grey
+      color: $medium-purple
     &__link
+      color: $blue-purple  
       text-decoration: none
+      &:hover
+        color: $medium-purple
 
 
 
