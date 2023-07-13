@@ -1,53 +1,51 @@
-<section id="page-content-contact" class="contact">
-  <div class="container pt-5 pb-0">
-    <h2 class="[ contact__title ] [ text-center pt-5 ]"> Contact </h2>
-    <div class="row pt-1 pb-3 text-center justify-content-center">
-      <div class="col-10 col-md-6 pt-4 pb-2 mb-0">
-        <h5> Feel free to contact me </h5>
-        <h3 class="text-center">
-          <i class="far fa-envelope"></i>
-        </h3>
+<section id="page-content-contact" class="contact row justify-content-center">
+  <div
+    class="contact__container container col-10 col-md-6 col-lg-6 mt-3 pt-5 pb-0"
+  >
+    <h2 class="text-center pt-5"> Contact </h2>
+
+    <div class="text-center pt-4 pb-2 mb-0">
+      <h5> Feel free to contact me </h5>
+      <h3 class="text-center">
+        <i class="far fa-envelope"></i>
+      </h3>
+    </div>
+    {{#if errorMessage}}
+      <div class="[ contact__error-message ] [ mt-0 mb-3 ]">
+        <h5> {{errorMessage}} </h5>
       </div>
-      {{#if errorMessage}}
-        <div class="[ contact__error-message ] [ mt-0 mb-3 ]">
-          <h5> {{errorMessage}} </h5>
+    {{/if}}
+    <div class="w-100"></div>
+    <div class="row justify-content-center pt-0 pb-4 mt-0 mb-5">
+      <form action="/contact" method="POST" class="col-12 col-md-10 col-lg-10">
+        <div class="form-group text-center px-5 pt-3 pb-4 rounded mb-5">
+          <label for="email"> <h4> Your email address </h4> </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-control form-control-sm"
+          />
         </div>
-      {{/if}}
-      <div class="w-100"></div>
-      <div
-        class="col-10 col-md-5 pt-0 pb-4 mt-0 mb-5 text-light-grey align-content-center"
-      >
-        <form action="/contact" method="POST">
-          <div
-            class="[ contact__form ] [ form-group px-5 pt-3 pb-4 rounded mb-5 ]"
-          >
-            <label for="email"> <h4> Your email address </h4> </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              class="form-control form-control-sm"
-            />
-          </div>
-          <div
-            class="[ contact__form ] [ form-group px-5 pt-3 pb-4 rounded mb-5 ]"
-          >
-            <label for="message"> <h4> Your message </h4></label>
-            <textarea
-              name="message"
-              rows="5"
-              id="message"
-              class="form-control form-control-sm w-100"
-            ></textarea>
-          </div>
+        <div class="form-group text-center px-5 pt-3 pb-4 rounded mb-5">
+          <label for="message"> <h4> Your message </h4></label>
+          <textarea
+            name="message"
+            rows="5"
+            id="message"
+            class="form-control form-control-sm w-100"
+          ></textarea>
+        </div>
+        <div class="text-center">
           <input
             type="submit"
             value="Send"
             formnovalidate="formnovalidate"
             class="btn btn-secondary w-25"
           />
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
+
   </div>
 </section>

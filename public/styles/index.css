@@ -122,6 +122,9 @@ body {
 .tone-portamento-step__help__header {
   color: rgb(205, 205, 205);
 }
+.tone-portamento-step__help__table {
+  color: rgb(240, 240, 240);
+}
 
 .volume-slide-step {
   text-shadow: 0px 0px 1px black;
@@ -231,6 +234,9 @@ body {
 .search-fx-commands__help__header {
   color: rgb(205, 205, 205);
 }
+.search-fx-commands__help__table {
+  color: rgb(240, 240, 240);
+}
 
 .used-fx-commands {
   text-shadow: 0px 0px 1px black;
@@ -292,12 +298,10 @@ body {
   background-attachment: fixed;
   color: rgb(205, 205, 205);
 }
-.contact__title {
+.contact__container {
+  background: rgba(0, 0, 0, 0.8);
   color: rgb(205, 205, 205);
 }
 .contact__error-message {
   color: red;
-}
-.contact__form {
-  background: rgba(0, 0, 0, 0.8);
 }
